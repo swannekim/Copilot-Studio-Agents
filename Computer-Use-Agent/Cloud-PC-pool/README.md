@@ -58,7 +58,7 @@ Get-MgServicePrincipalRemoteDesktopSecurityConfiguration -ServicePrincipalId $RD
 - group object id, display name 기록
 
 ```powershell
-# 2-2. PowerShell에서 TargetDeviceGroup 객체 생성
+# 2-2. Azure CLI PowerShell에서 TargetDeviceGroup 객체 생성
 $tdg = New-Object -TypeName Microsoft.Graph.PowerShell.Models.MicrosoftGraphTargetDeviceGroup
 $tdg.Id = "<group object id>"
 $tdg.DisplayName = "<group display name>"
