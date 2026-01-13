@@ -1,4 +1,4 @@
-# Cloud PC Pool Setup
+# Cloud PC Pool Setup for Computer Use Agent
 > [MS Learn: Use Cloud PC pool for computer use runs](https://learn.microsoft.com/en-us/microsoft-copilot-studio/use-cloud-pc-pool#create-a-cloud-pc-pool)
 
 ## Licensing Requirements
