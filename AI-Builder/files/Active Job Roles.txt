@@ -1,0 +1,40 @@
+Active Job Roles
+
+1. J1000 – Power Automate Specialist
+
+Job Title: Power Automate Specialist
+Description: Create and optimize workflows using Power Automate. Experience with connectors and API integrations required.
+Close Date: 12/30/2026
+Number of Hires: 2
+
+
+2. J1001 – Power BI Analyst
+
+Job Title: Power BI Analyst
+Description: Design and implement Power BI reports and dashboards. Must have strong DAX skills and experience with data modeling.
+Close Date: 01/31/2026
+Number of Hires: 2
+
+
+3. J1002 – Power Platform Architect
+
+Job Title: Power Platform Architect
+Description: Lead architecture design for enterprise Power Platform solutions. Requires 5+ years experience and certifications in Power Platform.
+Close Date: 08/15/2026
+Number of Hires: 1
+
+
+4. J1003 – Power Platform Consultant
+
+Job Title: Power Platform Consultant
+Description: Consult with clients to gather requirements and deliver Power Platform solutions. Strong communication and project management skills needed.
+Close Date: 12/15/2026
+Number of Hires: 2
+
+
+5. J1004 – Power Platform Developer
+
+Job Title: Power Platform Developer
+Description: Develop and customize Power Platform solutions including Power Apps and Power Automate. Requires 3+ years experience with Microsoft Power Platform and Azure.
+Close Date: 12/31/2026
+Number of Hires: 3

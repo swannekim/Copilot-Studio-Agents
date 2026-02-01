@@ -1,0 +1,126 @@
+Evaluation Criteria
+
+1. Criteria Name: Certifications
+   Description: Relevant Microsoft certifications in Power Platform and related technologies.
+   Job Role: Power Platform Developer
+   Weighting: 10
+
+2. Criteria Name: Client Engagement
+   Description: Proven ability to gather requirements and manage client relationships.
+   Job Role: Power Platform Consultant
+   Weighting: 25
+
+3. Criteria Name: Communication
+   Description: Ability to clearly communicate technical concepts and collaborate with teams.
+   Job Role: Power Platform Developer
+   Weighting: 15
+
+4. Criteria Name: Data Modeling Experience
+   Description: Experience designing and implementing data models for business intelligence solutions.
+   Job Role: Power BI Analyst
+   Weighting: 25
+
+5. Criteria Name: Documentation
+   Description: Skill in documenting workflows and providing user training materials.
+   Job Role: Power Automate Specialist
+   Weighting: 10
+
+6. Criteria Name: Error Handling
+   Description: Ability to implement robust error handling and monitoring in automated flows.
+   Job Role: Power Automate Specialist
+   Weighting: 15
+
+7. Criteria Name: ETL and Data Integration
+   Description: Experience with ETL processes and integrating data from multiple sources.
+   Job Role: Power BI Analyst
+   Weighting: 10
+
+8. Criteria Name: Experience
+   Description: Evaluation of years and relevance of experience in Power Platform development.
+   Job Role: Power Platform Developer
+   Weighting: 30
+
+9. Criteria Name: Governance and Security
+   Description: Knowledge of Power Platform governance, security, and compliance best practices.
+   Job Role: Power Platform Architect
+   Weighting: 15
+
+10. Criteria Name: Industry Knowledge
+    Description: Understanding of industry‑specific challenges and how Power Platform addresses them.
+    Job Role: Power Platform Consultant
+    Weighting: 15
+
+11. Criteria Name: Integration Strategy
+    Description: Solution architecture experience with integration between Azure, Dynamics 365, and external APIs.
+    Job Role: Power Platform Architect
+    Weighting: 20
+
+12. Criteria Name: Leadership Experience
+    Description: Demonstrated leadership in guiding teams and mentoring junior developers.
+    Job Role: Power Platform Architect
+    Weighting: 15
+
+13. Criteria Name: PI and Connector Usage
+    Description: Proficiency in using standard and custom connectors, and integrating with APIs.
+    Job Role: Power Automate Specialist
+    Weighting: 25
+
+14. Criteria Name: Platform Certifications
+    Description: Possession of Microsoft Certified: Power Platform Solution Architect Expert or similar.
+    Job Role: Power Platform Architect
+    Weighting: 20
+
+15. Criteria Name: Power BI Proficiency
+    Description: Demonstrated expertise in Power BI, including DAX, Power Query, and report development.
+    Job Role: Power BI Analyst
+    Weighting: 35
+
+16. Criteria Name: Problem Solving
+    Description: Demonstrated problem‑solving skills and ability to handle complex scenarios.
+    Job Role: Power Platform Developer
+    Weighting: 5
+
+17. Criteria Name: Process Optimization
+    Description: Experience optimizing business processes for efficiency and scalability.
+    Job Role: Power Automate Specialist
+    Weighting: 15
+
+18. Criteria Name: Project Management
+    Description: Experience managing projects using Agile or similar methodologies.
+    Job Role: Power Platform Consultant
+    Weighting: 20
+
+19. Criteria Name: Solution Architecture
+    Description: Proven ability to design scalable Power Platform architectures for enterprise clients.
+    Job Role: Power Platform Architect
+    Weighting: 30
+
+20. Criteria Name: Solution Delivery
+    Description: Track record of delivering Power Platform solutions on time and within scope.
+    Job Role: Power Platform Consultant
+    Weighting: 25
+
+21. Criteria Name: Stakeholder Communication
+    Description: Effectiveness in gathering requirements and presenting insights to business users.
+    Job Role: Power BI Analyst
+    Weighting: 10
+
+22. Criteria Name: Technical Skills
+    Description: Assessment of candidate's technical expertise in Power Platform tools and technologies.
+    Job Role: Power Platform Developer
+    Weighting: 40
+
+23. Criteria Name: Training and Enablement
+    Description: Ability to train end users and provide ongoing support for delivered solutions.
+    Job Role: Power Platform Consultant
+    Weighting: 15
+
+24. Criteria Name: Visualization Skills
+    Description: Ability to create clear, actionable, and visually appealing dashboards and reports.
+    Job Role: Power BI Analyst
+    Weighting: 20
+
+25. Criteria Name: Workflow Automation
+    Description: Hands‑on experience building complex workflows using Power Automate.
+    Job Role: Power Automate Specialist
+    Weighting: 35
