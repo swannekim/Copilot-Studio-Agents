@@ -1,5 +1,44 @@
 # Copilot Studio AI Builder: from extraction to generation
-> 260203 Microsoft Agenthon Low-code Day
+> ### 260203 Microsoft Agenthon Low-code Day
+> ![alt text](img/operative.png)
+Based on the [Copilot Studio Agent Academy Operative course](https://microsoft.github.io/agent-academy/operative/), restructured without Solution imports to provide a simplified 1 hour 30 minute hands-on experience.
+
+---
+
+## 🎯 What This Hands‑On Is Aimed For
+This hands‑on focuses on helping participants learn **how to use Copilot Studio + AI Builder for real document‑processing scenarios**, without the complexity of Dataverse, Solutions, or infrastructure-heavy setup. In about 90 minutes, participants will build an end‑to‑end mini hiring workflow that demonstrates:
+- Uploading and processing resumes using **Agent Flows + file inputs**
+- Extracting candidate details with **AI Builder multimodal prompts**
+- Generating structured output and summaries using **JSON-based prompt engineering**
+- Creating a complete interview prep document using **document generation prompts**
+- Coordinating everything through a simple **orchestrator + child agent** architecture
+
+The goal is to provide a fast, accessible, and practical experience focused on **AI Builder extraction → reasoning → document generation**, suitable for participants at the Agenthon.
+
+<details>
+<summary><strong>📑 Table of Contents</strong></summary>
+
+- [1. Adding the Application Intake Agent](#-01-adding-the-application-intake-agent)
+  - [1.1. Orchestrator Agent Setup](#11-orchestrator-agent-setup)
+  - [1.2. Add the Application Intake child agent](#12-add-the-application-intake-child-agent)
+  - [1.3. Configure Resume Upload agent flow](#13-configure-resume-upload-agent-flow)
+  - [1.4. Connect the flow to your agent](#14-connect-the-flow-to-your-agent)
+  - [1.5. Define agent instructions](#15-define-agent-instructions)
+
+- [2. Building a Resume Extraction System](#-02-building-a-resume-extraction-system)
+  - [2.1. Create a multimodal prompt](#21-create-a-multimodal-prompt)
+  - [2.2. Add prompt to an Agent Flow](#22-add-prompt-to-an-agent-flow)
+  - [2.3. Connect the flow to your agent](#23-connect-the-flow-to-your-agent)
+
+- [3. Generating an Interview Prep. Document](#-03-generating-an-interview-prep-document)
+  - [3.1. Create the prompt](#31-create-the-prompt)
+  - [3.2. Create an agent flow to call the prompt](#32-create-an-agent-flow-to-call-the-prompt)
+  - [3.3. Create the topic](#33-create-the-topic)
+  - [3.4. Hiring Agent](#34-hiring-agent)
+
+- [Reference](#reference)
+
+</details>
 
 ---
 
@@ -33,22 +72,20 @@
     | Code Interpreter | **Off** |
 
 ### 1.2. Add the Application Intake child agent
-#### 🤝Application Intake Agent responsibilities
+#### Application Intake Agent responsibilities
 
-- **Parse resume content** from PDFs provided via interactive chat (In a future mission you'll learn how to process resumes autonomously).
+- **Parse resume content** from PDFs provided via interactive chat.
 - **Extract structured data** (name, skills, experience, education)
-- **Match candidates to open roles** based on qualifications and cover letter
-- **Store candidate information** in Dataverse for later processing
-- **Deduplicate applications** to avoid creating the same candidate twice, match to existing records using the email address extracted from the resume.
+- **Return clean, machine‑readable outputs** such as ResumeID, ResumeSummary, and candidate fields for downstream steps
+- **Pass processed data to the Hiring Agent** for orchestration and document generation
 
 #### ⭐ Why this should be a child agent
 
 The Application Intake Agent fits perfectly as a child agent because:
 
-- It's specialized for document processing and data extraction
-- It doesn't need separate publishing  
-- It's part of our overall hiring solution managed by the same team
-- It focuses on a specific trigger (new resume received) and is invoked from the Hiring Agent.
+- It performs a tightly scoped, specialized task: specialized for document processing and data extraction
+- It doesn't need independent publishing  
+- It focuses on a specific trigger (new resume received) and is invoked from the Hiring Agent: ensures predictable behavior inside a multi‑step workflow.
 
 #### Hiring Agent > Add and Agent > New child agent
 ![alt text](img/image-1.png)
@@ -96,7 +133,7 @@ The Application Intake Agent fits perfectly as a child agent because:
 
     | Property         | How to Set                        | Details                                            |
     | ---------------- | --------------------------------- | -------------------------------------------------- |
-    | **Folder Path ** | Navigate with folder icon   | ```path to your testfolder```         |
+    | **Folder Path** | Navigate with folder icon   | ```path to your testfolder```         |
     | **File Name** | Dynamic data (thunderbolt icon)   | When an agent calls the flow → Resume name         |
     | **File Content**      | Dynamic data (thunderbolt icon)   | When an agent calls the flow → Resume contentBytes |
 
@@ -232,6 +269,28 @@ Resume: /document
 
     > Why we're not adding this as a tool yet: 
     > You'll use this prompt in an Agent Flow rather than directly as a tool, which gives you more control over the data processing workflow.
+
+#### Model comparison
+
+All of the following models support vision and document processing
+
+| Model | 💰Cost | ⚡Speed | ✅Best for |
+|-------|------|-------|----------|
+| **GPT-4.1 mini** | Basic (most cost-effective) | Fast | Standard document processing, summarization, budget-conscious projects |
+| **GPT-4.1** | Standard | Moderate | Complex documents, advanced content creation, high accuracy needs |
+| **o3** | Premium | Slow (reasons first) | Data analysis, critical thinking, sophisticated problem-solving |
+| **GPT-5 chat** | Standard | Enhanced | Latest document understanding, highest response accuracy |
+| **GPT-5 reasoning** | Premium | Slow (complex analysis) | Most sophisticated analysis, planning, advanced reasoning |
+
+#### Temperature settings explained
+
+Temperature controls how creative or predictable your AI responses are:
+
+- **Temperature 0**: Most predictable, consistent results (best for data extraction)
+- **Temperature 0.5**: Balanced creativity and consistency  
+- **Temperature 1**: Maximum creativity (best for content generation)
+
+For document analysis, use **temperature 0** to ensure consistent data extraction.
 
 ### 2.2. Add prompt to an Agent Flow
 #### Application Intake Agent > Tools panel > Add New tool > Agent flow
@@ -528,6 +587,18 @@ You coordinate activities end‑to‑end, ensure smooth task delegation, and pro
 ![alt text](img/image-73.png)
 ![alt text](img/image-74.png)
 ![alt text](img/image-75.png)
+
+### 📌 Why Section 2 Uses Only an Agent Flow, but Section 3 Requires a Topic
+
+| Aspect | Section 2: Resume Extraction (Flow Only) | Section 3: Interview Prep Document (Flow Inside Topic) |
+|-------|-------------------------------------------|---------------------------------------------------------|
+| **How it is triggered** | Automatically after uploading a resume (deterministic workflow) | Triggered only when the user explicitly asks for interview prep (intent‑based) |
+| **Who controls execution** | Child agent (Application Intake Agent) | Parent agent (Hiring Agent) via a Topic |
+| **Input availability** | Required input (ResumeID) is already known from previous step | Needs a variable from conversation context (ResumeSummary), provided by the Topic |
+| **Conversation flow** | Straight, sequential steps (Upload → Extract) | Requires branching: only run when user intends to prepare for an interview |
+| **Purpose of the action** | Data extraction step within a tightly scoped pipeline | Multi‑step document creation requiring user confirmation and context |
+| **Why a Topic is required** | No intent detection or routing required | Topic handles intent routing, variable binding, and delivering the .docx file |
+| **If Topic is NOT used** | Flow still executes correctly | Flow may not trigger, missing variable binding, or file fails to send back to user |
 
 ---
 
