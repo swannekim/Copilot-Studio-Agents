@@ -147,7 +147,7 @@ The Application Intake Agent fits perfectly as a child agent because:
      | --------------- | --------------------------------- | ------------------------------------------ |
      | **Type**        | Select                            | `Text`                                     |
      | **Name**        | Enter                             | `ResumeID`                             |
-     | **Value**       | Dynamic data (thunderbolt icon)   | Create Resume → See More → Resume Number   |
+     | **Value**       | Dynamic data (thunderbolt icon)   | Create Resume → See More → Resume ID   |
      | **Description** | Enter                             | `The [ResumeID] of the Resume created` |
 
 #### Overview tab > Edit on the Details panel
@@ -272,7 +272,7 @@ Resume: /document
 
 #### Model comparison
 
-All of the following models support vision and document processing
+All of the following models support vision and document processing.
 
 | Model | 💰Cost | ⚡Speed | ✅Best for |
 |-------|------|-------|----------|
@@ -605,7 +605,7 @@ You coordinate activities end‑to‑end, ensure smooth task delegation, and pro
 
 ---
 
-### Reference
+## Reference
 - [MS Learn: Explore AI capabilities in Copilot Studio](https://learn.microsoft.com/en-us/microsoft-copilot-studio/guidance/ai-capabilities)
 - [Agent Academy: Make Your Agent Multi-agent Ready with Connected Agents](https://microsoft.github.io/agent-academy/operative/03-multi-agent/)
 - [Agent Academy: Extracting Resume Contents with Multimodal Prompts](https://microsoft.github.io/agent-academy/operative/07-multimodal-prompts/)
