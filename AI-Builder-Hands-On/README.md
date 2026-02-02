@@ -525,6 +525,9 @@ Power Platform Architect with 10+ years of experience designing enterprise-grade
         binary(outputs('Run_a_prompt')?['body/responsev2/predictionOutput/documentOutput/contentBytes'])
         ```
     - This formula is necessary to properly extract the file from the output so we can return it to our agent.
+        - Extracts the Base64 content returned by AI Builder
+        - Converts it into a binary file stream
+        - Packages it as a file object that Copilot Studio can return to the user
 
 #### Overview > Edit > Details
 ![alt text](img/image-58.png)
