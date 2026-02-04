@@ -81,9 +81,10 @@ The goal is to provide a fast, accessible, and practical experience focused on *
 
 #### ⭐ Why this should be a child agent
 
-The Application Intake Agent fits perfectly as a child agent because:
+The Application Intake Agent fits perfectly as a child agent:
 
 - It performs a tightly scoped, specialized task: specialized for document processing and data extraction
+    - **Role-based Decomposition**
 - It doesn't need independent publishing  
 - It focuses on a specific trigger (new resume received) and is invoked from the Hiring Agent: ensures predictable behavior inside a multi‑step workflow.
 
@@ -190,6 +191,10 @@ The Application Intake Agent fits perfectly as a child agent because:
 - Custom Value > System
     - UserEmail: ```User.Email``` (System.User.Email)
 
+- 💡```System.Activity.Attachments```
+    - Copilot Studio reads attached files on chat message's Raw event payload.
+    - the only variable to verify if the user sent file on current chat.
+
 ### 1.5. Define agent instructions
 #### Application Intake Agent > Instructions
 ![alt text](img/image-23.png)
@@ -226,7 +231,7 @@ Process for Resume Upload via Chat
 - Rename: ```Summarize Resume```
 - Instructions:
 ```text
-You are tasked with extracting key candidate information from a resume and cover letter to facilitate matching with open job roles and creating a summary for application review.
+You are tasked with extracting key candidate information from a resume to facilitate matching with open job roles and creating a summary for application review.
 
 
 Instructions:
@@ -258,13 +263,15 @@ Output Format: Provide the output in valid JSON format with the following struct
 
 
 Guidelines:
-- Extract information only from the provided resume and cover letter documents.
+- Extract information only from the provided resume document.
 - Ensure accuracy in identifying all details such as contact details and skills.
 - The summary should be concise but informative, suitable for quick application review.
 
 Resume: /document
 ```
-
+- 💡 Why use JSON output? **Formalization of AI Output**
+    - LLM output: unstructured (default)
+    - JSON structure: use like API request call results - Automated mapping on Flow/Dataverse/SharePoint/SQL possible
 - In the **Configure for use in Agent** dialog, select **Cancel**.
 
     > Why we're not adding this as a tool yet: 
@@ -474,7 +481,7 @@ Power Platform Architect with 10+ years of experience designing enterprise-grade
 ```
 </details>
 
-- Because we want to have this prompt generate a document, we need to change the model the prompt is using to one that supports multi-modal inputs and outputs. To do this, select the **model dropdown** and change it to **GPT-4.1**
+- 💡 Because we want to have this prompt generate a document, we need to change the model the prompt is using to one that supports multi-modal inputs and outputs. To do this, select the **model dropdown** and change it to **GPT-4.1**
 
 
 #### Word document as the output
@@ -486,7 +493,7 @@ Power Platform Architect with 10+ years of experience designing enterprise-grade
 ![alt text](img/image-53.png)
 
 ### 3.2. Create an agent flow to call the prompt
-#### Application Intake Agent > Tools panel > Add New tool > Agent flow
+#### Hiring Agent > Tools panel > Add New tool > Agent flow
 #### When an agent calls the flow
 - Select the When an agent calls the flow node, use **+ Add an input** to add the following parameter:
 
@@ -524,9 +531,9 @@ Power Platform Architect with 10+ years of experience designing enterprise-grade
         ```text
         binary(outputs('Run_a_prompt')?['body/responsev2/predictionOutput/documentOutput/contentBytes'])
         ```
-    - This formula is necessary to properly extract the file from the output so we can return it to our agent.
-        - Extracts the Base64 content returned by AI Builder
-        - Converts it into a binary file stream
+    - 💡This formula is necessary to properly extract the file from the output so we can return it to our agent.
+        - Extracts the **Base64 content** returned by AI Builder
+        - Converts it into a **binary file stream** for Copilot Studio chat UI usage
         - Packages it as a file object that Copilot Studio can return to the user
 
 #### Overview > Edit > Details
