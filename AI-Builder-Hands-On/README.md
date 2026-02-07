@@ -489,6 +489,7 @@ Power Platform Architect with 10+ years of experience designing enterprise-grade
 
 
 #### Word document as the output
+> [MS Learn: How to create a document template](https://learn.microsoft.com/en-us/microsoft-copilot-studio/generate-document-output-prompt#create-a-prompt-with-document-output)
 - Use provided template: ```Interview_Questions_Template.docx```
 
 ![alt text](img/image-50.png)
