@@ -40,6 +40,9 @@ The goal is to provide a fast, accessible, and practical experience focused on *
 
 </details>
 
+<details>
+<summary><strong>🧩 Agent Architecture Diagram</strong></summary>
+
 ```mermaid
 %%{init: {'flowchart': {'nodeSpacing': 18, 'rankSpacing': 22}} }%%
 flowchart LR
@@ -82,6 +85,8 @@ flowchart LR
   %% Final delivery
   ORCH -->|Return file| U
 ```
+
+</details>
 
 ---
 
