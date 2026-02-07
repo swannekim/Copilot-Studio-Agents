@@ -40,6 +40,49 @@ The goal is to provide a fast, accessible, and practical experience focused on *
 
 </details>
 
+```mermaid
+%%{init: {'flowchart': {'nodeSpacing': 18, 'rankSpacing': 22}} }%%
+flowchart LR
+  %% Top-level user entry
+  U[User] -->|Uploads resume / Asks for interview prep| ORCH
+
+  %% Orchestrator boundary
+  subgraph ORCH["Hiring Agent (Orchestrator)"]
+    direction TB
+
+    %% Topic & tool chain for interview prep
+    T1[Topic: Generate Interview Doc]
+    O1["Tool: Doc Prep (Agent Flow)"]
+    P1["[AI Prompt: Interview Question<br/>Document Prep]"]
+    W1["(Word Output: InterviewPrep.docx)"]
+
+    T1 --> O1 --> P1 --> W1
+
+    %% Child agent boxed INSIDE orchestrator
+    subgraph CHILD["Application Intake Agent (Child)"]
+      direction TB
+      C1["Tool: Resume Upload (Agent Flow)"]
+      C2["[AI Prompt: File Extraction]"]
+      C3["(Emit: ResumeID)"]
+      C4["Tool: Summarize Resume (Agent Flow)"]
+      C5["[AI Prompt: Summarize Resume (JSON)]"]
+      C6["(Emit: ResumeSummary, Candidate Data)"]
+
+      C1 --> C2 --> C3 --> C4 --> C5 --> C6
+    end
+
+    %% Delegation arrows (parent -> child -> parent)
+    ORCH_TO_CHILD{{delegate: process resume}} -.->|call| CHILD
+    CHILD_TO_ORCH{{return: ResumeID + ResumeSummary}} -.->|respond| T1
+
+    %% Wire orchestration to rely on child output
+    C6 -. provides .-> T1
+  end
+
+  %% Final delivery
+  ORCH -->|Return file| U
+```
+
 ---
 
 ## 🧪 01. Adding the Application Intake Agent
