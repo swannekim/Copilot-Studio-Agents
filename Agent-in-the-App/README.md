@@ -16,21 +16,17 @@ This repo chooses Canvas App + PCF for the first end-to-end test because:
 
 ## Architecture
 
+## Architecture
+
 ```mermaid
 flowchart LR
-    A[Canvas App screen] -->|Selected record + User().Email + screen state| B[Agent-in-the-App PCF control]
-    B -->|MSAL delegated token| C[Microsoft Entra ID]
-    B -->|CopilotStudioClient + Web Chat bridge| D[Copilot Studio Agent]
-    D -->|grounded answer using APP_CONTEXT_JSON| B
-    B -->|response output property| A
+    A["Canvas App screen"] -->|"Selected record, user email, and screen state"| B["Agent-in-the-App PCF control"]
+    B -->|"MSAL delegated token"| C["Microsoft Entra ID"]
+    B -->|"CopilotStudioClient and Web Chat bridge"| D["Copilot Studio Agent"]
+    D -->|"Grounded answer using APP_CONTEXT_JSON"| B
+    B -->|"Response output property"| A
 ```
 
-## Repo structure
-
-```text
-## Repo structure
-
-```text
 ## Repo structure
 
 ```text
