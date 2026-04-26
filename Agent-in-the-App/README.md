@@ -16,8 +16,6 @@ This repo chooses Canvas App + PCF for the first end-to-end test because:
 
 ## Architecture
 
-## Architecture
-
 ```mermaid
 flowchart LR
     A["Canvas App screen"] -->|"Selected record, user email, and screen state"| B["Agent-in-the-App PCF control"]
