@@ -1,0 +1,24 @@
+// Put this in App.OnStart for a quick mock-data Canvas App demo.
+ClearCollect(
+    colCases,
+    Table(
+        {
+            CaseId: "CASE-1001",
+            CustomerName: "Contoso Bank",
+            Priority: "High",
+            Status: "Waiting on engineering",
+            SlaRisk: "At risk within 6 hours",
+            IssueSummary: "Power Automate approval flow intermittently fails after DLP policy update.",
+            LastContactDate: Date(2026, 4, 25)
+        },
+        {
+            CaseId: "CASE-1002",
+            CustomerName: "Fabrikam Retail",
+            Priority: "Medium",
+            Status: "Customer validation",
+            SlaRisk: "Healthy",
+            IssueSummary: "Copilot Studio topic handoff message needs Korean localization.",
+            LastContactDate: Date(2026, 4, 24)
+        }
+    )
+);

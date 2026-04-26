@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<manifest>
+  <control namespace="SageKim.PowerApps" constructor="AgentInTheAppControl" version="0.1.0" display-name-key="Agent in the App" description-key="Embeds a Copilot Studio agent and sends selected app context" control-type="virtual">
+    <external-service-usage enabled="true">
+      <domain>login.microsoftonline.com</domain>
+      <domain>api.powerplatform.com</domain>
+      <domain>powerva.microsoft.com</domain>
+      <domain>copilotstudio.microsoft.com</domain>
+      <domain>directline.botframework.com</domain>
+    </external-service-usage>
+
+    <property name="agentTitle" display-name-key="Agent title" description-key="Visible title shown above the chat" of-type="SingleLine.Text" usage="input" required="true" />
+    <property name="appClientId" display-name-key="App client ID" description-key="Microsoft Entra application client ID" of-type="SingleLine.Text" usage="input" required="true" />
+    <property name="tenantId" display-name-key="Tenant ID" description-key="Microsoft Entra tenant ID" of-type="SingleLine.Text" usage="input" required="true" />
+    <property name="environmentId" display-name-key="Environment ID" description-key="Power Platform environment ID" of-type="SingleLine.Text" usage="input" required="true" />
+    <property name="agentIdentifier" display-name-key="Agent schema name" description-key="Copilot Studio agent schema name, for example cr123_agent" of-type="SingleLine.Text" usage="input" required="true" />
+    <property name="username" display-name-key="Username" description-key="Current user UPN/email, usually User().Email" of-type="SingleLine.Text" usage="input" required="false" />
+
+    <property name="appContextJson" display-name-key="App context JSON" description-key="JSON object from Power Apps, for example selected account/order/ticket context" of-type="Multiple" usage="input" required="false" />
+    <property name="autoSendContext" display-name-key="Auto-send context" description-key="When true, sends app context to the agent when changed" of-type="TwoOptions" usage="input" required="false" />
+    <property name="contextInstruction" display-name-key="Context instruction" description-key="Instruction prepended to the context bootstrap message" of-type="Multiple" usage="input" required="false" />
+    <property name="styleOptions" display-name-key="Web Chat style options" description-key="JSON Web Chat style options" of-type="Multiple" usage="input" required="false" />
+    <property name="disableFileUpload" display-name-key="Disable file upload" description-key="Disable Web Chat file upload UI" of-type="TwoOptions" usage="input" required="false" />
+
+    <property name="response" display-name-key="Latest response" description-key="Latest agent text response" of-type="Multiple" usage="output" required="false" />
+    <property name="conversationId" display-name-key="Conversation ID" description-key="Current conversation ID" of-type="SingleLine.Text" usage="output" required="false" />
+    <property name="status" display-name-key="Status" description-key="Control connection/runtime status" of-type="SingleLine.Text" usage="output" required="false" />
+
+    <resources>
+      <code path="index.ts" order="1" />
+      <!-- <css path="css/AgentInTheApp.css" order="1" /> -->
+    </resources>
+    <feature-usage>
+      <uses-feature name="WebAPI" required="false" />
+    </feature-usage>
+  </control>
+</manifest>
