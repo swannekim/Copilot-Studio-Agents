@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Style Gallery · 90 Trending Photo Styles</title>
+  <meta name="description" content="90 trendy, creative AI photo-transformation styles with Korean names and descriptions. Click any style to see what it does." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <p class="kicker">Image Style Transformer</p>
+      <h1>AI Style Gallery</h1>
+      <p class="subtitle">90 trending &amp; creative photo styles — built for a 20s audience.<br />Tap any style to reveal what it does. <span class="ko">스타일을 눌러 설명을 확인하세요.</span></p>
+      <div class="search-wrap">
+        <input type="search" id="search" placeholder="Search a style…  (e.g. plush, vamp, 폴라로이드)" aria-label="Search styles" />
+      </div>
+      <div class="filters" id="filters" role="tablist" aria-label="Category filters"></div>
+      <p class="count" id="count"></p>
+    </div>
+  </header>
+
+  <main id="gallery" aria-live="polite"></main>
+
+  <footer class="site-footer">
+    <p>Built for the Image Style Transformer agent · Trends sourced from Pinterest 2026 &amp; TikTok/Instagram AI-filter culture.</p>
+    <p class="hint">Trends cycle fast — refresh this list periodically to keep the menu current.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
