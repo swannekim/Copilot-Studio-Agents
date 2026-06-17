@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Acme Supply Co. — Vendor Portal</title>
+<style>
+  :root {
+    --bg: #eef2f7;
+    --surface: #ffffff;
+    --ink: #1f2937;
+    --muted: #6b7280;
+    --line: #d8dee9;
+    --brand: #1e4fa3;
+    --brand-ink: #ffffff;
+    --ok-bg: #e7f6ec;
+    --ok-ink: #1d7a3a;
+    --warn-bg: #fdecea;
+    --warn-ink: #b3261e;
+    --shadow: 0 1px 3px rgba(16,24,40,.08), 0 8px 24px rgba(16,24,40,.06);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f141b;
+      --surface: #161d27;
+      --ink: #e7ecf3;
+      --muted: #9aa6b6;
+      --line: #2a3543;
+      --brand: #4f8be0;
+      --brand-ink: #0b1017;
+      --ok-bg: #11321f;
+      --ok-ink: #6ee7a0;
+      --warn-bg: #3a1714;
+      --warn-ink: #ffb4ab;
+      --shadow: 0 1px 3px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.45;
+  }
+  header.site {
+    background: var(--brand);
+    color: var(--brand-ink);
+    padding: 14px 22px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: var(--shadow);
+  }
+  header.site .logo { display: flex; align-items: center; gap: 10px; }
+  header.site h1 { font-size: 1.05rem; margin: 0; font-weight: 600; letter-spacing: .2px; }
+  header.site .spacer { flex: 1; }
+  header.site .who { font-size: .82rem; opacity: .92; }
+  main { max-width: 920px; margin: 0 auto; padding: 28px 20px 60px; }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    padding: 26px;
+  }
+  .view[hidden] { display: none; }
+
+  /* Login */
+  .login-wrap { max-width: 380px; margin: 40px auto; }
+  .login-wrap h2 { margin: 0 0 4px; font-size: 1.3rem; }
+  .login-wrap p.sub { margin: 0 0 22px; color: var(--muted); font-size: .9rem; }
+  label { display: block; font-size: .8rem; font-weight: 600; margin: 14px 0 6px; color: var(--muted); }
+  input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 11px 12px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    font-size: .95rem;
+    background: var(--surface);
+    color: var(--ink);
+  }
+  input:focus { outline: 2px solid var(--brand); outline-offset: 1px; }
+  button.primary {
+    margin-top: 22px;
+    width: 100%;
+    padding: 12px;
+    background: var(--brand);
+    color: var(--brand-ink);
+    border: none;
+    border-radius: 8px;
+    font-size: .95rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  button.primary:hover { filter: brightness(1.05); }
+  .hint {
+    margin-top: 18px;
+    font-size: .78rem;
+    color: var(--muted);
+    border-top: 1px dashed var(--line);
+    padding-top: 12px;
+  }
+  .hint code { background: var(--bg); padding: 1px 6px; border-radius: 5px; }
+  .error { color: var(--warn-ink); background: var(--warn-bg); border-radius: 8px; padding: 9px 12px; font-size: .85rem; margin-top: 14px; }
+  .check-row { display: flex; align-items: center; gap: 9px; font-size: .9rem; font-weight: 500; color: var(--ink); text-transform: none; margin: 8px 0 6px; cursor: pointer; }
+  .check-row input { width: 18px; height: 18px; }
+  .code-input { text-align: center; letter-spacing: 8px; font-size: 1.2rem; font-weight: 600; }
+
+  /* Orders */
+  h2.page { font-size: 1.25rem; margin: 0 0 2px; }
+  p.page-sub { color: var(--muted); margin: 0 0 20px; font-size: .9rem; }
+  table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+  thead th {
+    text-align: start;
+    font-size: .72rem;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    color: var(--muted);
+    border-bottom: 2px solid var(--line);
+    padding: 10px 12px;
+  }
+  tbody td { padding: 13px 12px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+  tbody tr:last-child td { border-bottom: none; }
+  .po-id { font-weight: 600; }
+  .badge {
+    display: inline-block;
+    font-size: .72rem;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: var(--bg);
+    color: var(--muted);
+  }
+  .badge.invoiced { background: var(--ok-bg); color: var(--ok-ink); }
+  button.link {
+    background: none;
+    border: 1px solid var(--brand);
+    color: var(--brand);
+    border-radius: 7px;
+    padding: 6px 14px;
+    font-size: .82rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  button.link:hover { background: var(--brand); color: var(--brand-ink); }
+  .amount { font-variant-numeric: tabular-nums; font-weight: 600; }
+
+  /* Detail */
+  button.back {
+    background: none; border: none; color: var(--brand);
+    font-size: .85rem; font-weight: 600; cursor: pointer;
+    padding: 0; margin-bottom: 18px;
+  }
+  .detail-head { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-bottom: 4px; }
+  .detail-head h2 { margin: 0; font-size: 1.4rem; }
+  .meta-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 14px; margin: 20px 0 26px;
+  }
+  .meta-grid .k { font-size: .72rem; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); }
+  .meta-grid .v { font-size: .98rem; font-weight: 600; margin-top: 2px; }
+  .invoice-box {
+    border: 1px solid var(--line); border-radius: 10px; overflow: hidden; margin-top: 8px;
+  }
+  .invoice-box .inv-head {
+    background: var(--bg); padding: 12px 16px; font-weight: 600; font-size: .85rem;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .invoice-box table { font-size: .88rem; }
+  .invoice-box td, .invoice-box th { padding: 11px 16px; }
+  .total-row td { border-top: 2px solid var(--line); font-size: 1.05rem; font-weight: 700; }
+  .total-row .amount { color: var(--brand); }
+  footer.site { text-align: center; color: var(--muted); font-size: .75rem; padding: 24px; }
+</style>
+</head>
+<body>
+<header class="site">
+  <span class="logo">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <rect x="2" y="2" width="20" height="20" rx="5" fill="#ffffff" opacity="0.18"></rect>
+      <path d="M6 16 L12 6 L18 16 Z" fill="#ffffff"></path>
+      <rect x="9" y="13" width="6" height="3" fill="#1e4fa3"></rect>
+    </svg>
+    <h1>Acme Supply Co. — Vendor Portal</h1>
+  </span>
+  <span class="spacer"></span>
+  <span class="who" id="whoami" hidden>Signed in: AP Service Bot</span>
+</header>
+
+<main>
+  <!-- LOGIN VIEW -->
+  <section class="view" id="view-login">
+    <div class="card login-wrap">
+      <h2>Sign in</h2>
+      <p class="sub">Supplier order &amp; invoice access</p>
+      <form id="login-form">
+        <label for="user">Username</label>
+        <input type="text" id="user" name="user" autocomplete="off" placeholder="name@company">
+        <label for="pass">Password</label>
+        <input type="password" id="pass" name="pass" autocomplete="off" placeholder="••••••••">
+        <button type="submit" class="primary">Sign in</button>
+      </form>
+      <div class="error" id="login-error" hidden>Incorrect username or password.</div>
+      <div class="hint">
+        <strong>Demo credentials</strong><br>
+        Username: <code>ap.bot@vendorwrangler.demo</code><br>
+        Password: <code>Demo123!</code>
+      </div>
+    </div>
+  </section>
+
+  <!-- MFA / VERIFICATION VIEW -->
+  <section class="view" id="view-mfa" hidden>
+    <div class="card login-wrap">
+      <h2>Verify it's you</h2>
+      <p class="sub">An extra security check is required to continue.</p>
+      <form id="mfa-form">
+        <label class="check-row">
+          <input type="checkbox" id="not-robot">
+          <span>I'm not a robot</span>
+        </label>
+        <label for="code">6-digit verification code</label>
+        <input type="text" id="code" name="code" inputmode="numeric" maxlength="6" autocomplete="off" placeholder="● ● ● ● ● ●" class="code-input">
+        <button type="submit" class="primary">Verify &amp; continue</button>
+      </form>
+      <div class="error" id="mfa-error" hidden>Tick the box and enter the correct code.</div>
+      <div class="hint">
+        <strong>Demo code</strong> — a human enters this after approving the pause: <code>482915</code>
+      </div>
+    </div>
+  </section>
+
+  <!-- ORDERS VIEW -->
+  <section class="view" id="view-orders" hidden>
+    <div class="card">
+      <h2 class="page">Purchase Orders</h2>
+      <p class="page-sub">Open orders with invoices ready for review.</p>
+      <table>
+        <thead>
+          <tr><th>PO Number</th><th>Vendor</th><th>Status</th><th>Invoice Total</th><th></th></tr>
+        </thead>
+        <tbody id="orders-body"><!-- rows injected --></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- DETAIL VIEW -->
+  <section class="view" id="view-detail" hidden>
+    <div class="card">
+      <button type="button" class="back" id="back-btn">&larr; Back to orders</button>
+      <div class="detail-head">
+        <h2 id="d-po">PO</h2>
+        <span class="badge invoiced" id="d-status">Invoiced</span>
+      </div>
+      <div class="meta-grid">
+        <div><div class="k">Vendor</div><div class="v" id="d-vendor"></div></div>
+        <div><div class="k">Invoice Number</div><div class="v" id="d-invno"></div></div>
+        <div><div class="k">Invoice Date</div><div class="v" id="d-invdate"></div></div>
+        <div><div class="k">Currency</div><div class="v" id="d-currency"></div></div>
+      </div>
+      <div class="invoice-box">
+        <div class="inv-head"><span>Invoice detail</span><span id="d-invno2"></span></div>
+        <table>
+          <thead>
+            <tr><th>Description</th><th>Qty</th><th>Unit price</th><th style="text-align:end;">Amount</th></tr>
+          </thead>
+          <tbody id="lines-body"><!-- lines injected --></tbody>
+          <tfoot>
+            <tr class="total-row">
+              <td colspan="3">Invoice Total</td>
+              <td class="amount" id="d-total" style="text-align:end;"></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site">Acme Supply Co. · Vendor Portal · Demo environment</footer>
+
+<script>
+  // --- Demo data (the "vendor's records") ---
+  var ORDERS = {
+    "PO-2026-04821": {
+      po: "PO-2026-04821",
+      vendor: "Acme Supply Co.",
+      status: "Invoiced",
+      invoiceNo: "INV-88231",
+      invoiceDate: "2026-06-12",
+      currency: "USD",
+      total: "$12,500.00",
+      lines: [
+        { desc: "Industrial valve assembly", qty: 10, unit: "$850.00", amount: "$8,500.00" },
+        { desc: "Pipe fitting kit", qty: 20, unit: "$150.00", amount: "$3,000.00" },
+        { desc: "Freight & handling", qty: 1, unit: "$1,000.00", amount: "$1,000.00" }
+      ]
+    },
+    "PO-2026-04830": {
+      po: "PO-2026-04830",
+      vendor: "Acme Supply Co.",
+      status: "Invoiced",
+      invoiceNo: "INV-88245",
+      invoiceDate: "2026-06-14",
+      currency: "USD",
+      total: "$9,120.00",
+      lines: [
+        { desc: "Steel bracket", qty: 40, unit: "$180.00", amount: "$7,200.00" },
+        { desc: "Mounting hardware", qty: 1, unit: "$1,200.00", amount: "$1,200.00" },
+        { desc: "Expedited freight surcharge", qty: 1, unit: "$720.00", amount: "$720.00" }
+      ]
+    }
+  };
+
+  var CREDS = { user: "ap.bot@vendorwrangler.demo", pass: "Demo123!" };
+
+  function show(id) {
+    var views = document.querySelectorAll(".view");
+    for (var i = 0; i < views.length; i++) { views[i].hidden = true; }
+    document.getElementById(id).hidden = false;
+    window.scrollTo(0, 0);
+  }
+
+  function renderOrders() {
+    var body = document.getElementById("orders-body");
+    body.innerHTML = "";
+    Object.keys(ORDERS).forEach(function (key) {
+      var o = ORDERS[key];
+      var tr = document.createElement("tr");
+
+      var c1 = document.createElement("td"); c1.className = "po-id"; c1.textContent = o.po;
+      var c2 = document.createElement("td"); c2.textContent = o.vendor;
+      var c3 = document.createElement("td");
+      var b = document.createElement("span"); b.className = "badge invoiced"; b.textContent = o.status; c3.appendChild(b);
+      var c4 = document.createElement("td"); c4.className = "amount"; c4.textContent = o.total;
+      var c5 = document.createElement("td");
+      var btn = document.createElement("button"); btn.className = "link"; btn.type = "button";
+      btn.textContent = "View";
+      btn.setAttribute("data-po", o.po);
+      btn.addEventListener("click", function () { openDetail(this.getAttribute("data-po")); });
+      c5.appendChild(btn);
+
+      tr.appendChild(c1); tr.appendChild(c2); tr.appendChild(c3); tr.appendChild(c4); tr.appendChild(c5);
+      body.appendChild(tr);
+    });
+  }
+
+  function openDetail(poKey) {
+    var o = ORDERS[poKey];
+    if (!o) { return; }
+    document.getElementById("d-po").textContent = o.po;
+    document.getElementById("d-status").textContent = o.status;
+    document.getElementById("d-vendor").textContent = o.vendor;
+    document.getElementById("d-invno").textContent = o.invoiceNo;
+    document.getElementById("d-invno2").textContent = o.invoiceNo;
+    document.getElementById("d-invdate").textContent = o.invoiceDate;
+    document.getElementById("d-currency").textContent = o.currency;
+    document.getElementById("d-total").textContent = o.total;
+
+    var lb = document.getElementById("lines-body");
+    lb.innerHTML = "";
+    o.lines.forEach(function (ln) {
+      var tr = document.createElement("tr");
+      var d = document.createElement("td"); d.textContent = ln.desc;
+      var q = document.createElement("td"); q.textContent = ln.qty;
+      var u = document.createElement("td"); u.textContent = ln.unit;
+      var a = document.createElement("td"); a.className = "amount"; a.style.textAlign = "end"; a.textContent = ln.amount;
+      tr.appendChild(d); tr.appendChild(q); tr.appendChild(u); tr.appendChild(a);
+      lb.appendChild(tr);
+    });
+    show("view-detail");
+  }
+
+  document.getElementById("login-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var u = document.getElementById("user").value.trim();
+    var p = document.getElementById("pass").value;
+    var err = document.getElementById("login-error");
+    if (u === CREDS.user && p === CREDS.pass) {
+      err.hidden = true;
+      show("view-mfa");
+    } else {
+      err.hidden = false;
+    }
+  });
+
+  document.getElementById("mfa-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var box = document.getElementById("not-robot").checked;
+    var code = document.getElementById("code").value.trim();
+    var err = document.getElementById("mfa-error");
+    if (box && code === "482915") {
+      err.hidden = true;
+      document.getElementById("whoami").hidden = false;
+      renderOrders();
+      show("view-orders");
+    } else {
+      err.hidden = false;
+    }
+  });
+
+  document.getElementById("back-btn").addEventListener("click", function () {
+    show("view-orders");
+  });
+
+  show("view-login");
+</script>
+</body>
+</html>
