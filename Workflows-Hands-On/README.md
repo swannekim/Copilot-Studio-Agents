@@ -1,7 +1,5 @@
 # Hands‑On Lab — Building Workflows in the New Copilot Studio
 
-**Level:** 200 (intermediate)  ·  **Persona:** Maker  ·  **Duration:** ~2 hours  ·  **Format:** Instructor‑led or self‑paced
-
 A practical, build‑from‑scratch lab on the **new Workflows experience** in Microsoft Copilot Studio. You'll create two autonomous workflows: one that hands real work to a reasoning **inline agent**, and one that **classifies and routes** email, drafts a reply with **Microsoft 365 Copilot**, and pauses for **human approval** before it acts.
 
 > This lab is the hands‑on companion to the *"Introducing the New Copilot Studio & Workflows"* presentation. It puts the deck's core ideas into practice: **Event → Payload → Action**, **agents vs. workflows**, **agent nodes**, **human‑in‑the‑loop**, and **test‑as‑you‑build**.
