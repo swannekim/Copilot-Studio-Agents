@@ -424,3 +424,9 @@ So test emails don't keep firing the workflows after the lab:
 ---
 
 ## References
+- [MS Learn: Agents overview (preview)](https://learn.microsoft.com/en-us/microsoft-copilot-studio/agents-experience/overview)
+- [MS Learn: Classic vs. new agent experience (preview)](https://learn.microsoft.com/en-us/microsoft-copilot-studio/agents-experience/classic-vs-new)
+- [MS Learn: Workflows overview](https://learn.microsoft.com/en-us/microsoft-copilot-studio/workflows-experience/flows-overview)
+- [Meet the new Copilot Studio: rebuilt for more complex, multi-step work
+](https://techcommunity.microsoft.com/blog/copilot-studio-blog/meet-the-new-copilot-studio-rebuilt-for-more-complex-multi-step-work/4526488)
+- [New and improved: Computer-using agents, a new workflows experience, and real-time voice experiences](https://www.microsoft.com/en-us/microsoft-copilot/blog/copilot-studio/new-and-improved-computer-using-agents-a-new-workflows-experience-and-real-time-voice-experiences/)
