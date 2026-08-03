@@ -1,0 +1,9 @@
+supplier_id,supplier_name,status,payment_terms,currency,tax_id,ap_contact_email
+SUP-1001,Northwind Components Ltd,Approved,NET30,USD,GB-841120394,ap@northwind-components.example.com
+SUP-1002,Fabrikam Industrial GmbH,Approved,NET45,USD,DE-811204553,billing@fabrikam-ind.example.com
+SUP-1003,Tailspin Logistics Inc,Approved,NET30,USD,US-27-3391847,invoices@tailspin-log.example.com
+SUP-1004,Adventure Works Metals SA,Approved,NET60,EUR,FR-40922113,compta@awmetals.example.com
+SUP-1005,Litware Chemicals Co,On Hold,NET30,USD,US-55-8871220,ar@litware-chem.example.com
+SUP-1006,Proseware Packaging LLC,Approved,NET30,USD,US-31-4470912,ap@proseware-pkg.example.com
+SUP-1007,Wide World Fasteners,Approved,NET15,USD,GB-192298110,accounts@wwfasteners.example.com
+SUP-1008,Contoso Freight Services,Blocked,NET30,USD,US-66-1039284,billing@contoso-freight.example.com

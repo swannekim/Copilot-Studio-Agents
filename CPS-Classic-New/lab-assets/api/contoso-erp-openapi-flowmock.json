@@ -1,0 +1,196 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Contoso ERP (Lab - Flow mock)",
+    "description": "Read-only access to Contoso's purchasing system for accounts-payable automation, backed by an in-tenant Power Automate mock. Use this connector to look up a supplier's approval status, retrieve a purchase order with its line items and goods receipts, and post an approved invoice for payment.",
+    "version": "1.0.0"
+  },
+  "host": "REPLACE-WITH-YOUR-LOGIC-APP-HOST",
+  "basePath": "/",
+  "schemes": ["https"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/workflows/REPLACE-WORKFLOW-ID/triggers/manual/paths/invoke": {
+      "post": {
+        "summary": "Query the Contoso ERP",
+        "description": "Single entry point to the Contoso ERP mock. The operation parameter selects which ERP function to run.",
+        "operationId": "InvokeErp",
+        "parameters": [
+          {
+            "name": "api-version",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "default": "2016-06-01",
+            "x-ms-visibility": "internal",
+            "description": "Logic Apps API version. Fixed."
+          },
+          {
+            "name": "sp",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "default": "REPLACE-SP",
+            "x-ms-visibility": "internal",
+            "description": "Shared access permission from the flow trigger URL. Fixed."
+          },
+          {
+            "name": "sv",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "default": "1.0",
+            "x-ms-visibility": "internal",
+            "description": "Shared access version from the flow trigger URL. Fixed."
+          },
+          {
+            "name": "sig",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "default": "REPLACE-SIG",
+            "x-ms-visibility": "internal",
+            "description": "Shared access signature from the flow trigger URL. Fixed."
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": { "$ref": "#/definitions/ErpRequest" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The ERP responded. Inspect the status field to determine whether the record was found.",
+            "schema": { "$ref": "#/definitions/ErpResponse" }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ErpRequest": {
+      "type": "object",
+      "required": ["operation"],
+      "properties": {
+        "operation": {
+          "type": "string",
+          "enum": ["GetSupplier", "GetPurchaseOrder", "PostInvoice"],
+          "description": "Which ERP function to run. GetSupplier returns the supplier master record. GetPurchaseOrder returns a purchase order with lines and goods receipts. PostInvoice records an approved invoice for payment.",
+          "x-ms-summary": "Operation"
+        },
+        "supplierId": {
+          "type": "string",
+          "description": "Supplier identifier exactly as printed on the invoice, for example SUP-1001.",
+          "x-ms-summary": "Supplier ID"
+        },
+        "poNumber": {
+          "type": "string",
+          "description": "Purchase order number exactly as printed on the invoice, for example PO-45001.",
+          "x-ms-summary": "PO number"
+        },
+        "supplierInvoiceNumber": {
+          "type": "string",
+          "description": "Invoice number as printed by the supplier. Required for PostInvoice.",
+          "x-ms-summary": "Supplier invoice number"
+        },
+        "currency": {
+          "type": "string",
+          "description": "Invoice currency, ISO 4217. Required for PostInvoice.",
+          "x-ms-summary": "Currency"
+        },
+        "totalAmount": {
+          "type": "number",
+          "format": "double",
+          "description": "Total amount to be paid. Required for PostInvoice.",
+          "x-ms-summary": "Total amount"
+        },
+        "matchResult": {
+          "type": "string",
+          "description": "Outcome that authorised the posting. One of AUTO_CLEAR or APPROVED_EXCEPTION.",
+          "x-ms-summary": "Match result"
+        },
+        "approvedBy": {
+          "type": "string",
+          "description": "Email of the human approver, required when matchResult is APPROVED_EXCEPTION.",
+          "x-ms-summary": "Approved by"
+        }
+      }
+    },
+    "ErpResponse": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "description": "Outcome of the lookup. One of Found, NotFound, AlreadyPosted, Posted. Treat NotFound as a business exception, not a technical failure.",
+          "x-ms-summary": "Status"
+        },
+        "supplier": { "$ref": "#/definitions/Supplier" },
+        "purchaseOrder": { "$ref": "#/definitions/PurchaseOrder" },
+        "posting": { "$ref": "#/definitions/InvoicePostingResponse" },
+        "message": {
+          "type": "string",
+          "description": "Human-readable detail about the outcome.",
+          "x-ms-summary": "Message"
+        }
+      }
+    },
+    "Supplier": {
+      "type": "object",
+      "properties": {
+        "supplierId": { "type": "string", "description": "Supplier identifier.", "x-ms-summary": "Supplier ID" },
+        "supplierName": { "type": "string", "description": "Registered supplier name.", "x-ms-summary": "Supplier name" },
+        "status": { "type": "string", "description": "Approval status. One of Approved, On Hold, Blocked. Only Approved suppliers may be paid.", "x-ms-summary": "Status" },
+        "paymentTerms": { "type": "string", "description": "Agreed payment terms, for example NET30.", "x-ms-summary": "Payment terms" },
+        "currency": { "type": "string", "description": "Supplier default currency, ISO 4217.", "x-ms-summary": "Currency" },
+        "taxId": { "type": "string", "description": "Tax registration number.", "x-ms-summary": "Tax ID" },
+        "apContactEmail": { "type": "string", "description": "Supplier accounts-receivable contact.", "x-ms-summary": "AP contact email" }
+      }
+    },
+    "PurchaseOrder": {
+      "type": "object",
+      "properties": {
+        "poNumber": { "type": "string", "description": "Purchase order number.", "x-ms-summary": "PO number" },
+        "supplierId": { "type": "string", "description": "Supplier the order was placed with.", "x-ms-summary": "Supplier ID" },
+        "supplierName": { "type": "string", "description": "Supplier name.", "x-ms-summary": "Supplier name" },
+        "poStatus": { "type": "string", "description": "Order status. One of Open, Partially Received, Closed, Cancelled. Invoices may only be matched against Open or Partially Received orders.", "x-ms-summary": "PO status" },
+        "currency": { "type": "string", "description": "Currency the order was raised in. The invoice currency must match this exactly.", "x-ms-summary": "Currency" },
+        "orderDate": { "type": "string", "description": "Date the order was raised, yyyy-MM-dd.", "x-ms-summary": "Order date" },
+        "buyerEmail": { "type": "string", "description": "Contoso buyer who raised the order.", "x-ms-summary": "Buyer email" },
+        "poTotal": { "type": "number", "format": "double", "description": "Total value of the order.", "x-ms-summary": "PO total" },
+        "lines": { "type": "array", "description": "Order lines.", "items": { "$ref": "#/definitions/PurchaseOrderLine" } }
+      }
+    },
+    "PurchaseOrderLine": {
+      "type": "object",
+      "properties": {
+        "lineNumber": { "type": "integer", "format": "int32", "description": "Line number on the order.", "x-ms-summary": "Line number" },
+        "sku": { "type": "string", "description": "Item code. Match invoice lines to order lines on this value.", "x-ms-summary": "SKU" },
+        "description": { "type": "string", "description": "Item description.", "x-ms-summary": "Description" },
+        "qtyOrdered": { "type": "number", "format": "double", "description": "Quantity ordered.", "x-ms-summary": "Quantity ordered" },
+        "qtyReceived": { "type": "number", "format": "double", "description": "Total quantity received and booked in. Never pay for more than this quantity.", "x-ms-summary": "Quantity received" },
+        "unitPrice": { "type": "number", "format": "double", "description": "Agreed unit price on the order.", "x-ms-summary": "Unit price" },
+        "uom": { "type": "string", "description": "Unit of measure.", "x-ms-summary": "Unit of measure" },
+        "lineAmount": { "type": "number", "format": "double", "description": "Ordered quantity multiplied by unit price.", "x-ms-summary": "Line amount" },
+        "goodsReceipts": { "type": "array", "description": "Goods receipt records. An empty array means nothing has been received.", "items": { "$ref": "#/definitions/GoodsReceipt" } }
+      }
+    },
+    "GoodsReceipt": {
+      "type": "object",
+      "properties": {
+        "grNumber": { "type": "string", "description": "Goods receipt document number.", "x-ms-summary": "GR number" },
+        "qtyReceived": { "type": "number", "format": "double", "description": "Quantity booked in on this receipt.", "x-ms-summary": "Quantity received" },
+        "receivedDate": { "type": "string", "description": "Date goods were received, yyyy-MM-dd.", "x-ms-summary": "Received date" }
+      }
+    },
+    "InvoicePostingResponse": {
+      "type": "object",
+      "properties": {
+        "postingId": { "type": "string", "description": "Identifier of the created posting.", "x-ms-summary": "Posting ID" },
+        "status": { "type": "string", "description": "Posting status, for example Scheduled.", "x-ms-summary": "Status" },
+        "scheduledPaymentDate": { "type": "string", "description": "Date payment is scheduled for.", "x-ms-summary": "Scheduled payment date" }
+      }
+    }
+  }
+}

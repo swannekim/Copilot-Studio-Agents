@@ -1,0 +1,534 @@
+{
+  "suppliers": [
+    {
+      "supplierId": "SUP-1001",
+      "supplierName": "Northwind Components Ltd",
+      "status": "Approved",
+      "paymentTerms": "NET30",
+      "currency": "USD",
+      "taxId": "GB-841120394",
+      "apContactEmail": "ap@northwind-components.example.com"
+    },
+    {
+      "supplierId": "SUP-1002",
+      "supplierName": "Fabrikam Industrial GmbH",
+      "status": "Approved",
+      "paymentTerms": "NET45",
+      "currency": "USD",
+      "taxId": "DE-811204553",
+      "apContactEmail": "billing@fabrikam-ind.example.com"
+    },
+    {
+      "supplierId": "SUP-1003",
+      "supplierName": "Tailspin Logistics Inc",
+      "status": "Approved",
+      "paymentTerms": "NET30",
+      "currency": "USD",
+      "taxId": "US-27-3391847",
+      "apContactEmail": "invoices@tailspin-log.example.com"
+    },
+    {
+      "supplierId": "SUP-1004",
+      "supplierName": "Adventure Works Metals SA",
+      "status": "Approved",
+      "paymentTerms": "NET60",
+      "currency": "EUR",
+      "taxId": "FR-40922113",
+      "apContactEmail": "compta@awmetals.example.com"
+    },
+    {
+      "supplierId": "SUP-1005",
+      "supplierName": "Litware Chemicals Co",
+      "status": "On Hold",
+      "paymentTerms": "NET30",
+      "currency": "USD",
+      "taxId": "US-55-8871220",
+      "apContactEmail": "ar@litware-chem.example.com"
+    },
+    {
+      "supplierId": "SUP-1006",
+      "supplierName": "Proseware Packaging LLC",
+      "status": "Approved",
+      "paymentTerms": "NET30",
+      "currency": "USD",
+      "taxId": "US-31-4470912",
+      "apContactEmail": "ap@proseware-pkg.example.com"
+    },
+    {
+      "supplierId": "SUP-1007",
+      "supplierName": "Wide World Fasteners",
+      "status": "Approved",
+      "paymentTerms": "NET15",
+      "currency": "USD",
+      "taxId": "GB-192298110",
+      "apContactEmail": "accounts@wwfasteners.example.com"
+    },
+    {
+      "supplierId": "SUP-1008",
+      "supplierName": "Contoso Freight Services",
+      "status": "Blocked",
+      "paymentTerms": "NET30",
+      "currency": "USD",
+      "taxId": "US-66-1039284",
+      "apContactEmail": "billing@contoso-freight.example.com"
+    }
+  ],
+  "purchaseOrders": [
+    {
+      "poNumber": "PO-45001",
+      "supplierId": "SUP-1001",
+      "supplierName": "Northwind Components Ltd",
+      "poStatus": "Partially Received",
+      "currency": "USD",
+      "orderDate": "2026-06-02",
+      "buyerEmail": "j.moreau@contoso.com",
+      "poTotal": 2140.0,
+      "lines": [
+        {
+          "lineNumber": 1,
+          "sku": "NC-BRG-6204",
+          "description": "Deep groove ball bearing 6204-2RS",
+          "qtyOrdered": 400,
+          "unitPrice": 3.85,
+          "uom": "EA",
+          "lineAmount": 1540.0,
+          "qtyReceived": 400,
+          "goodsReceipts": [
+            {
+              "grNumber": "GR-77001",
+              "qtyReceived": 400,
+              "receivedDate": "2026-06-20"
+            }
+          ]
+        },
+        {
+          "lineNumber": 2,
+          "sku": "NC-SEA-0912",
+          "description": "Nitrile shaft seal 45x62x8",
+          "qtyOrdered": 250,
+          "unitPrice": 2.4,
+          "uom": "EA",
+          "lineAmount": 600.0,
+          "qtyReceived": 250,
+          "goodsReceipts": [
+            {
+              "grNumber": "GR-77001",
+              "qtyReceived": 250,
+              "receivedDate": "2026-06-20"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "poNumber": "PO-45002",
+      "supplierId": "SUP-1002",
+      "supplierName": "Fabrikam Industrial GmbH",
+      "poStatus": "Open",
+      "currency": "USD",
+      "orderDate": "2026-06-05",
+      "buyerEmail": "s.patel@contoso.com",
+      "poTotal": 8880.0,
+      "lines": [
+        {
+          "lineNumber": 1,
+          "sku": "FB-STL-4410",
+          "description": "Cold rolled steel sheet 1.5mm 1250x2500",
+          "qtyOrdered": 60,
+          "unitPrice": 148.0,
+          "uom": "SHT",
+          "lineAmount": 8880.0,
+          "qtyReceived": 60,
+          "goodsReceipts": [
+            {
+              "grNumber": "GR-77002",
+              "qtyReceived": 60,
+              "receivedDate": "2026-06-24"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "poNumber": "PO-45003",
+      "supplierId": "SUP-1003",
+      "supplierName": "Tailspin Logistics Inc",
+      "poStatus": "Open",
+      "currency": "USD",
+      "orderDate": "2026-06-09",
+      "buyerEmail": "j.moreau@contoso.com",
+      "poTotal": 4620.0,
+      "lines": [
+        {
+          "lineNumber": 1,
+          "sku": "TL-FRT-STD",
+          "description": "Standard palletised freight - domestic",
+          "qtyOrdered": 12,
+          "unitPrice": 385.0,
+          "uom": "SHP",
+          "lineAmount": 4620.0,
+          "qtyReceived": 12,
+          "goodsReceipts": [
+            {
+              "grNumber": "GR-77003",
+              "qtyReceived": 12,
+              "receivedDate": "2026-06-26"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "poNumber": "PO-45004",
+      "supplierId": "SUP-1001",
+      "supplierName": "Northwind Components Ltd",
+      "poStatus": "Open",
+      "currency": "USD",
+      "orderDate": "2026-06-11",
+      "buyerEmail": "k.oyelaran@contoso.com",
+      "poTotal": 2310.0,
+      "lines": [
+        {
+          "lineNumber": 1,
+          "sku": "NC-BRG-6204",
+          "description": "Deep groove ball bearing 6204-2RS",
+          "qtyOrdered": 600,
+          "unitPrice": 3.85,
+          "uom": "EA",
+          "lineAmount": 2310.0,
+          "qtyReceived": 550,
+          "goodsReceipts": [
+            {
+              "grNumber": "GR-77004",
+              "qtyReceived": 550,
+              "receivedDate": "2026-06-30"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "poNumber": "PO-45005",
+      "supplierId": "SUP-1006",
+      "supplierName": "Proseware Packaging LLC",
+      "poStatus": "Open",
+      "currency": "USD",
+      "orderDate": "2026-06-15",
+      "buyerEmail": "s.patel@contoso.com",
+      "poTotal": 1725.0,
+      "lines": [
+        {
+          "lineNumber": 1,
+          "sku": "PW-CTN-32L",
+          "description": "Double wall carton 600x400x300",
+          "qtyOrdered": 1500,
+          "unitPrice": 1.15,
+          "uom": "EA",
+          "lineAmount": 1725.0,
+          "qtyReceived": 1500,
+          "goodsReceipts": [
+            {
+              "grNumber": "GR-77005",
+              "qtyReceived": 1500,
+              "receivedDate": "2026-07-02"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "poNumber": "PO-45006",
+      "supplierId": "SUP-1005",
+      "supplierName": "Litware Chemicals Co",
+      "poStatus": "Open",
+      "currency": "USD",
+      "orderDate": "2026-06-16",
+      "buyerEmail": "j.moreau@contoso.com",
+      "poTotal": 2940.0,
+      "lines": [
+        {
+          "lineNumber": 1,
+          "sku": "LW-SOL-IPA5",
+          "description": "Isopropyl alcohol 99.5% 5L",
+          "qtyOrdered": 120,
+          "unitPrice": 24.5,
+          "uom": "CAN",
+          "lineAmount": 2940.0,
+          "qtyReceived": 120,
+          "goodsReceipts": [
+            {
+              "grNumber": "GR-77006",
+              "qtyReceived": 120,
+              "receivedDate": "2026-07-03"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "poNumber": "PO-45007",
+      "supplierId": "SUP-1004",
+      "supplierName": "Adventure Works Metals SA",
+      "poStatus": "Open",
+      "currency": "USD",
+      "orderDate": "2026-06-18",
+      "buyerEmail": "k.oyelaran@contoso.com",
+      "poTotal": 9540.0,
+      "lines": [
+        {
+          "lineNumber": 1,
+          "sku": "AW-ALU-6082",
+          "description": "Aluminium billet 6082-T6 100mm",
+          "qtyOrdered": 45,
+          "unitPrice": 212.0,
+          "uom": "EA",
+          "lineAmount": 9540.0,
+          "qtyReceived": 45,
+          "goodsReceipts": [
+            {
+              "grNumber": "GR-77007",
+              "qtyReceived": 45,
+              "receivedDate": "2026-07-06"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "poNumber": "PO-45008",
+      "supplierId": "SUP-1002",
+      "supplierName": "Fabrikam Industrial GmbH",
+      "poStatus": "Open",
+      "currency": "USD",
+      "orderDate": "2026-06-22",
+      "buyerEmail": "s.patel@contoso.com",
+      "poTotal": 66800.0,
+      "lines": [
+        {
+          "lineNumber": 1,
+          "sku": "FB-STL-4410",
+          "description": "Cold rolled steel sheet 1.5mm 1250x2500",
+          "qtyOrdered": 320,
+          "unitPrice": 148.0,
+          "uom": "SHT",
+          "lineAmount": 47360.0,
+          "qtyReceived": 320,
+          "goodsReceipts": [
+            {
+              "grNumber": "GR-77008",
+              "qtyReceived": 320,
+              "receivedDate": "2026-07-08"
+            }
+          ]
+        },
+        {
+          "lineNumber": 2,
+          "sku": "FB-STL-6620",
+          "description": "Galvanised steel coil 0.8mm",
+          "qtyOrdered": 40,
+          "unitPrice": 486.0,
+          "uom": "COIL",
+          "lineAmount": 19440.0,
+          "qtyReceived": 40,
+          "goodsReceipts": [
+            {
+              "grNumber": "GR-77008",
+              "qtyReceived": 40,
+              "receivedDate": "2026-07-08"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "poNumber": "PO-45009",
+      "supplierId": "SUP-1007",
+      "supplierName": "Wide World Fasteners",
+      "poStatus": "Open",
+      "currency": "USD",
+      "orderDate": "2026-06-24",
+      "buyerEmail": "j.moreau@contoso.com",
+      "poTotal": 2560.0,
+      "lines": [
+        {
+          "lineNumber": 1,
+          "sku": "WW-BLT-M10",
+          "description": "Hex bolt M10x40 grade 8.8 zinc",
+          "qtyOrdered": 8000,
+          "unitPrice": 0.32,
+          "uom": "EA",
+          "lineAmount": 2560.0,
+          "qtyReceived": 0,
+          "goodsReceipts": []
+        }
+      ]
+    },
+    {
+      "poNumber": "PO-45010",
+      "supplierId": "SUP-1003",
+      "supplierName": "Tailspin Logistics Inc",
+      "poStatus": "Closed",
+      "currency": "USD",
+      "orderDate": "2026-05-04",
+      "buyerEmail": "k.oyelaran@contoso.com",
+      "poTotal": 3840.0,
+      "lines": [
+        {
+          "lineNumber": 1,
+          "sku": "TL-FRT-EXP",
+          "description": "Expedited freight - domestic",
+          "qtyOrdered": 6,
+          "unitPrice": 640.0,
+          "uom": "SHP",
+          "lineAmount": 3840.0,
+          "qtyReceived": 6,
+          "goodsReceipts": [
+            {
+              "grNumber": "GR-77010",
+              "qtyReceived": 6,
+              "receivedDate": "2026-05-19"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "poNumber": "PO-45011",
+      "supplierId": "SUP-1006",
+      "supplierName": "Proseware Packaging LLC",
+      "poStatus": "Open",
+      "currency": "USD",
+      "orderDate": "2026-06-27",
+      "buyerEmail": "s.patel@contoso.com",
+      "poTotal": 7318.0,
+      "lines": [
+        {
+          "lineNumber": 1,
+          "sku": "PW-CTN-32L",
+          "description": "Double wall carton 600x400x300",
+          "qtyOrdered": 4000,
+          "unitPrice": 1.15,
+          "uom": "EA",
+          "lineAmount": 4600.0,
+          "qtyReceived": 4000,
+          "goodsReceipts": [
+            {
+              "grNumber": "GR-77011",
+              "qtyReceived": 4000,
+              "receivedDate": "2026-07-11"
+            }
+          ]
+        },
+        {
+          "lineNumber": 2,
+          "sku": "PW-TAP-48",
+          "description": "Reinforced packing tape 48mm x 66m",
+          "qtyOrdered": 1200,
+          "unitPrice": 2.05,
+          "uom": "EA",
+          "lineAmount": 2460.0,
+          "qtyReceived": 1200,
+          "goodsReceipts": [
+            {
+              "grNumber": "GR-77011",
+              "qtyReceived": 1200,
+              "receivedDate": "2026-07-11"
+            }
+          ]
+        },
+        {
+          "lineNumber": 3,
+          "sku": "PW-WRP-500",
+          "description": "Stretch wrap 500mm x 300m",
+          "qtyOrdered": 30,
+          "unitPrice": 8.6,
+          "uom": "EA",
+          "lineAmount": 258.0,
+          "qtyReceived": 30,
+          "goodsReceipts": [
+            {
+              "grNumber": "GR-77011",
+              "qtyReceived": 30,
+              "receivedDate": "2026-07-11"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "poNumber": "PO-45012",
+      "supplierId": "SUP-1001",
+      "supplierName": "Northwind Components Ltd",
+      "poStatus": "Open",
+      "currency": "USD",
+      "orderDate": "2026-06-29",
+      "buyerEmail": "j.moreau@contoso.com",
+      "poTotal": 1200.0,
+      "lines": [
+        {
+          "lineNumber": 1,
+          "sku": "NC-SEA-0912",
+          "description": "Nitrile shaft seal 45x62x8",
+          "qtyOrdered": 500,
+          "unitPrice": 2.4,
+          "uom": "EA",
+          "lineAmount": 1200.0,
+          "qtyReceived": 500,
+          "goodsReceipts": [
+            {
+              "grNumber": "GR-77012",
+              "qtyReceived": 500,
+              "receivedDate": "2026-07-14"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "poNumber": "PO-45013",
+      "supplierId": "SUP-1007",
+      "supplierName": "Wide World Fasteners",
+      "poStatus": "Open",
+      "currency": "USD",
+      "orderDate": "2026-07-01",
+      "buyerEmail": "k.oyelaran@contoso.com",
+      "poTotal": 5160.0,
+      "lines": [
+        {
+          "lineNumber": 1,
+          "sku": "WW-BLT-M10",
+          "description": "Hex bolt M10x40 grade 8.8 zinc",
+          "qtyOrdered": 12000,
+          "unitPrice": 0.32,
+          "uom": "EA",
+          "lineAmount": 3840.0,
+          "qtyReceived": 12000,
+          "goodsReceipts": [
+            {
+              "grNumber": "GR-77013",
+              "qtyReceived": 12000,
+              "receivedDate": "2026-07-16"
+            }
+          ]
+        },
+        {
+          "lineNumber": 2,
+          "sku": "WW-NUT-M10",
+          "description": "Hex nut M10 grade 8 zinc",
+          "qtyOrdered": 12000,
+          "unitPrice": 0.11,
+          "uom": "EA",
+          "lineAmount": 1320.0,
+          "qtyReceived": 12000,
+          "goodsReceipts": [
+            {
+              "grNumber": "GR-77013",
+              "qtyReceived": 12000,
+              "receivedDate": "2026-07-16"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

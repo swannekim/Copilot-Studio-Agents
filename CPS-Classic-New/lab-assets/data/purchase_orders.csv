@@ -1,0 +1,14 @@
+po_number,supplier_id,po_status,currency,order_date,buyer_email
+PO-45001,SUP-1001,Partially Received,USD,2026-06-02,j.moreau@contoso.com
+PO-45002,SUP-1002,Open,USD,2026-06-05,s.patel@contoso.com
+PO-45003,SUP-1003,Open,USD,2026-06-09,j.moreau@contoso.com
+PO-45004,SUP-1001,Open,USD,2026-06-11,k.oyelaran@contoso.com
+PO-45005,SUP-1006,Open,USD,2026-06-15,s.patel@contoso.com
+PO-45006,SUP-1005,Open,USD,2026-06-16,j.moreau@contoso.com
+PO-45007,SUP-1004,Open,USD,2026-06-18,k.oyelaran@contoso.com
+PO-45008,SUP-1002,Open,USD,2026-06-22,s.patel@contoso.com
+PO-45009,SUP-1007,Open,USD,2026-06-24,j.moreau@contoso.com
+PO-45010,SUP-1003,Closed,USD,2026-05-04,k.oyelaran@contoso.com
+PO-45011,SUP-1006,Open,USD,2026-06-27,s.patel@contoso.com
+PO-45012,SUP-1001,Open,USD,2026-06-29,j.moreau@contoso.com
+PO-45013,SUP-1007,Open,USD,2026-07-01,k.oyelaran@contoso.com

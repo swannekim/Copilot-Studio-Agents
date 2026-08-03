@@ -1,0 +1,19 @@
+po_number,line_no,sku,description,qty_ordered,unit_price,uom,line_amount
+PO-45001,1,NC-BRG-6204,Deep groove ball bearing 6204-2RS,400,3.85,EA,1540.00
+PO-45001,2,NC-SEA-0912,Nitrile shaft seal 45x62x8,250,2.40,EA,600.00
+PO-45002,1,FB-STL-4410,Cold rolled steel sheet 1.5mm 1250x2500,60,148.00,SHT,8880.00
+PO-45003,1,TL-FRT-STD,Standard palletised freight - domestic,12,385.00,SHP,4620.00
+PO-45004,1,NC-BRG-6204,Deep groove ball bearing 6204-2RS,600,3.85,EA,2310.00
+PO-45005,1,PW-CTN-32L,Double wall carton 600x400x300,1500,1.15,EA,1725.00
+PO-45006,1,LW-SOL-IPA5,Isopropyl alcohol 99.5% 5L,120,24.50,CAN,2940.00
+PO-45007,1,AW-ALU-6082,Aluminium billet 6082-T6 100mm,45,212.00,EA,9540.00
+PO-45008,1,FB-STL-4410,Cold rolled steel sheet 1.5mm 1250x2500,320,148.00,SHT,47360.00
+PO-45008,2,FB-STL-6620,Galvanised steel coil 0.8mm,40,486.00,COIL,19440.00
+PO-45009,1,WW-BLT-M10,Hex bolt M10x40 grade 8.8 zinc,8000,0.32,EA,2560.00
+PO-45010,1,TL-FRT-EXP,Expedited freight - domestic,6,640.00,SHP,3840.00
+PO-45011,1,PW-CTN-32L,Double wall carton 600x400x300,4000,1.15,EA,4600.00
+PO-45011,2,PW-TAP-48,Reinforced packing tape 48mm x 66m,1200,2.05,EA,2460.00
+PO-45011,3,PW-WRP-500,Stretch wrap 500mm x 300m,30,8.60,EA,258.00
+PO-45012,1,NC-SEA-0912,Nitrile shaft seal 45x62x8,500,2.40,EA,1200.00
+PO-45013,1,WW-BLT-M10,Hex bolt M10x40 grade 8.8 zinc,12000,0.32,EA,3840.00
+PO-45013,2,WW-NUT-M10,Hex nut M10 grade 8 zinc,12000,0.11,EA,1320.00

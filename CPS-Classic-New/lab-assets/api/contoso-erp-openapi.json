@@ -1,0 +1,234 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Contoso ERP (Lab)",
+    "description": "Read-only access to Contoso's purchasing system for accounts-payable automation. Use this connector to look up a supplier's approval status, retrieve a purchase order with its line items and goods receipts, and post an approved invoice for payment. This is a training mock of a real ERP.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Contoso AP Platform Team",
+      "email": "ap-platform@contoso.com"
+    }
+  },
+  "host": "REPLACE-WITH-YOUR-MOCK-HOST",
+  "basePath": "/api/erp/v1",
+  "schemes": ["https"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "securityDefinitions": {
+    "api_key": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "x-api-key",
+      "description": "Static API key issued by the AP Platform team."
+    }
+  },
+  "security": [{ "api_key": [] }],
+  "paths": {
+    "/suppliers/{supplierId}": {
+      "get": {
+        "summary": "Get supplier by ID",
+        "description": "Returns the supplier master record, including the approval status that determines whether Contoso is permitted to pay this supplier. Call this before matching an invoice. A supplier whose status is not 'Approved' must never be auto-paid.",
+        "operationId": "GetSupplier",
+        "parameters": [
+          {
+            "name": "supplierId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The supplier identifier exactly as printed on the invoice, for example SUP-1001.",
+            "x-ms-summary": "Supplier ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The supplier record was found.",
+            "schema": { "$ref": "#/definitions/Supplier" }
+          },
+          "404": {
+            "description": "No supplier exists with that ID.",
+            "schema": { "$ref": "#/definitions/ErrorResponse" }
+          }
+        }
+      }
+    },
+    "/purchaseorders/{poNumber}": {
+      "get": {
+        "summary": "Get purchase order with lines and goods receipts",
+        "description": "Returns a single purchase order including every line item, the quantity ordered, the agreed unit price, and the quantity actually received against each line. This is the authoritative source for a three-way match between invoice, purchase order and goods receipt. Returns 404 when the purchase order number does not exist, which must be treated as an exception rather than an error.",
+        "operationId": "GetPurchaseOrder",
+        "parameters": [
+          {
+            "name": "poNumber",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The purchase order number exactly as printed on the invoice, for example PO-45001.",
+            "x-ms-summary": "Purchase order number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The purchase order was found.",
+            "schema": { "$ref": "#/definitions/PurchaseOrder" }
+          },
+          "404": {
+            "description": "No purchase order exists with that number.",
+            "schema": { "$ref": "#/definitions/ErrorResponse" }
+          }
+        }
+      }
+    },
+    "/purchaseorders": {
+      "get": {
+        "summary": "List purchase orders for a supplier",
+        "description": "Returns purchase orders filtered by supplier and optionally by status. Use this when an invoice does not quote a purchase order number and you need to find candidate orders for the supplier.",
+        "operationId": "ListPurchaseOrders",
+        "parameters": [
+          {
+            "name": "supplierId",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": "Supplier identifier, for example SUP-1001.",
+            "x-ms-summary": "Supplier ID"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "enum": ["Open", "Partially Received", "Closed", "Cancelled"],
+            "description": "Optional purchase order status filter.",
+            "x-ms-summary": "PO status"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of matching purchase orders.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "array",
+                  "description": "Matching purchase orders.",
+                  "items": { "$ref": "#/definitions/PurchaseOrder" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/invoicepostings": {
+      "post": {
+        "summary": "Post an approved invoice for payment",
+        "description": "Records an invoice as approved and schedules it for payment. Call this only after the invoice has passed the three-way match, or after a human approver has explicitly approved an exception. This operation changes financial data and must never be called speculatively.",
+        "operationId": "PostInvoice",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": { "$ref": "#/definitions/InvoicePostingRequest" }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "The invoice was posted.",
+            "schema": { "$ref": "#/definitions/InvoicePostingResponse" }
+          },
+          "409": {
+            "description": "This invoice was already posted. Treat as a duplicate, not as a failure.",
+            "schema": { "$ref": "#/definitions/ErrorResponse" }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Supplier": {
+      "type": "object",
+      "properties": {
+        "supplierId": { "type": "string", "description": "Supplier identifier.", "x-ms-summary": "Supplier ID" },
+        "supplierName": { "type": "string", "description": "Registered supplier name.", "x-ms-summary": "Supplier name" },
+        "status": { "type": "string", "description": "Approval status. One of Approved, On Hold, Blocked. Only Approved suppliers may be paid.", "x-ms-summary": "Status" },
+        "paymentTerms": { "type": "string", "description": "Agreed payment terms, for example NET30.", "x-ms-summary": "Payment terms" },
+        "currency": { "type": "string", "description": "Supplier default currency, ISO 4217.", "x-ms-summary": "Currency" },
+        "taxId": { "type": "string", "description": "Tax registration number.", "x-ms-summary": "Tax ID" },
+        "apContactEmail": { "type": "string", "description": "Supplier accounts-receivable contact for payment queries.", "x-ms-summary": "AP contact email" }
+      }
+    },
+    "PurchaseOrder": {
+      "type": "object",
+      "properties": {
+        "poNumber": { "type": "string", "description": "Purchase order number.", "x-ms-summary": "PO number" },
+        "supplierId": { "type": "string", "description": "Supplier the order was placed with.", "x-ms-summary": "Supplier ID" },
+        "supplierName": { "type": "string", "description": "Supplier name.", "x-ms-summary": "Supplier name" },
+        "poStatus": { "type": "string", "description": "Order status. One of Open, Partially Received, Closed, Cancelled. Invoices may only be matched against Open or Partially Received orders.", "x-ms-summary": "PO status" },
+        "currency": { "type": "string", "description": "Currency the order was raised in, ISO 4217. The invoice currency must match this exactly.", "x-ms-summary": "Currency" },
+        "orderDate": { "type": "string", "description": "Date the order was raised, yyyy-MM-dd.", "x-ms-summary": "Order date" },
+        "buyerEmail": { "type": "string", "description": "Contoso buyer who raised the order. Route sourcing questions here.", "x-ms-summary": "Buyer email" },
+        "poTotal": { "type": "number", "format": "double", "description": "Total value of the order.", "x-ms-summary": "PO total" },
+        "lines": {
+          "type": "array",
+          "description": "Order lines with ordered and received quantities.",
+          "items": { "$ref": "#/definitions/PurchaseOrderLine" }
+        }
+      }
+    },
+    "PurchaseOrderLine": {
+      "type": "object",
+      "properties": {
+        "lineNumber": { "type": "integer", "format": "int32", "description": "Line number on the order.", "x-ms-summary": "Line number" },
+        "sku": { "type": "string", "description": "Item code. Match invoice lines to order lines on this value.", "x-ms-summary": "SKU" },
+        "description": { "type": "string", "description": "Item description.", "x-ms-summary": "Description" },
+        "qtyOrdered": { "type": "number", "format": "double", "description": "Quantity ordered.", "x-ms-summary": "Quantity ordered" },
+        "qtyReceived": { "type": "number", "format": "double", "description": "Total quantity actually received and booked in. Never pay for more than this quantity.", "x-ms-summary": "Quantity received" },
+        "unitPrice": { "type": "number", "format": "double", "description": "Agreed unit price on the order. Compare the invoiced unit price against this value.", "x-ms-summary": "Unit price" },
+        "uom": { "type": "string", "description": "Unit of measure.", "x-ms-summary": "Unit of measure" },
+        "lineAmount": { "type": "number", "format": "double", "description": "Ordered quantity multiplied by unit price.", "x-ms-summary": "Line amount" },
+        "goodsReceipts": {
+          "type": "array",
+          "description": "Individual goods receipt records against this line. An empty array means nothing has been received yet.",
+          "items": { "$ref": "#/definitions/GoodsReceipt" }
+        }
+      }
+    },
+    "GoodsReceipt": {
+      "type": "object",
+      "properties": {
+        "grNumber": { "type": "string", "description": "Goods receipt document number.", "x-ms-summary": "GR number" },
+        "qtyReceived": { "type": "number", "format": "double", "description": "Quantity booked in on this receipt.", "x-ms-summary": "Quantity received" },
+        "receivedDate": { "type": "string", "description": "Date goods were received, yyyy-MM-dd.", "x-ms-summary": "Received date" }
+      }
+    },
+    "InvoicePostingRequest": {
+      "type": "object",
+      "required": ["supplierId", "supplierInvoiceNumber", "poNumber", "currency", "totalAmount"],
+      "properties": {
+        "supplierId": { "type": "string", "description": "Supplier identifier.", "x-ms-summary": "Supplier ID" },
+        "supplierInvoiceNumber": { "type": "string", "description": "Invoice number as printed by the supplier.", "x-ms-summary": "Supplier invoice number" },
+        "poNumber": { "type": "string", "description": "Purchase order the invoice is matched to.", "x-ms-summary": "PO number" },
+        "currency": { "type": "string", "description": "Invoice currency, ISO 4217.", "x-ms-summary": "Currency" },
+        "totalAmount": { "type": "number", "format": "double", "description": "Total amount to be paid.", "x-ms-summary": "Total amount" },
+        "matchResult": { "type": "string", "description": "Outcome that authorised this posting. One of AUTO_CLEAR or APPROVED_EXCEPTION.", "x-ms-summary": "Match result" },
+        "approvedBy": { "type": "string", "description": "Email of the human approver, required when matchResult is APPROVED_EXCEPTION.", "x-ms-summary": "Approved by" }
+      }
+    },
+    "InvoicePostingResponse": {
+      "type": "object",
+      "properties": {
+        "postingId": { "type": "string", "description": "Identifier of the created posting.", "x-ms-summary": "Posting ID" },
+        "status": { "type": "string", "description": "Posting status, for example Scheduled.", "x-ms-summary": "Status" },
+        "scheduledPaymentDate": { "type": "string", "description": "Date payment is scheduled for, yyyy-MM-dd.", "x-ms-summary": "Scheduled payment date" }
+      }
+    },
+    "ErrorResponse": {
+      "type": "object",
+      "properties": {
+        "code": { "type": "string", "description": "Machine-readable error code.", "x-ms-summary": "Error code" },
+        "message": { "type": "string", "description": "Human-readable error message.", "x-ms-summary": "Error message" }
+      }
+    }
+  }
+}
