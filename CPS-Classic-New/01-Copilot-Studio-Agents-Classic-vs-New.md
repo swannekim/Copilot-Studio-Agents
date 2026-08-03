@@ -1,7 +1,5 @@
 # Copilot Studio: Classic vs New Agents, Agent Flows vs Workflows
 
-**Classification:** Microsoft Internal — contains NDA roadmap and pre-launch billing content. Do not share externally. See §10.
-
 ---
 
 ## How to use this document
@@ -270,10 +268,7 @@ This is the judgement that separates an L200 build from an L400 one.
 
 ---
 
-## 10. Microsoft Internal — August 2026 launch and roadmap
-
-> 🔒 **Microsoft Internal / NDA. Do not share with customers without an NDA in place. Do not leave these pages behind.**
-> Source: *Copilot Studio FAQ – August 2026 Launch (Internal)* and *Microsoft Copilot Studio Futures — NDA Roadmap*. Dates are calendar year and are subject to change.
+## 10. Microsoft — August 2026 launch and roadmap
 
 ### The three harnesses
 
@@ -325,9 +320,9 @@ Being precise about what is confirmed protects you in front of a customer.
 
 Agent anatomy for both experiences; orchestration mode behaviour; the agent flow and workflow feature sets; the agent node; skills format and limits; memory scope and 28-day expiry; connected-agent restrictions; the 100-second limit and the after-response pattern; quotas; Copilot Credit rates; no migration path.
 
-### Provisional — internal FAQ only, not yet on public docs
+### Provisional — not yet on public docs
 
-- **The 3 August 2026 GA date and the "GitHub Copilot harness" branding.** As of 2 August 2026 every public Learn page for the new experience is still labelled prerelease: the **agent** experience as *production-ready preview*, the **workflows** experience as *public preview*. Microsoft's own changelog records the experience launching **9 June 2026**. Expect the public labels to flip, but do not assert GA to a customer on the strength of an internal FAQ alone.
+- **The 3 August 2026 GA date and the "GitHub Copilot harness" branding.** As of 2 August 2026 every public Learn page for the new experience is still labelled prerelease: the **agent** experience as *production-ready preview*, the **workflows** experience as *public preview*. Microsoft's own changelog records the experience launching **9 June 2026**. Expect the public labels to flip, but do not assert GA to a customer.
 - Usage-based billing specifics for the new harness, including the 1 September grace period.
 - **Hooks.** No Learn page exists. Do not present hooks as available.
 - Cross-harness and same-environment connected-agent scoping.
@@ -367,4 +362,3 @@ Primary documentation, all Microsoft Learn:
 - [Quotas and limits](https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-quotas)
 - [Copilot Credits management](https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-messages-management) · [Billing and licensing](https://learn.microsoft.com/en-us/microsoft-copilot-studio/billing-licensing)
 
-Internal, NDA: *Copilot Studio FAQ – August 2026 Launch (Internal)*; *Microsoft Copilot Studio Futures — NDA Roadmap*, deck owner Lucia Mosner.
