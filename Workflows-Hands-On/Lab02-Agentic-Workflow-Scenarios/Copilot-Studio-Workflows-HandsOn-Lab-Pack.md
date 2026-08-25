@@ -75,6 +75,10 @@ Complete this before you start building, ideally the day before.
    > environment name.
 
 3. In the left navigation, confirm you can see **Workflows** (below **Agents**). If **Workflows** is missing, the new experience is not enabled for you — resolve this before the session, not during it.
+
+![The Workflows list. Every workflow you build appears here with its publish state and an Enabled toggle.](./img/01-workflows-list.png)
+*The Workflows list. Every workflow you build appears here with its publish state and an Enabled toggle.*
+
 4. Open a second browser tab on **Outlook** (`outlook.office.com`) and a third on **Teams**. You will send test mail and check results there.
 
 ### 1.2 One identity for everything ⚠️
@@ -83,31 +87,46 @@ Complete this before you start building, ideally the day before.
 >
 > Triggers, agents, the M365 Copilot node, and every connector tool all act on one identity. If they do not match, the workflow cannot read your mail or write to your files, and you get permission errors at run time that are genuinely hard to diagnose. The M365 Copilot node in particular runs **as the user in its Connection field** — whatever that user can see in Microsoft 365, the workflow can use.
 
-### 1.3 Connections — create these two in advance
+### 1.3 Connections — what to expect the first time
 
-Most connections in this pack bind **silently**: the first time you add an Outlook, Teams, Agent or Human review node, the node simply shows your account with a green **Connected** tick and you carry on. Nothing to do.
+A **connection** is the stored permission that lets a node act as you — read your mail, write your file, post as you in Teams. Each connector needs one, and you create it once per environment.
 
-**Two connectors do not do this**, and both cost you a couple of minutes mid-build if you meet them cold:
+**What you will see depends on whether that connector has ever been used in your environment:**
 
-| Connection | Needed by | Why it is different |
+| Situation | What the node shows | What you do |
 |---|---|---|
-| **Excel Online (Business)** | Scenarios 1, 4 | Node opens showing **Not connected** |
-| **M365 Copilot** | Scenarios 2, 3 | Node opens showing **Not connected** and a *"Connect to M365 Copilot"* placeholder |
+| A connection for that connector **already exists** | Your account, with a green **Connected** tick | Nothing — carry on |
+| **No connection exists yet** (a fresh lab environment) | **Not connected** | Create one — 20 seconds, procedure below |
 
-**How to create either one (the procedure is identical):**
+> ⚠️ **On a newly provisioned lab environment, expect *every* connector to say "Not connected" the first time you touch it** — Office 365 Outlook and Microsoft Teams included, not just Excel and M365 Copilot. This is normal and is not a sign you have done something wrong. Once created, a connection is reused by every later node that needs the same connector, so you only pay this cost once per connector per environment.
+
+**How to create a connection (identical for every connector):**
 
 1. On the node, find **Connection\*** at the top of the configuration panel. It reads **Not connected**.
-2. Click the small **chevron (⌄)** at the right-hand end of that field — *not* the placeholder text in the body of the panel, which does nothing.
+2. Click the **Not connected** button itself, or the small **chevron (⌄)** at the right-hand end of that field — *not* any placeholder text in the body of the panel, which does nothing.
 3. The menu shows *"No connections available"* and **Create new connection**. Click it.
-4. A dialog appears naming the connector (for example **M365 Copilot (V2)**). Click **Create**.
-5. A sign-in popup opens. Pick your lab account. The popup closes itself.
-6. The field now shows your account and the dependent fields below it load.
+4. A dialog appears naming the connector (for example **Office 365 Outlook** or **M365 Copilot (V2)**), with an optional display name you can leave blank. Click **Create**.
+5. A sign-in tab opens. Pick your lab account. It closes itself.
+6. The field now shows your account, and the dependent fields below it load.
 
-> **Tip.** Do this once during setup by dropping a throwaway Excel node and a throwaway M365 Copilot node into a scratch workflow, creating both connections, then deleting the workflow. After that both connectors bind silently for the rest of the day.
+> **Facilitator shortcut — worth doing.** Before the session, in the lab environment, create the connections for **Office 365 Outlook**, **Microsoft Teams**, **Excel Online (Business)** and **M365 Copilot** once. Drop a throwaway node of each type into a scratch workflow, create the connection, then delete the workflow. Every participant then sees a green tick instead of stopping four times mid-build.
 
 ### 1.4 Prepare the Excel workbook (needed for Scenario 1 and Scenario 4)
 
 Excel Online (Business) can only read and write cells that are inside a **formatted Excel Table**. A worksheet with headers typed into row 1 is *not* a table and will not appear in the connector's **Table** dropdown. This is the single most common failure in Excel-based labs.
+
+> ⏭️ **Do this instead — it takes about a minute.** `Workflows-Lab.xlsx` ships **in the same folder as this guide**, with all three tables already created and the sample data already in place.
+>
+> 1. Download it and upload it to the **root of your own OneDrive for Business** — the connector needs a file the *running identity* owns, so each participant needs their own copy.
+> 2. Keep the filename exactly `Workflows-Lab.xlsx`.
+> 3. Close it. Then continue to section 1.5.
+>
+> That is the whole prerequisite. The manual build below is kept only as a reference and a fallback — it is data entry, not learning, and hand-typing a table name slightly wrong produces a failure that only shows up much later, at the Excel node, looking like a connector problem.
+
+<details>
+<summary><b>Build the workbook by hand instead (reference / fallback)</b></summary>
+
+<br>
 
 **Do this once:**
 
@@ -151,13 +170,18 @@ Excel Online (Business) can only read and write cells that are inside a **format
 
 7. Add a third sheet named `ReportArchive` with headers **A1:D1** — `GeneratedAt`, `Headline`, `AtRiskCount`, `ApprovedBy` — and turn it into a table named `ReportArchive`.
 
-8. **Leave the file closed** when a workflow runs against it. An open browser session holding a lock is a common cause of intermittent Excel write failures.
+</details>
+
+---
+
+**Whichever route you took, two things apply:**
+
+- **Leave the file closed** when a workflow runs against it. An open browser session holding a lock is a common cause of intermittent Excel write failures.
+- **Each participant needs the file in their own OneDrive.** The connector runs as the signed-in identity and can only reach a file that identity owns. A shared link to someone else's copy will not work.
 
 > 📎 **Expect a blank row.** `Insert ▸ Table` on a header-only row creates a table whose range already
 > includes one empty data row. So the first row your workflow writes lands in **row 3**, not row 2.
 > That is normal — do not read it as a failure.
-
-> **Facilitator shortcut.** Build this workbook once, then share it as a downloadable file. Each participant saves their own copy to *their own* OneDrive — the connector needs a file the running identity owns.
 
 ### 1.5 Prepare a Teams destination (needed for Scenarios 1, 3, 4)
 
@@ -194,11 +218,19 @@ Skim this before you start. Refer back whenever a step mentions a term in **bold
 | **Publish** | A workflow only listens for its trigger **after you publish it**. You cannot publish a workflow that contains errors — the **Review** button in the command bar shows the count. |
 | **Activity** | The run history tab. Select a run to load it onto the canvas with each node's real inputs and outputs. This is where you debug. |
 
+![Every node has its own Run node tab, so you can test one step in isolation before adding the next.](./img/10-run-node-tab.png)
+
+*Every node has its own Run node tab, so you can test one step in isolation before adding the next.*
+
 ### 2.1 Five habits that save the most time today
 
-1. **Rename every node as you create it.** Rename by **double-clicking the node's title in the configuration panel header** on the right, then typing over it. (The node's **⋯** menu only offers Settings and Code view — there is no Rename command there.) Default names become unreadable by node five, and they are what you search for in the dynamic-content picker.
+![The node palette on the designer canvas — the building blocks you assemble a workflow from.](./img/03-node-palette.png)
+*The node palette on the designer canvas — the building blocks you assemble a workflow from.*
 
-2. **Insert tokens slowly and check the chip.** Type `/`, **pause** for the *Insert dynamic content* panel to open, *then* type two or three letters to filter, then click the entry. Typing the filter too fast scrambles the characters, the picker matches nothing, and you are left with literal text like `/Frmo` sitting in the field. After each insertion, glance at the chip: it reads **`NodeName.FieldName`**, which is how you confirm you picked the right one.
+
+1. **Rename every node as you create it.** In the configuration panel header on the right, **click the node's title once** — the hint below it reads *"Click to rename"* — and the existing text arrives pre-selected, so type straight over it and press **Enter**. (The node's **⋯** menu only offers Settings and Code view — there is no Rename command there.) Default names become unreadable by node five, and they are what you search for in the dynamic-content picker.
+
+2. **Insert tokens slowly and check the chip.** Type `/`, **pause** for the *Insert dynamic content* panel to open, *then* type two or three letters to filter, then click the entry. Typing the filter too fast scrambles the characters, the picker matches nothing, and you are left with literal text like `/Frmo` sitting in the field. After each insertion, glance at the result: a real token is a rounded **chip** you cannot edit letter by letter, and hovering it shows the underlying expression. Two naming details worth knowing: inside an **agent's Instructions** box the trigger's values sit under a group called **Input** and the chip shows just the field name (`Subject`); in **connector** fields they sit under the trigger's node name and chips read **`NodeName.FieldName`**. An agent's structured-output fields always arrive **capitalised** — `category` in your schema becomes the token **`Category`**, and `owner_team` becomes **`Owner_team`**.
 
 3. **Clear pre-filled boxes before you type.** Several fields arrive with placeholder text already *in* them — Human review input labels (`Text`, `Text 1`) and dropdown option boxes (`First option`). Typing **appends**, producing values like `TextDecision` or `First optionApprove`. Always **Ctrl+A, Delete** first. This one is worth reading twice: a wrong dropdown value causes a branch to silently take the wrong path with **no error at all**.
 
@@ -340,6 +372,10 @@ This workflow does all of it in about thirty seconds per email — and, importan
 
 ### What you will build
 
+![Scenario 1 finished. Note the acknowledgement sits before the If/Else — branches never rejoin, so shared steps go above them.](./img/14-scenario1-canvas.png)
+*Scenario 1 finished. Note the acknowledgement sits before the If/Else — branches never rejoin, so shared steps go above them.*
+
+
 ```
 [Trigger]  Office 365 Outlook — When a new email arrives
            Folder: Inbox · Subject filter: [REQ]
@@ -380,7 +416,21 @@ This workflow does all of it in about thirty seconds per email — and, importan
 
 4. Select **Save** (or Ctrl+S).
 
-> 💡 **Concept.** A workflow is the autonomous side of Copilot Studio. It runs on a trigger, not on a chat turn — that is the whole difference from an agent you talk to.
+> 🔎 **Finding Save, and why it is often greyed out.** The right-hand end of the command bar is **icons only** — no text labels. Left to right they are **Undo · Redo · Version history · Send feedback · Save · Test · Review · Publish**; only the last two show words. **Save** is the floppy-disk icon, third from the right.
+>
+> It will frequently look **disabled**, and that is normal: the designer keeps a **Draft** saved for you automatically, so Save greys out whenever there is nothing new to write. Greyed out means *already saved*, not *broken*. You can confirm at any time by opening **Workflows** in the left navigation — your workflow is listed there with the status **Draft**.
+>
+> **Test** and **Publish** stay disabled until the workflow has at least one **action** node; hover **Publish** and the tooltip says *"Action node required to publish."* That clears in Step 3.
+
+![The designer command bar: Build / Activity / Monitor tabs on the left, and Save, Test, Review and Publish on the right.](./img/12-command-bar.png)
+*The right-hand icons are, left to right: Undo, Redo, Version history, Send feedback, Save, Test — then Review and Publish.*
+
+<details>
+<summary>💡 <b>Concept</b></summary>
+
+A workflow is the autonomous side of Copilot Studio. It runs on a trigger, not on a chat turn — that is the whole difference from an agent you talk to.
+
+</details>
 
 > 📛 **Naming rule.** A workflow name **must start with a letter**. A name that begins with a digit is
 > rejected outright. You will meet this again in Scenario 3.
@@ -389,6 +439,10 @@ This workflow does all of it in about thirty seconds per email — and, importan
 
 ## Step 2 — Configure the email trigger
 
+![The email trigger. Subject Filter lives under Advanced parameters — click Show all to reveal it.](./img/11-email-trigger.png)
+*The email trigger, already configured. Before you click **Show all** the counter reads "Showing 4 of 9" and Subject Filter is hidden.*
+
+
 1. Select the **Start** node. The configuration panel opens on the right.
 2. Change **Trigger type** from **Manual** to **Connector**.
 
@@ -396,21 +450,27 @@ This workflow does all of it in about thirty seconds per email — and, importan
 
 3. In that dialog choose the **Office 365 Outlook** tile, then choose **When a new email arrives**.
 
-   The connection binds to your signed-in account automatically and shows a green **Connected** tick.
+   > Four triggers have near-identical names — *When a new email arrives*, *…in a shared mailbox*, *…mentioning me arrives*, and an event trigger. Pick the plain **When a new email arrives**.
 
-4. Set the **Folder**. It is a folder *tree*, not a dropdown: expand it, then **double-click** **Inbox** to select it. (A single click only highlights it — the tooltip says "Double-click to select this folder".)
+   If a connection for Office 365 Outlook already exists in your environment, it binds automatically and shows a green **Connected** tick. **On a fresh lab environment it will instead say "Not connected"** — create the connection using the six steps in section 1.3, then continue. This is expected, not an error.
 
-5. Now set the subject filter. Under **Advanced parameters** the panel reads **"Showing 4 of 9"** — the filter is one of the five hidden ones. Click **Show all**, then find **Subject filter** and type:
+4. Set the **Folder**. The field looks like a text box, but you cannot type into it and clicking it does nothing. Click the small **Change** button to the right of the field — that opens the folder picker. Click **Inbox** in the list, then press **Escape** or click elsewhere in the panel to close the picker. The field now reads `Inbox`.
+
+   > The picker is a *tree*, so folders with children can be expanded — but **Inbox** sits at the top level, so a single click on it is all you need here.
+
+5. Now set the subject filter. Under **Advanced parameters** the panel reads **"Showing 4 of 9"** — the filter is one of the five hidden ones. Click **Show all** (the counter changes to *Showing 9 of 9*), then find **Subject Filter** and type:
 
    ```
    [REQ]
    ```
 
-6. Rename the node: **double-click the title in the configuration panel header** and type over it:
+6. Rename the node. In the configuration panel header, **click the node's title once** — the hint beneath it reads *"Click to rename"*. The existing text arrives already selected, so just type over it:
 
    ```
    New request email
    ```
+
+   Press **Enter**.
 
 7. Select **Save**.
 
@@ -428,16 +488,28 @@ This is the heart of the scenario. Everything before it moves data; this node ma
 
 1. Below the trigger, select the **+** (**Add a step**) button.
 2. In the **Add** dialog, select the **Agent** tile.
-3. Leave the **Agent** dropdown on **New agent for this workflow**.
-4. Rename the node to `Request Triage Agent`.
+3. If the node opens showing **Not connected**, create the connection first — see section 1.3. On a fresh environment it will. Once connected, the **Agent** dropdown and **Instructions** field appear.
+4. Leave the **Agent** dropdown on **New agent for this workflow**.
+5. Rename the node to `Request Triage Agent`.
 
-> 💡 **Concept.** **New agent for this workflow** builds an *inline* agent: its instructions, model and output shape live inside this node and travel with the workflow. It cannot be reused elsewhere — and that is exactly what you want when the agent's job is specific to one automation.
+<details>
+<summary>💡 <b>Concept</b></summary>
+
+**New agent for this workflow** builds an *inline* agent: its instructions, model and output shape live inside this node and travel with the workflow. It cannot be reused elsewhere — and that is exactly what you want when the agent's job is specific to one automation.
+
+</details>
 
 ### 3b — Write the instructions
 
+![An inline agent node: Agent set to 'New agent for this workflow', your instructions, and the model picker.](./img/05-agent-node-config.png)
+*An inline agent node: Agent set to 'New agent for this workflow', your instructions, and the model picker.*
+
+
 For an inline agent, the **Instructions** field is *both* the job description and the per-run prompt — there is no separate Message field.
 
-Type the text below into **Instructions**. Where you see **`⟨insert /Subject⟩`**, type `/`, wait for the picker, type a few letters, and select that value from **New request email** — do not type the word.
+Type the text below into **Instructions**. Where you see **`⟨insert /Subject⟩`**, type `/`, wait for the picker, type a few letters, then select that value — do not type the word.
+
+> 🔤 **Where the trigger's values live in the picker — it changes with the field you are in.** Inside an **agent node's Instructions** box, the trigger's outputs are grouped under a heading called **Input**, *not* the trigger's node name. So here you are looking for **Input** → **Subject**, **From**, **Body**. In an ordinary **connector** field (the Excel and Outlook steps later on) the same values are grouped under the trigger's node name instead — **New request email** — alongside a group for each earlier node. Same tokens either way; only the heading differs.
 
 ```
 You are the IT service desk triage assistant for an enterprise IT team.
@@ -480,22 +552,38 @@ promise a solution, a fix, or a root cause. Do not include a greeting line
 and do not include a signature.
 ```
 
-> ✅ **Check the three chips.** Before moving on, confirm you have three coloured chips reading
-> `New request email.Subject`, `New request email.From` and `New request email.Body` — not literal
-> text. If a token failed to insert, the picker stays open and swallows everything you type next,
-> which silently truncates the rest of your instructions.
+> ✅ **Check the three chips.** Before moving on, confirm the three values appear as coloured **chips**
+> — small rounded pills you cannot edit character by character — and not as literal text. A trigger
+> chip shows just the field name: **`Subject`**, **`From`**, **`Body`**. Hover one and the tooltip
+> shows the underlying expression, e.g. `triggerOutputs()?['body/subject']`; that is how you confirm
+> it is a real token. If a token failed to insert, the picker stays open and swallows everything you
+> type next, which silently truncates the rest of your instructions.
 
-> 💡 **Why the instructions are this specific.** An inline agent decides at run time. The way you make a non-deterministic step *reliable* is not to make it shorter — it is to close every gap where it would otherwise have to guess. Notice that every field has an explicit, closed list of allowed values. That is what makes the next steps (writing to a fixed Excel column, branching on `High`) safe.
+<details>
+<summary>💡 <b>Why the instructions are this specific</b></summary>
+
+An inline agent decides at run time. The way you make a non-deterministic step *reliable* is not to make it shorter — it is to close every gap where it would otherwise have to guess. Notice that every field has an explicit, closed list of allowed values. That is what makes the next steps (writing to a fixed Excel column, branching on `High`) safe.
+
+</details>
 
 ### 3c — Choose the model
 
 The model dropdown sits in the **Instructions** header, on the right.
 
-The default is **Claude Opus 5**, a heavy multi-step reasoning model. It works well here and the reference build used it, so you can leave it.
+The default is **Claude Opus 5**, a heavy multi-step reasoning model. It works well for this task, so you can leave it as it is.
 
-> 🎯 **Worth knowing, though.** Classification over a short email is a fast, high-volume job — exactly the case where a chat-tier model (GPT-5 Chat, Claude Sonnet) gives you the same answer for less latency and cost. Right-sizing the model per node is the cheapest optimisation in the product. Try both and compare the run times in **Activity**.
+<details>
+<summary>🎯 <b>Worth knowing, though</b></summary>
+
+Classification over a short email is a fast, high-volume job — exactly the case where a chat-tier model (GPT-5 Chat, Claude Sonnet) gives you the same answer for less latency and cost. Right-sizing the model per node is the cheapest optimisation in the product. Try both and compare the run times in **Activity**.
+
+</details>
 
 ### 3d — Shape the output — the most important setting in this scenario
+
+![Output sits at the very bottom of the agent panel. Custom structured output validates the JSON schema you supply.](./img/09-agent-output-structured.png)
+*Output sits at the very bottom of the agent panel. Custom structured output validates the JSON schema you supply.*
+
 
 1. Scroll to the **bottom** of the configuration panel. **Output** sits below Tools, Knowledge, Request human assistance and Web search.
 2. Open the **Output** dropdown and select **Custom structured output**.
@@ -518,7 +606,12 @@ The default is **Claude Opus 5**, a heavy multi-step reasoning model. It works w
 
 4. Select **Save**.
 
-> 💡 **Concept — this is the pivot of the whole scenario.** With **Text response** the agent hands you one blob of prose and you can do nothing structural with it. With **Custom structured output**, **each field becomes its own dynamic-content token**. That is what lets Step 4 drop `priority` into an Excel column and Step 6 branch on it. *AI produces structure; deterministic steps consume it.* Remember this pattern — it is the single most reusable idea in the pack.
+<details>
+<summary>💡 <b>Concept — this is the pivot of the whole scenario</b></summary>
+
+With **Text response** the agent hands you one blob of prose and you can do nothing structural with it. With **Custom structured output**, **each field becomes its own dynamic-content token**. That is what lets Step 4 drop `priority` into an Excel column and Step 6 branch on it. *AI produces structure; deterministic steps consume it.* Remember this pattern — it is the single most reusable idea in the pack.
+
+</details>
 
 > 🔤 **The tokens are capitalised.** Your schema uses `snake_case`, but the picker shows the fields with
 > an initial capital: **Category, Priority, Summary, Owner_team, Sla_hours, Ack_message**. Same values,
@@ -534,11 +627,24 @@ The default is **Claude Opus 5**, a heavy multi-step reasoning model. It works w
 3. Select **Run**.
 4. Read the **Output**. You should get six named fields back, with `category` = `Access`, `priority` = `High`, `owner_team` = `Identity`, `sla_hours` = `4`, and an `ack_message` in English.
 
-> 💡 **Test the node, not the whole flow.** Node-level testing runs this step in isolation — it is fast, it does not publish, and it does not trigger the rest of the workflow. Iterate on the instructions here until the output is right. Fixing a prompt is 20 seconds at this stage and 5 minutes after you have built five more nodes on top of it.
+<details>
+<summary>💡 <b>Test the node, not the whole flow</b></summary>
+
+Node-level testing runs this step in isolation — it is fast, it does not publish, and it does not trigger the rest of the workflow. Iterate on the instructions here until the output is right. Fixing a prompt is 20 seconds at this stage and 5 minutes after you have built five more nodes on top of it.
+
+</details>
 
 ---
 
 ## Step 4 — Log the request to Excel
+
+![Add a row into a table. Location, Document library, File and Table must all resolve before the Row fields appear.](./img/15-excel-add-row.png)
+*Add a row into a table. Location, Document library, File and Table must all resolve before the Row fields appear.*
+
+
+![The dynamic-content picker. Each field of a structured output becomes its own token, with its data type shown on the right.](./img/16-token-picker.png)
+*The dynamic-content picker. Each field of a structured output becomes its own token, with its data type shown on the right.*
+
 
 1. Below the agent node, select **Add a step**.
 2. Search for `Add a row into a table` and choose it under **Excel Online (Business)**.
@@ -548,8 +654,8 @@ The default is **Claude Opus 5**, a heavy multi-step reasoning model. It works w
    | Parameter | Value |
    |---|---|
    | Location | `OneDrive for Business` |
-   | Document library | `OneDrive` |
-   | File | **double-click** `Workflows-Lab.xlsx` in the file tree |
+   | Document library | `OneDrive` — note it is **not** first in the list; `PersonalCacheLibrary` usually is |
+   | File | click **Change**, then select `Workflows-Lab.xlsx` in the file tree |
    | Table | `RequestLog` |
 
 5. The nine table columns now appear as fields. Fill each one — type `/`, pause, filter, select:
@@ -574,7 +680,12 @@ The default is **Claude Opus 5**, a heavy multi-step reasoning model. It works w
 
 > ⚠️ **If the Table dropdown is empty**, the workbook has headers but no *formatted table*. Go back to Section 1.4, select your header row, and use **Insert ▸ Table**. Also make sure the file is **closed** in your browser.
 
-> 💡 **Notice what just happened.** Eight of the nine columns were filled from tokens; only `Status` was typed. If you had used **Text response** on the agent, none of the six AI columns would have been possible.
+<details>
+<summary>💡 <b>Notice what just happened</b></summary>
+
+Eight of the nine columns were filled from tokens; only `Status` was typed. If you had used **Text response** on the agent, none of the six AI columns would have been possible.
+
+</details>
 
 ---
 
@@ -598,13 +709,22 @@ This runs for **every** request, urgent or not — which is why it goes here, *b
 > **BCC**, **Subject**, **Body**, **Reply all**, **Importance** and **Attachments**. `Body` is a
 > rich-text editor — insert the token there.
 
-> 💡 **Why the agent wrote the acknowledgement.** A canned "we received your request" reply teaches the sender to ignore your automation. The agent's `ack_message` restates *their specific problem* in *their own language* and commits to a real response time — which is the difference between an automation people trust and one they route around.
+<details>
+<summary>💡 <b>Why the agent wrote the acknowledgement</b></summary>
+
+A canned "we received your request" reply teaches the sender to ignore your automation. The agent's `ack_message` restates *their specific problem* in *their own language* and commits to a real response time — which is the difference between an automation people trust and one they route around.
+
+</details>
 
 ---
 
 ## Step 6 — Escalate high-priority requests to Teams
 
 ### 6a — Add the branch
+
+![The If/Else condition builder — Property, Operator, Value. The Else branch is created automatically.](./img/07-ifelse-condition.png)
+*The If/Else condition builder — Property, Operator, Value. The Else branch is created automatically.*
+
 
 1. Below **Acknowledge the sender**, select **Add a step** and choose **If/Else**.
 2. Configure the condition row — it is built from three parts, not free text:
@@ -658,11 +778,20 @@ This runs for **every** request, urgent or not — which is why it goes here, *b
 > to `Log to request tracker.Category` instead of `Request Triage Agent.Category`. Both "work", so
 > nothing errors; you just get the wrong data. Confirm every chip reads the node you intended.
 
-> 💡 **Concept — deterministic vs. AI.** The agent decided *what* the priority is; the If/Else decided *what to do about it*. Never ask an AI step to do something a rule can do reliably: a branch is faster, free, auditable, and it always behaves the same way.
+<details>
+<summary>💡 <b>Concept — deterministic vs. AI</b></summary>
+
+The agent decided *what* the priority is; the If/Else decided *what to do about it*. Never ask an AI step to do something a rule can do reliably: a branch is faster, free, auditable, and it always behaves the same way.
+
+</details>
 
 ---
 
 ## Step 7 — Publish, run and verify
+
+![The designer command bar: Build / Activity / Monitor tabs on the left, and Save, Test, Review and Publish on the right.](./img/12-command-bar.png)
+*The designer command bar: Build / Activity / Monitor tabs on the left, and Save, Test, Review and Publish on the right.*
+
 
 1. Check the **Review** button in the command bar — it shows a problem count if anything is incomplete. Then select **Publish**.
 
@@ -729,7 +858,6 @@ Send Test B specifically to prove the **Else** path works. A workflow that alert
 - **This is a genuine 20–40 minutes per day per triager**, and it is the easiest workflow in the pack to hand to a real team on Monday morning.
 
 ---
----
 
 # Scenario 2 — Reply Desk with Approval
 
@@ -772,7 +900,7 @@ Microsoft 365 Copilot already has that context. This workflow puts it to work �
 
 2. Select the **Start** node, set **Trigger type** to **Connector**, and in the dialog choose **Office 365 Outlook ▸ When a new email arrives**.
 3. Configure it exactly as in Scenario 1:
-   - **Folder** — double-click **Inbox** in the tree.
+   - **Folder** — click **Change**, then select **Inbox** in the tree.
    - **Advanced parameters ▸ Show all**, then **Subject filter** = `[Ask]`
 4. Rename the node to `New question email`. Select **Save**.
 
@@ -817,7 +945,12 @@ Return only the reply text and nothing else.
 
 > ⏰ **This field defaults to `America/New_York`.** Not UTC, not your tenant's region. Leave it alone and every relative phrase — "today", "this week", "yesterday's meeting" — resolves in New York time. Set it deliberately. Note the format is `Asia/Seoul`, **not** `(UTC+09:00) Seoul`; that other format belongs to the *Recurrence trigger*, which you will meet in Scenario 3. Two different time-zone fields, two different formats, two different jobs.
 
-> 💡 **Concept — why this node and not an agent node.** The M365 Copilot node runs **as the user in its Connection field** and is grounded in that user's mail, files, calendar and chats out of the box. An agent node would need tools and knowledge wired up to get anywhere near the same context. Rule of thumb: **reuse what Microsoft 365 already knows → M365 Copilot node. Build automation-specific behaviour → agent node.** Step 5 uses the agent node for exactly that reason, so you will see both in one workflow.
+<details>
+<summary>💡 <b>Concept — why this node and not an agent node</b></summary>
+
+The M365 Copilot node runs **as the user in its Connection field** and is grounded in that user's mail, files, calendar and chats out of the box. An agent node would need tools and knowledge wired up to get anywhere near the same context. Rule of thumb: **reuse what Microsoft 365 already knows → M365 Copilot node. Build automation-specific behaviour → agent node.** Step 5 uses the agent node for exactly that reason, so you will see both in one workflow.
+
+</details>
 
 > 🔐 **Say this out loud in the room.** Whatever the connected user can see in Microsoft 365, this node can use. The connection account is a security decision, not a convenience one. Never point this node at a shared or elevated account.
 
@@ -834,6 +967,10 @@ Open the node's **Run node** tab, paste a Subject, From and Body by hand, and se
 ### 3a — Add the node
 
 1. Below the Copilot node, select **Add a step** and choose the **Human review** tile. That single tile adds the node — there is no sub-item to pick.
+
+![A Human review node. Each input you define becomes a token carrying the reviewer's answer; a text input can be given dropdown options.](./img/06-human-review-inputs.png)
+*A Human review node. Each input you define becomes a token carrying the reviewer's answer; a text input can be given dropdown options.*
+
 2. The connection binds automatically.
 3. Rename the node to `Approve the reply`.
 
@@ -910,9 +1047,19 @@ Each input you define becomes a dynamic-content token carrying the human's answe
 >
 > **Always Ctrl+A, Delete before typing**, then re-read both boxes before you save.
 
-> 💡 **Concept — a review gate is not just an approval button.** A yes/no gate makes a human a rubber stamp. Adding one optional free-text field turns the same node into a *collaboration* step: the reviewer can steer the outcome without rewriting anything. That single field is the difference between an automation people accept and one they switch off.
+<details>
+<summary>💡 <b>Concept — a review gate is not just an approval button</b></summary>
 
-> 💡 **By design vs. by judgement.** You just placed this gate deliberately — *human-in-the-loop by design*. The alternative is *by judgement*: turning on **Request human assistance** on an agent node so it escalates on its own. Use *by design* when the action is always high-stakes (sending mail as you), and *by judgement* when only the edge cases are.
+A yes/no gate makes a human a rubber stamp. Adding one optional free-text field turns the same node into a *collaboration* step: the reviewer can steer the outcome without rewriting anything. That single field is the difference between an automation people accept and one they switch off.
+
+</details>
+
+<details>
+<summary>💡 <b>By design vs. by judgement</b></summary>
+
+You just placed this gate deliberately — *human-in-the-loop by design*. The alternative is *by judgement*: turning on **Request human assistance** on an agent node so it escalates on its own. Use *by design* when the action is always high-stakes (sending mail as you), and *by judgement* when only the edge cases are.
+
+</details>
 
 ---
 
@@ -972,7 +1119,12 @@ Rules:
 4. Leave **Output** on **Text response**. Add **no tools** — this agent only needs to read and reason.
 5. Select **Save**.
 
-> 💡 **Concept — an agent node with no tools is still an agent node.** Tools let an agent *act*; without them it can only read and reason. Here, reasoning is all you want. Notice too that the instruction explicitly forbids unrequested improvement — without that line, the model will helpfully rewrite a reply a human already approved, and your approval gate silently stops meaning anything.
+<details>
+<summary>💡 <b>Concept — an agent node with no tools is still an agent node</b></summary>
+
+Tools let an agent *act*; without them it can only read and reason. Here, reasoning is all you want. Notice too that the instruction explicitly forbids unrequested improvement — without that line, the model will helpfully rewrite a reply a human already approved, and your approval gate silently stops meaning anything.
+
+</details>
 
 ### 5b — Send the reply
 
@@ -1029,7 +1181,11 @@ Rules:
 
    > 🔒 **Outlook only:** if Outlook shows a **"blocked content"** banner, click **Show blocked content** — the interactive form will not render until you do.
    >
-   > ⏱️ **If nothing arrives, do not assume you built it wrong.** The node shows **Waiting** and the run reports no error whether the card arrives in ten seconds or not at all — there is no failure to read. Outlook delivery is **inconsistent** rather than uniformly slow: in this environment one request was delivered **one minute** after the node started waiting, while two others had still not arrived after **18 minutes** and never did. The **Teams** channel delivered within three minutes every time it was used. If you are running to a fixed schedule, set **Channel** to **Teams** and republish. A pending request is also **not** visible in the Power Automate **Approvals** portal — that page reads *"You don't have any pending approvals"* even while requests are genuinely open, so it cannot be used to check.
+   > ⏱️ **If nothing arrives, do not assume you built it wrong.** The node shows **Waiting** and the run reports no error whether the card arrives in ten seconds or not at all — there is no failure to read.
+>
+> Outlook delivery is **inconsistent**: sometimes it lands in under a minute, sometimes not at all. Teams is reliable. **If you are working to a fixed schedule, set Channel to Teams and republish.**
+>
+> Do not go looking in the Power Automate **Approvals** portal — it reads *"You don't have any pending approvals"* even while requests are genuinely open, so it cannot tell you anything.
 
 5. Respond on separate test emails to see all three paths. **Write the change request so you can prove it was applied** — ask for something measurable *and* for a specific word that does not appear anywhere in the draft:
    - **Run 1** — `Decision` = `Approve`, `ChangeRequest` = *empty*. Select **Submit**.
@@ -1091,7 +1247,6 @@ Watching the run sit in **Waiting** until you submit the form is the moment the 
 - **The `ChangeRequest` field is the whole design.** A reviewer who can only say yes or no eventually says yes to everything.
 
 ---
----
 
 # Scenario 3 — Daily Brief 0800
 
@@ -1120,6 +1275,10 @@ Microsoft 365 Copilot can already answer all of it. What it cannot do on its own
 ---
 
 ## Step 1 — Create the workflow and the schedule
+
+![A Recurrence trigger. Set Frequency first, then the days, hours and minutes. Time zone sits under the Advanced divider.](./img/08-recurrence-config.png)
+*A Recurrence trigger. Set Frequency first, then the days, hours and minutes. Time zone sits under the Advanced divider.*
+
 
 1. **Workflows ▸ New workflow**. Rename the title to:
 
@@ -1159,7 +1318,12 @@ Microsoft 365 Copilot can already answer all of it. What it cannot do on its own
 
 4. Rename the node to `Every weekday at 08:00`. Select **Save**.
 
-> 💡 **Concept — this is the other half of "trigger".** Scenarios 1 and 2 were **event-driven**: something happened, so the workflow ran. This one is **schedule-driven**: nothing happened, and the workflow runs anyway. Most teams reach for event triggers first and then discover that half of their real toil is on a clock — morning briefs, Friday reports, month-end checks, licence reviews.
+<details>
+<summary>💡 <b>Concept — this is the other half of "trigger"</b></summary>
+
+Scenarios 1 and 2 were **event-driven**: something happened, so the workflow ran. This one is **schedule-driven**: nothing happened, and the workflow runs anyway. Most teams reach for event triggers first and then discover that half of their real toil is on a clock — morning briefs, Friday reports, month-end checks, licence reviews.
+
+</details>
 
 > ⏰ **You will set a time zone twice in this scenario, in two different formats.** Here it is a display name (`(UTC+09:00) Seoul`) and it controls **when the workflow runs**. On the next node it is an IANA identifier (`Asia/Seoul`) and it controls **what "today" means to Copilot**. Getting one right and the other wrong produces a brief that looks perfect and is a day out.
 
@@ -1207,7 +1371,12 @@ Rules:
 
 5. Rename the node to `Read my day`. Select **Save**.
 
-> 💡 **Concept — grounding is the whole point.** No prompt engineering can make a general model know that your 10:00 is a customer escalation. This node runs **as the connected Microsoft 365 user** and reads that user's mail, files, calendar and chats. Notice you never had to add a single connector action to get calendar and mail data — that is the difference between the M365 Copilot node and building the same thing out of individual Outlook actions.
+<details>
+<summary>💡 <b>Concept — grounding is the whole point</b></summary>
+
+No prompt engineering can make a general model know that your 10:00 is a customer escalation. This node runs **as the connected Microsoft 365 user** and reads that user's mail, files, calendar and chats. Notice you never had to add a single connector action to get calendar and mail data — that is the difference between the M365 Copilot node and building the same thing out of individual Outlook actions.
+
+</details>
 
 ### Test it now
 
@@ -1276,9 +1445,14 @@ Rules:
 
 > ✅ **Verify the chip before you type the rest.** After inserting the token you should see a chip reading `Read my day.Body / Response`. If it did not insert, the picker stays open and swallows every character you type next — you will end up with instructions that stop at "RAW BRIEF:" and an agent that invents a brief from nothing.
 
-> 💡 **Concept — two AI nodes, two different jobs, and the order matters.** The M365 Copilot node was chosen for *what it knows*. This agent node is chosen for *how it behaves*: a fixed layout, a length limit, and one genuinely additive instruction — the **Top 3**, which is the only line in the brief the raw data does not already contain.
->
-> This is worth pausing on. Retrieval alone produces a longer to-do list. **Prioritisation** is what makes a brief worth reading, and it is the one thing you should ask an AI step to actually decide.
+<details>
+<summary>💡 <b>Concept — two AI nodes, two different jobs, and the order matters</b></summary>
+
+The M365 Copilot node was chosen for *what it knows*. This agent node is chosen for *how it behaves*: a fixed layout, a length limit, and one genuinely additive instruction — the **Top 3**, which is the only line in the brief the raw data does not already contain.
+
+This is worth pausing on. Retrieval alone produces a longer to-do list. **Prioritisation** is what makes a brief worth reading, and it is the one thing you should ask an AI step to actually decide.
+
+</details>
 
 ### Test it
 
@@ -1307,7 +1481,12 @@ Open the **Run node** tab on this node and select **Run**. Compare its output wi
 
 4. Rename the node to `Send the brief` and select **Save**.
 
-> 💡 **Why Teams and not email.** The brief competes with the inbox it is summarising. Putting it anywhere other than the inbox is a design decision, not a technical one.
+<details>
+<summary>💡 <b>Why Teams and not email</b></summary>
+
+The brief competes with the inbox it is summarising. Putting it anywhere other than the inbox is a design decision, not a technical one.
+
+</details>
 
 ---
 
@@ -1348,7 +1527,6 @@ Tomorrow at 08:00 it arrives on its own. That is the point of the scenario, and 
 - **Two time zones, two formats, two jobs.** One decides when the workflow runs, one decides what "today" means. This is the most reliable "gotcha" moment in the pack.
 
 ---
----
 
 # Scenario 4 — Friday Project Roll-up
 
@@ -1361,6 +1539,10 @@ The project tracker is already up to date. What takes 45 minutes every Friday is
 This workflow reads the tracker, does the translation, and asks a human to approve it before it goes anywhere near leadership. It is the most complete pattern in the pack — deterministic data in, AI judgement in the middle, a human gate before it commits, and structured distribution out.
 
 ### What you will build
+
+![Scenario 4 finished: a scheduled trigger, an Excel read, an agent, a human gate, then three parallel outputs on the approved branch.](./img/04-canvas-zoomed.png)
+*Scenario 4 finished: a scheduled trigger, an Excel read, an agent, a human gate, then three parallel outputs on the approved branch.*
+
 
 ```
 [Trigger]  Recurrence — every Friday at 16:00, (UTC+09:00) Seoul
@@ -1418,8 +1600,8 @@ This workflow reads the tracker, does the translation, and asks a human to appro
    | Parameter | Value |
    |---|---|
    | Location | `OneDrive for Business` |
-   | Document library | `OneDrive` |
-   | File | **double-click** `Workflows-Lab.xlsx` in the tree |
+   | Document library | `OneDrive` — note it is **not** first in the list; `PersonalCacheLibrary` usually is |
+   | File | click **Change**, then select `Workflows-Lab.xlsx` in the tree |
    | Table | `ProjectTracker` |
 
 4. Rename the node to `List project rows`. Select **Save**.
@@ -1427,7 +1609,12 @@ This workflow reads the tracker, does the translation, and asks a human to appro
 
 > ⚠️ **Do run this test.** It takes ten seconds and it is what makes the next node's test meaningful — the agent test can then reuse real rows instead of running against nothing.
 
-> 💡 **Concept — this step is completely deterministic and that is deliberate.** Reading rows is a rule, not a judgement. Do it with a connector: it is faster, it is free, and it always returns exactly the same thing. Save the AI for the next node, which is where the judgement actually lives.
+<details>
+<summary>💡 <b>Concept — this step is completely deterministic and that is deliberate</b></summary>
+
+Reading rows is a rule, not a judgement. Do it with a connector: it is faster, it is free, and it always returns exactly the same thing. Save the AI for the next node, which is where the judgement actually lives.
+
+</details>
 
 > 📐 **Scaling note for the real version.** **List rows present in a table** returns a bounded page of rows by default; beyond that you must turn on pagination. Six sample rows are fine today, but a real portfolio tracker will hit this — and an agent reasoning over a silently truncated list produces a confident, wrong report.
 
@@ -1524,7 +1711,12 @@ Against the six sample rows you should get:
 > upstream data — go back and run the **List project rows** node test first, then re-run this one. Note
 > that the agent *correctly refused to invent projects*, which is your "never invent" rule working.
 
-> 💡 **Concept — you are grading the agent, not admiring it.** You know the right answer for this dataset, so you can tell instantly whether the instructions are working. Building a small, known test set *before* you write the prompt is the single most useful habit in AI automation.
+<details>
+<summary>💡 <b>Concept — you are grading the agent, not admiring it</b></summary>
+
+You know the right answer for this dataset, so you can tell instantly whether the instructions are working. Building a small, known test set *before* you write the prompt is the single most useful habit in AI automation.
+
+</details>
 
 ---
 
@@ -1579,7 +1771,12 @@ Hold to stop it here - nothing is sent.
 
 > 🚨 **Clear every pre-filled box.** Input labels arrive as `Text`, `Text 1`, `Date`, `Email`; the dropdown's first option arrives as `First option`. Typing appends. If you end up with `First optionApprove` stored as the option value, the approver will pick a value that never equals `Approve`, Step 5's branch will quietly take **Else**, nothing will be sent — and the run will still report **Succeeded**. **Ctrl+A, Delete, then type.** Re-read the option boxes before you save.
 
-> 💡 **Concept — you just used four of the five supported input types.** Human review supports **Text**, **Yes/No**, **Email**, **Number** and **Date**, and text inputs can become single-select or multi-select dropdowns. A review gate is a *form*, not a button — which means the human can contribute structured data the workflow then uses, rather than only permitting or blocking it.
+<details>
+<summary>💡 <b>Concept — you just used four of the five supported input types</b></summary>
+
+Human review supports **Text**, **Yes/No**, **Email**, **Number** and **Date**, and text inputs can become single-select or multi-select dropdowns. A review gate is a *form*, not a button — which means the human can contribute structured data the workflow then uses, rather than only permitting or blocking it.
+
+</details>
 
 ---
 
@@ -1659,8 +1856,8 @@ Hold to stop it here - nothing is sent.
    | Parameter | Value |
    |---|---|
    | Location | `OneDrive for Business` |
-   | Document library | `OneDrive` |
-   | File | **double-click** `Workflows-Lab.xlsx` |
+   | Document library | `OneDrive` — note it is **not** first in the list; `PersonalCacheLibrary` usually is |
+   | File | click **Change**, then select `Workflows-Lab.xlsx` |
    | Table | `ReportArchive` |
    | GeneratedAt | `ReportDate` *(from Team lead approval)* |
    | Headline | `Headline` *(from Status Analyst)* |
@@ -1679,7 +1876,12 @@ Hold to stop it here - nothing is sent.
 
 2. Rename it to `Tell me it was held`. Select **Save**.
 
-> 💡 **Notice which nodes are on which branch.** The email, the Teams post *and* the archive row all sit behind the approval. An archive entry for a report that was never sent is worse than no archive at all — the audit trail has to record what actually happened, not what was drafted.
+<details>
+<summary>💡 <b>Notice which nodes are on which branch</b></summary>
+
+The email, the Teams post *and* the archive row all sit behind the approval. An archive entry for a report that was never sent is worse than no archive at all — the audit trail has to record what actually happened, not what was drafted.
+
+</details>
 
 ---
 
@@ -1733,15 +1935,22 @@ Then change a row in `ProjectTracker` — set *Teams Phone migration* to `Blocke
 - **Show the silent-failure trap deliberately.** If you have five spare minutes, set the dropdown option to `First optionApprove` on purpose, run it, and let the room watch a green "Succeeded" run that did nothing. It is the most memorable lesson in the pack.
 
 ---
----
 
 # Troubleshooting
+
+![The Activity panel lists every run with its status and duration. Select a run to load it onto the canvas with real inputs and outputs.](./img/13-activity-runs.png)
+*The Activity panel lists every run with its status and duration. Select a run to load it onto the canvas with real inputs and outputs.*
+
 
 Work down this table before asking for help — the first eight rows cover roughly nine out of ten lab failures.
 
 | Symptom | Most likely cause | Fix |
 |---|---|---|
 | **A step "worked" but used the wrong data** | You inserted a token from the wrong node. After an Excel *Add a row* step exists, the picker contains **duplicate names** (`Category`, `Subject`, `Summary`…) because that action returns the row it created. | Click the chip and read it: it says **`NodeName.FieldName`**. Re-insert from the correct group. |
+| **A node says "Not connected"** | No connection for that connector exists in this environment yet. On a freshly provisioned lab environment this happens for **every** connector on first use, Outlook and Teams included. | Create it: click **Not connected** ▸ **Create new connection** ▸ **Create** ▸ pick your account. Section 1.3 has the full procedure. You only do this once per connector. |
+| **A field looks like a text box but will not accept typing** (Folder, File, Table) | These are pickers, not text fields. Clicking the box itself does nothing. | Click the small **Change** button to the right of the field to open the picker, choose the item, then press **Escape** to close it. |
+| **"Could not load options. You can enter a value manually."** on Location / Document Library / File | The node has no connection yet, so it cannot query your OneDrive. It is not a permissions error. | Create the connection (section 1.3). The message disappears and the dropdowns populate. |
+| **A field says "Fill in dependent fields first…"** | Excel's four location fields cascade: **Location → Document Library → File → Table**. Each one only loads once the one above it is set. | Set them strictly top to bottom. If one stays empty, the field above it is not really set. |
 | **A branch took the wrong path, but the run says Succeeded** | A dropdown option or input label kept its pre-filled placeholder, e.g. `First optionApprove` or `TextDecision`. The comparison never matches and the flow falls through to **Else** with no error. | Open the finished run, select the If/Else node, and read its inputs — it prints the comparison, e.g. `Reject is equal to Approve → False`. Then fix the option/label box on the **Build** tab (**Ctrl+A + Delete**, retype), publish, re-run. |
 | **The run fails on the last step with *"A message needs to have at least one recipient"*** | **Reply to email** was left with an empty **To**. It does not reliably auto-address the reply — and never does when you are testing by emailing yourself. | Bind **To** to the trigger's `From` token, publish, and send a **new** test email (the spent approval cannot be reused). |
 | **The run fails with *"…is required to be of type 'String/email'. The runtime value `"a@b.com\n"`…"*** | A stray line break is stored in the **To** box alongside the token. Token fields are rich editors, and a leftover empty line becomes part of the value. | Click into **To**, **Ctrl+A**, **Delete** repeatedly until the box is truly empty, then re-insert the token using the **Insert dynamic content** button and save without typing anything else. |

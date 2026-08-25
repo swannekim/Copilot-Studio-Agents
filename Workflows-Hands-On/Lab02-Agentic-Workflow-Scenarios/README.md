@@ -52,7 +52,9 @@ uses all three AI node types — Agent, M365 Copilot and Human review — in a s
 
 | File | Purpose |
 |---|---|
-| `Copilot-Studio-Workflows-HandsOn-Lab-Pack.md` | **The lab guide.** Everything is here — setup, all four scenarios, troubleshooting, facilitator notes and appendices. Self-contained: no images or linked assets. |
+| `Copilot-Studio-Workflows-HandsOn-Lab-Pack.md` | **The lab guide.** Everything is here — setup, all four scenarios, troubleshooting, facilitator notes and appendices. |
+| `Copilot-Studio-Workflows-HandsOn-Lab-Pack.ko.md` | **Korean translation of the lab guide.** Structurally identical to the English original. Node names, UI labels, token names and all copy-paste values are kept in English, since that is what appears on screen. |
+| `img/` | Screenshots referenced by both guides. Keep this folder alongside the guide when moving it. |
 | `Workflows-Lab.xlsx` | **Optional shortcut** for the workbook prerequisite. |
 
 ### About `Workflows-Lab.xlsx`
