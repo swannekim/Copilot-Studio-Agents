@@ -219,7 +219,7 @@ You may already automate things with Power Automate. If so, the obvious question
 
 **The word that explains everything: *harness*.**
 
-Whatever you build in Copilot Studio runs on a **harness** — a runtime that sits between your design and the model. It decides when to call the model, what to send it, how to interpret what comes back, and which tools to call. Microsoft currently ships three, and the harness determines what you can build, what it can recover from, and how you are billed.
+Whatever you build in Copilot Studio runs on a **harness** — a runtime that sits between your design and the model. It decides when to call the model, what to send it, how to interpret what comes back, and which tools to call. Microsoft currently ships three, and the harness determines what you can build and what it can recover from.
 
 | | **Power Automate cloud flow** | **Agent flow** | **Workflow** ← *this lab* |
 |---|---|---|---|
@@ -227,9 +227,7 @@ Whatever you build in Copilot Studio runs on a **harness** — a runtime that si
 | **Runs in** | Power Automate | Copilot Studio | Copilot Studio |
 | **Designer** | Power Automate designer | Copilot Studio flow designer | Redesigned visual canvas |
 | **Distinctive capability** | Broadest connector reach, long-established | Deterministic automation tied to Copilot Studio agents | Native AI action nodes, agent handoffs, **node-level testing** |
-| **Billing model** | Power Automate licensing | Copilot Studio capacity | **Copilot Credits** (usage-based) |
-
-> 💷 **On billing, read the docs carefully rather than the summary.** Microsoft's harness documentation states that agents and workflows on the GitHub Copilot harness use **Copilot Credits** for usage-based billing. The workflows article *also* says workflows consume **Copilot Studio capacity** for each action executed, and the admin centre reports them under **Agent flow actions**. Both statements are published. Treat "workflows draw on Copilot Credits, and their action consumption is visible alongside capacity" as the safe summary, and confirm the specifics with whoever owns licensing before quoting numbers to a customer. What is **not** ambiguous: **testing from the designer is free**, which is why this pack has you test every node as you build it.
+| **Example** | A form response arrives — log it to Excel and notify the owner | A chatbot receives an order number and calls this flow to look up delivery status | A request email arrives, an agent triages it, a human approves, the reply goes out |
 
 **Why three, and not one?**
 
