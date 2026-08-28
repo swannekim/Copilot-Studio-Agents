@@ -1,85 +1,54 @@
 # Hands-On Lab Pack — Building Workflows in the New Copilot Studio
 
-**Audience:** IT professionals, L200–250 · **Format:** pick **2 of 4** scenarios
+**Audience:** L200–250 · **Format:** pick **2 of 4** scenarios
 **Built for a DLP-restricted tenant:** Microsoft 365 connectors only.
-
-> Every step in this pack was built and run end to end in a live Copilot Studio environment. Field
-> names, button labels, token names and node names are the ones you will actually see on screen.
 
 ---
 
-## 0. How to use this pack
+## 0. Overview
 
-This pack contains **four independent, self-contained scenarios**. Each one is a complete build. Choose any two for a hands-on session — there are no dependencies between them.
+This pack contains **four independent, self-contained scenarios**. There are no dependencies between them.
 
-Everything is written so that **a participant can complete it by reading alone**, with no facilitator narration required. Every field value, every instruction string, and every test message is copy-paste ready.
-
-### 0.1 The four scenarios
+### 0.1 4 Scenarios
 
 | # | Scenario | What it does for real work | Trigger |
 |---|---|---|---|
 | **1** | **IT Request Triage Desk** | Every request email that lands in your inbox is classified, prioritised, logged to an Excel tracker, acknowledged to the sender, and escalated to Teams if urgent — automatically. | Email arrives |
 | **2** | **Reply Desk with Approval** | Microsoft 365 Copilot drafts a grounded reply to an incoming question, a human approves or asks for changes, an agent applies the feedback, and the workflow sends the reply. | Email arrives |
-| **3** | **Daily Brief 0800** | Every weekday morning, Microsoft 365 Copilot reads your day (calendar, mail, chats), an agent formats it into a fixed brief, and it lands in Teams before you open your laptop. | Schedule |
+| **3** | **Daily Brief 8AM** | Every weekday morning, Microsoft 365 Copilot reads your day (calendar, mail, chats), an agent formats it into a fixed brief, and it lands in Teams before you open your laptop. | Schedule |
 | **4** | **Friday Project Roll-up** | Reads your project tracker in Excel, has an agent analyse status and risk, asks the team lead to approve the summary, then emails leadership, posts to the team and archives the report. | Schedule |
 
-### 0.2 Node coverage — use this to choose your two
+### 0.2 Node coverage
 
 | | Agent node | M365 Copilot node | Human review | Excel Online | Outlook | Teams |
 |---|:---:|:---:|:---:|:---:|:---:|:---:|
 | **1 · IT Request Triage Desk** | ✅ | ➕ | ➕ | ✅ | ✅ | ✅ |
 | **2 · Reply Desk with Approval** | ✅ | ✅ | ✅ | ➕ | ✅ | ✅ |
-| **3 · Daily Brief 0800** | ✅ | ✅ | ➕ | ➕ | ➕ | ✅ |
+| **3 · Daily Brief 8AM** | ✅ | ✅ | ➕ | ➕ | ➕ | ✅ |
 | **4 · Friday Project Roll-up** | ✅ | ➕ | ✅ | ✅ | ✅ | ✅ |
 
 ✅ **In the core build** — you will use this node
-➕ **Optional extension** — not in the core build, but this pack walks you through adding it if you
-finish early.
-
-### 0.3 Recommended pairings
-
-| Pairing | Why choose it | Watch out for |
-|---|---|---|
-| **1 + 2** ⭐ **Recommended** | Strongest one-hour story. Both fire from an email you send yourself, so **you control exactly when each run happens** — no waiting for a clock. Together they cover all four favourite nodes plus Excel and Teams. Scenario 1 teaches *deterministic + AI*, Scenario 2 teaches *AI + human*. | Both use an email trigger, so use **distinct subject prefixes** (`[REQ]` vs `[Ask]`) or one workflow will swallow the other's test mail. |
-| **2 + 4** | The "governance" pairing. Both put a human gate in front of an AI-drafted action — the single most requested pattern in regulated environments. Covers Human review twice, from two different angles (free-text feedback vs. structured approve/hold). | Scenario 4 needs the Excel workbook prepared in advance (Section 1.4). |
-| **1 + 3** | The "personal productivity" pairing. One reactive workflow, one proactive workflow — a clean demonstration of *event-driven* vs *schedule-driven* automation. | Scenario 3's value is best felt the next morning; in-session you verify it with a manual test run. |
-| **3 + 4** | The "no inbox noise" pairing. Both are scheduled, so nothing fires unexpectedly during the session. | Both are tested with the **Test** button rather than a natural trigger — set that expectation up front. |
-
-### 0.4 What is deliberately *not* used in this pack
-
-Your lab environment enforces a strict DLP policy. Every step in this pack stays inside it.
-
-| Not used | Why | What we use instead |
-|---|---|---|
-| SharePoint node | Excluded by request | **Excel Online (Business)** with the workbook stored in **OneDrive for Business** |
-| Work IQ / Work IQ Calendar MCP | Not available in this environment | **Office 365 Outlook** connector actions, and the **M365 Copilot** node for Microsoft 365 grounding |
-| Microsoft To Do, Planner, Dynamics 365, third-party connectors | Blocked by DLP | Outlook, Teams, Excel Online (Business), Dataverse |
-| Knowledge sources on the agent node | SharePoint excluded; web indexing may be blocked | Data is passed **into** the agent as dynamic content instead of being looked up by it |
-
-> **Facilitator note.** If a participant's tenant blocks a connector mid-lab, every scenario still completes — the blocked step is always one of the optional extensions, never a core step.
+➕ **Optional extension** — not in the core build, but this pack walks you through adding it if you finish early.
 
 ---
 
-## 1. Before you begin — shared setup (done once)
-
-Complete this before you start building, ideally the day before.
+## 1. Before you begin
 
 ### 1.1 Environment check
 
 1. Open **Copilot Studio** at `copilotstudio.microsoft.com`.
 2. Confirm the **environment picker** (bottom left, above your name) shows your lab environment. Every participant must be in the same one.
 
-   > Some environments are served from the preview host `copilotstudio.preview.microsoft.com`. If your
-   > lab environment is one of them you may be signed in again when you switch to it, and the URL will
-   > differ from the one above. That is normal — what matters is that the picker shows the right
-   > environment name.
+   > Some environments are served from the preview host `copilotstudio.preview.microsoft.com`. If your lab
+   > environment is one of them you may be signed in again when you switch to it, and the URL will differ
+   > from the one above. That is normal — what matters is that the picker shows the right environment name.
 
 3. In the left navigation, confirm you can see **Workflows** (below **Agents**). If **Workflows** is missing, the new experience is not enabled for you — resolve this before the session, not during it.
 
 ![The Workflows list. Every workflow you build appears here with its publish state and an Enabled toggle.](./img/01-workflows-list.png)
 *The Workflows list. Every workflow you build appears here with its publish state and an Enabled toggle.*
 
-4. Open a second browser tab on **Outlook** (`outlook.office.com`) and a third on **Teams**. You will send test mail and check results there.
+4. Open three more browser tabs: **Outlook** (`outlook.office.com`), **Teams**, and **OneDrive**.
 
 ### 1.2 One identity for everything ⚠️
 
@@ -109,8 +78,6 @@ A **connection** is the stored permission that lets a node act as you — read y
 5. A sign-in tab opens. Pick your lab account. It closes itself.
 6. The field now shows your account, and the dependent fields below it load.
 
-> **Facilitator shortcut — worth doing.** Before the session, in the lab environment, create the connections for **Office 365 Outlook**, **Microsoft Teams**, **Excel Online (Business)** and **M365 Copilot** once. Drop a throwaway node of each type into a scratch workflow, create the connection, then delete the workflow. Every participant then sees a green tick instead of stopping four times mid-build.
-
 ### 1.4 Prepare the Excel workbook (needed for Scenario 1 and Scenario 4)
 
 Excel Online (Business) can only read and write cells that are inside a **formatted Excel Table**. A worksheet with headers typed into row 1 is *not* a table and will not appear in the connector's **Table** dropdown. This is the single most common failure in Excel-based labs.
@@ -122,6 +89,8 @@ Excel Online (Business) can only read and write cells that are inside a **format
 > 3. Close it. Then continue to section 1.5.
 >
 > That is the whole prerequisite. The manual build below is kept only as a reference and a fallback — it is data entry, not learning, and hand-typing a table name slightly wrong produces a failure that only shows up much later, at the Excel node, looking like a connector problem.
+
+![alt text](./img/image-4.png)
 
 <details>
 <summary><b>Build the workbook by hand instead (reference / fallback)</b></summary>
@@ -185,18 +154,16 @@ Excel Online (Business) can only read and write cells that are inside a **format
 
 ### 1.5 Prepare a Teams destination (needed for Scenarios 1, 3, 4)
 
-You have two options. Pick one now.
+You have two options. Option A is recommended for this lab.
 
 - **Option A — message yourself (fastest, zero setup).** In the Teams post step, set **Post in** to **Chat with Flow bot**, and **Recipient** to your own email address. Nothing to create in advance.
 - **Option B — a real channel (more realistic).** Create a Team called `Workflow Lab` with a **standard** channel called `Alerts`.
-
-This pack assumes **Option A** in the core steps and notes Option B where relevant.
 
 > ⚠️ **Two Teams constraints to check before the session.** Posting to a **private channel is not supported** — make `Alerts` a standard channel. And the **Flow bot** poster is available in **commercial tenants only**; on a government cloud, set **Post as** to **User** instead. Both actions also require the Workflows (Power Automate) app to be in the **allow** state in the Teams admin center.
 
 ---
 
-## 2. Core concepts — one-page cheat sheet
+## 2. Core concepts
 
 Skim this before you start. Refer back whenever a step mentions a term in **bold**.
 
@@ -214,7 +181,7 @@ Skim this before you start. Refer back whenever a step mentions a term in **bold
 | **Human review** | Pauses the workflow, sends one or more named people a form, and resumes when someone submits it. Every input you define becomes a dynamic-content token carrying the human's answer. The run sits at **Waiting** in the meantime. |
 | **Human-in-the-loop: by design vs. by judgement** | *By design* = you, the maker, place a Human review node at a specific point. *By judgement* = you turn on **Request human assistance** on an agent node and let the agent escalate on its own. Scenarios 2 and 4 use *by design*. |
 | **Deterministic step vs. AI step** | Use a deterministic step when the rule is clear — it is cheaper and predictable. Use an AI step when the step needs reasoning you cannot express as a rule. A good workflow is mostly deterministic with AI at the two or three points where judgement is genuinely needed. |
-| **Run node vs. Test** | The **Run node** tab on a node runs *that step alone*, letting you mock only the upstream values it actually references — fast, and it does not publish. The **Test** button in the top command bar exercises the whole graph. Iterating on a prompt? Run the node. Validating trigger logic? Test the flow. |
+| **Testing one node vs. the whole flow** | The **Run node** tab on a node runs *that step alone*, letting you mock only the upstream values it actually references — fast, and it does not publish. The **Run** button in the top command bar exercises the whole graph. Iterating on a prompt? Run the node. Validating trigger logic? Run the flow. |
 | **Publish** | A workflow only listens for its trigger **after you publish it**. You cannot publish a workflow that contains errors — the **Review** button in the command bar shows the count. |
 | **Activity** | The run history tab. Select a run to load it onto the canvas with each node's real inputs and outputs. This is where you debug. |
 
@@ -230,13 +197,13 @@ Skim this before you start. Refer back whenever a step mentions a term in **bold
 
 1. **Rename every node as you create it.** In the configuration panel header on the right, **click the node's title once** — the hint below it reads *"Click to rename"* — and the existing text arrives pre-selected, so type straight over it and press **Enter**. (The node's **⋯** menu only offers Settings and Code view — there is no Rename command there.) Default names become unreadable by node five, and they are what you search for in the dynamic-content picker.
 
-2. **Insert tokens slowly and check the chip.** Type `/`, **pause** for the *Insert dynamic content* panel to open, *then* type two or three letters to filter, then click the entry. Typing the filter too fast scrambles the characters, the picker matches nothing, and you are left with literal text like `/Frmo` sitting in the field. After each insertion, glance at the result: a real token is a rounded **chip** you cannot edit letter by letter, and hovering it shows the underlying expression. Two naming details worth knowing: inside an **agent's Instructions** box the trigger's values sit under a group called **Input** and the chip shows just the field name (`Subject`); in **connector** fields they sit under the trigger's node name and chips read **`NodeName.FieldName`**. An agent's structured-output fields always arrive **capitalised** — `category` in your schema becomes the token **`Category`**, and `owner_team` becomes **`Owner_team`**.
+2. **Insert Dynamic Content slowly and check the chip.** Type `/`, **pause** for the *Insert dynamic content* panel to open, *then* type two or three letters to filter, then click the entry. Dynamic Content is a rounded **chip** you cannot edit letter by letter, and hovering it shows the underlying expression.
 
 3. **Clear pre-filled boxes before you type.** Several fields arrive with placeholder text already *in* them — Human review input labels (`Text`, `Text 1`) and dropdown option boxes (`First option`). Typing **appends**, producing values like `TextDecision` or `First optionApprove`. Always **Ctrl+A, Delete** first. This one is worth reading twice: a wrong dropdown value causes a branch to silently take the wrong path with **no error at all**.
 
 4. **Test each node the moment you finish it**, before adding the next one. Finding out at node seven that node two returns the wrong shape costs far more than 30 seconds of testing.
 
-5. **Save often** with **Ctrl+S** or the toolbar **Save** icon. Note the designer keeps the URL `.../flows/new` until you navigate away — reloading *that* URL gives you a blank canvas. Your work is not lost; reopen the workflow from the **Workflows** list.
+5. **Save often.**
 
 ---
 
@@ -405,25 +372,24 @@ This workflow does all of it in about thirty seconds per email — and, importan
 ## Step 1 — Create and name the workflow
 
 1. In the Copilot Studio left navigation, select **Workflows**.
+![alt text](./img/image.png)
 2. Select **New workflow**. The designer ("Agentic Automations") opens with a single **Start** node on the canvas.
+![alt text](./img/image-1.png)
 3. Select the title at the top (**Untitled Workflow**) and type over it:
 
    ```
    IT Request Triage Desk
    ```
 
-   Press **Enter**.
-
 4. Select **Save** (or Ctrl+S).
 
-> 🔎 **Finding Save, and why it is often greyed out.** The right-hand end of the command bar is **icons only** — no text labels. Left to right they are **Undo · Redo · Version history · Send feedback · Save · Test · Review · Publish**; only the last two show words. **Save** is the floppy-disk icon, third from the right.
+> 🔎 **The Save icon**
+> It will frequently look **disabled**, and that is normal: the designer keeps a **Draft** saved for you automatically, so Save greys out whenever there is nothing new to write.
 >
-> It will frequently look **disabled**, and that is normal: the designer keeps a **Draft** saved for you automatically, so Save greys out whenever there is nothing new to write. Greyed out means *already saved*, not *broken*. You can confirm at any time by opening **Workflows** in the left navigation — your workflow is listed there with the status **Draft**.
->
-> **Test** and **Publish** stay disabled until the workflow has at least one **action** node; hover **Publish** and the tooltip says *"Action node required to publish."* That clears in Step 3.
+> **Run** and **Publish** stay disabled until the workflow has at least one **action** node; hover **Publish** and the tooltip says *"Action node required to publish."*
 
-![The designer command bar: Build / Activity / Monitor tabs on the left, and Save, Test, Review and Publish on the right.](./img/12-command-bar.png)
-*The right-hand icons are, left to right: Undo, Redo, Version history, Send feedback, Save, Test — then Review and Publish.*
+![The designer command bar: Build / Activity / Monitor tabs on the left, and Save, Run, Review and Publish on the right.](./img/12-command-bar.png)
+*The right-hand icons are, left to right: Undo, Redo, Version history, Send feedback, Save, Run — then Review and Publish.*
 
 <details>
 <summary>💡 <b>Concept</b></summary>
@@ -444,6 +410,8 @@ A workflow is the autonomous side of Copilot Studio. It runs on a trigger, not o
 
 
 1. Select the **Start** node. The configuration panel opens on the right.
+![alt text](./img/image-2.png)
+
 2. Change **Trigger type** from **Manual** to **Connector**.
 
    Selecting Connector immediately opens the **Select a trigger** dialog — you do not need to click anything else.
@@ -451,6 +419,8 @@ A workflow is the autonomous side of Copilot Studio. It runs on a trigger, not o
 3. In that dialog choose the **Office 365 Outlook** tile, then choose **When a new email arrives**.
 
    > Four triggers have near-identical names — *When a new email arrives*, *…in a shared mailbox*, *…mentioning me arrives*, and an event trigger. Pick the plain **When a new email arrives**.
+
+   ![alt text](./img/image-3.png)
 
    If a connection for Office 365 Outlook already exists in your environment, it binds automatically and shows a green **Connected** tick. **On a fresh lab environment it will instead say "Not connected"** — create the connection using the six steps in section 1.3, then continue. This is expected, not an error.
 
@@ -471,6 +441,7 @@ A workflow is the autonomous side of Copilot Studio. It runs on a trigger, not o
    ```
 
    Press **Enter**.
+   ![alt text](./img/image-5.png)
 
 7. Select **Save**.
 
@@ -491,6 +462,7 @@ This is the heart of the scenario. Everything before it moves data; this node ma
 3. If the node opens showing **Not connected**, create the connection first — see section 1.3. On a fresh environment it will. Once connected, the **Agent** dropdown and **Instructions** field appear.
 4. Leave the **Agent** dropdown on **New agent for this workflow**.
 5. Rename the node to `Request Triage Agent`.
+![alt text](./img/image-6.png)
 
 <details>
 <summary>💡 <b>Concept</b></summary>
@@ -552,6 +524,7 @@ promise a solution, a fix, or a root cause. Do not include a greeting line
 and do not include a signature.
 ```
 
+![alt text](./img/image-7.png)
 > ✅ **Check the three chips.** Before moving on, confirm the three values appear as coloured **chips**
 > — small rounded pills you cannot edit character by character — and not as literal text. A trigger
 > chip shows just the field name: **`Subject`**, **`From`**, **`Body`**. Hover one and the tooltip
@@ -603,6 +576,7 @@ Classification over a short email is a fast, high-volume job — exactly the cas
   "required": ["category", "priority", "summary", "owner_team", "sla_hours", "ack_message"]
 }
 ```
+![alt text](./img/image-8.png)
 
 4. Select **Save**.
 
@@ -648,6 +622,7 @@ Node-level testing runs this step in isolation — it is fast, it does not publi
 
 1. Below the agent node, select **Add a step**.
 2. Search for `Add a row into a table` and choose it under **Excel Online (Business)**.
+![alt text](./img/image-9.png)
 3. **Create the connection** if the node shows **Not connected** — chevron ⌄ → **Create new connection** → **Create** → pick your account in the popup. (See Section 1.3.)
 4. Set the location parameters in order — each one loads the next:
 
@@ -657,6 +632,8 @@ Node-level testing runs this step in isolation — it is fast, it does not publi
    | Document library | `OneDrive` — note it is **not** first in the list; `PersonalCacheLibrary` usually is |
    | File | click **Change**, then select `Workflows-Lab.xlsx` in the file tree |
    | Table | `RequestLog` |
+
+   ![alt text](./img/image-10.png)
 
 5. The nine table columns now appear as fields. Fill each one — type `/`, pause, filter, select:
 
@@ -671,6 +648,8 @@ Node-level testing runs this step in isolation — it is fast, it does not publi
    | Owner team | `Owner_team` | Request Triage Agent |
    | SLA hours | `Sla_hours` | Request Triage Agent |
    | Status | *type the literal text* `New` | — |
+
+   ![alt text](./img/image-11.png)
 
 6. Rename the node to `Log to request tracker` and select **Save**.
 
@@ -695,6 +674,7 @@ This runs for **every** request, urgent or not — which is why it goes here, *b
 
 1. Below **Log to request tracker**, select **Add a step**.
 2. Search for `Reply to email` and choose it under **Office 365 Outlook**.
+![alt text](./img/image-12.png)
 3. Configure:
 
    | Parameter | Value |
@@ -702,6 +682,8 @@ This runs for **every** request, urgent or not — which is why it goes here, *b
    | **Message ID** | `Message Id` *(from New request email)* |
    | **Body** | `Ack_message` *(from Request Triage Agent)* |
    | Reply all | leave off |
+
+   ![alt text](./img/image-13.png)
 
 4. Rename the node to `Acknowledge the sender` and select **Save**.
 
@@ -727,6 +709,7 @@ A canned "we received your request" reply teaches the sender to ignore your auto
 
 
 1. Below **Acknowledge the sender**, select **Add a step** and choose **If/Else**.
+![alt text](./img/image-14.png)
 2. Configure the condition row — it is built from three parts, not free text:
 
    | Part | Value |
@@ -736,7 +719,7 @@ A canned "we received your request" reply teaches the sender to ignore your auto
    | **Value** | type `High` |
 
 3. Rename the node to `Is it urgent?` and select **Save**.
-
+![alt text](./img/image-16.png)
 > 📎 **The branches are named If and Else**, and the **Else** branch is created for you automatically —
 > the panel says so. Leave **Else** empty: a Medium or Low request is logged and acknowledged, and
 > that is all it should be.
@@ -745,6 +728,7 @@ A canned "we received your request" reply teaches the sender to ignore your auto
 
 1. On the **If** branch, select **Add a step**.
 2. Search for `Post message in a chat or channel` and choose it under **Microsoft Teams**.
+![alt text](./img/image-17.png)
 3. Set:
 
    | Parameter | Value |
@@ -769,7 +753,7 @@ A canned "we received your request" reply teaches the sender to ignore your auto
    From:    ⟨insert /From⟩
    Subject: ⟨insert /Subject⟩
    ```
-
+   ![alt text](./img/image-18.png)
 5. Rename the node to `Escalate to on-call` and select **Save**.
 
 > 🚨 **Read the chips carefully in this step.** Now that the Excel node exists, the picker contains
@@ -789,8 +773,8 @@ The agent decided *what* the priority is; the If/Else decided *what to do about 
 
 ## Step 7 — Publish, run and verify
 
-![The designer command bar: Build / Activity / Monitor tabs on the left, and Save, Test, Review and Publish on the right.](./img/12-command-bar.png)
-*The designer command bar: Build / Activity / Monitor tabs on the left, and Save, Test, Review and Publish on the right.*
+![The designer command bar: Build / Activity / Monitor tabs on the left, and Save, Run, Review and Publish on the right.](./img/12-command-bar.png)
+*The designer command bar: Build / Activity / Monitor tabs on the left, and Save, Run, Review and Publish on the right.*
 
 
 1. Check the **Review** button in the command bar — it shows a problem count if anything is incomplete. Then select **Publish**.
@@ -830,6 +814,9 @@ The agent decided *what* the priority is; the If/Else decided *what to do about 
    > ⏱️ Be patient. The mail trigger polls, so a run typically appears within a minute or two. A complete run takes roughly 30 seconds.
 
 4. Select each node on the loaded run to inspect the real inputs and outputs it received.
+![alt text](./img/image-19.png)
+![alt text](./img/image-21.png)
+![alt text](./img/image-20.png)
 
 ### ✅ Verify all four outcomes
 
@@ -842,6 +829,8 @@ The agent decided *what* the priority is; the If/Else decided *what to do about 
 
 Send Test B specifically to prove the **Else** path works. A workflow that alerts on everything is the same as a workflow that alerts on nothing.
 
+![alt text](./img/image-22.png)
+
 ### Optional extensions
 
 | Extension |
@@ -849,13 +838,6 @@ Send Test B specifically to prove the **Else** path works. A workflow that alert
 | **Add an M365 Copilot node** between the trigger and the agent. Message: `Have we seen a request like this before? Search my mail and chats for prior cases matching:` + `/Subject`. Feed its **Body / Response** into the agent's instructions as extra context so triage improves with your organisation's history. |
 | **Add a human gate for High priority.** On the **If** branch, insert a **Human review** node before the Teams post, with one Yes/No input `PageOnCall`. Only page someone when a human confirms. |
 | **Deduplicate.** Add **Excel Online (Business) ▸ List rows present in a table** before the agent and pass recent subjects into the instructions so it can flag `duplicate_of`. |
-
-### Talking points for the facilitator
-
-- **"AI produces structure, deterministic steps consume it."** Everything after the agent node is ordinary, auditable, zero-AI automation. This is how you keep an AI workflow explainable to a security team.
-- **The closed value lists in the instructions are a governance control**, not a style choice. They are what guarantee the Excel column and the branch never see an unexpected value.
-- **The branch does not rejoin.** Ask the room where they would have put the acknowledgement, then show why it has to sit above the If/Else. It is a 20-second lesson that saves them an hour later.
-- **This is a genuine 20–40 minutes per day per triager**, and it is the easiest workflow in the pack to hand to a real team on Monday morning.
 
 ---
 
@@ -903,6 +885,7 @@ Microsoft 365 Copilot already has that context. This workflow puts it to work �
    - **Folder** — click **Change**, then select **Inbox** in the tree.
    - **Advanced parameters ▸ Show all**, then **Subject filter** = `[Ask]`
 4. Rename the node to `New question email`. Select **Save**.
+![alt text](./img/image-24.png)
 
 > ⚠️ **If you also built Scenario 1**, the subject filters must differ — `[REQ]` and `[Ask]`. Two workflows watching the same inbox with overlapping filters will both fire on the same message and you will spend the rest of the session wondering why.
 
@@ -914,26 +897,27 @@ Microsoft 365 Copilot already has that context. This workflow puts it to work �
 2. The node opens showing **Not connected**. Create the connection: click the **chevron ⌄** on the **Connection** field → **Create new connection** → **Create** on the *M365 Copilot (V2)* dialog → pick your lab account in the popup. (Clicking the large *"Connect to M365 Copilot"* placeholder in the body does nothing.)
 3. In the **Message** field, type the text below, inserting tokens with `/` where shown:
 
-```
-Draft a reply to the email below, written on my behalf.
+   ```
+   Draft a reply to the email below, written on my behalf.
 
-Use my Microsoft 365 content - my recent mail, files, meetings and chats - to
-ground the answer in what my team has actually said and decided. Where you use
-something you found, say briefly where it came from, for example "as we agreed
-in Tuesday's review". If you cannot find grounding for a point, say plainly that
-you will follow up with the detail rather than inventing it.
+   Use my Microsoft 365 content - my recent mail, files, meetings and chats - to
+   ground the answer in what my team has actually said and decided. Where you use
+   something you found, say briefly where it came from, for example "as we agreed
+   in Tuesday's review". If you cannot find grounding for a point, say plainly that
+   you will follow up with the detail rather than inventing it.
 
-Subject: ⟨insert /Subject⟩
-From:    ⟨insert /From⟩
-Body:    ⟨insert /Body⟩
+   Subject: ⟨insert /Subject⟩
+   From:    ⟨insert /From⟩
+   Body:    ⟨insert /Body⟩
 
-Write the reply as a plain-text email body in the same language as the incoming
-email. Keep it under 150 words. Use short paragraphs. End with one clear next
-step and an owner for it.
+   Write the reply as a plain-text email body in the same language as the incoming
+   email. Keep it under 150 words. Use short paragraphs. End with one clear next
+   step and an owner for it.
 
-Do not include a subject line, a greeting header block, or a signature.
-Return only the reply text and nothing else.
-```
+   Do not include a subject line, a greeting header block, or a signature.
+   Return only the reply text and nothing else.
+   ```
+   ![alt text](./img/image-23.png)
 
 4. Set the **Time zone**. It is already visible under **Advanced parameters** (*Showing 2 of 3*) and it takes an **IANA identifier**:
 
@@ -942,8 +926,9 @@ Return only the reply text and nothing else.
    ```
 
 5. Rename the node to `Draft reply with Copilot`. Select **Save**.
+![alt text](./img/image-25.png)
 
-> ⏰ **This field defaults to `America/New_York`.** Not UTC, not your tenant's region. Leave it alone and every relative phrase — "today", "this week", "yesterday's meeting" — resolves in New York time. Set it deliberately. Note the format is `Asia/Seoul`, **not** `(UTC+09:00) Seoul`; that other format belongs to the *Recurrence trigger*, which you will meet in Scenario 3. Two different time-zone fields, two different formats, two different jobs.
+> ⏰ **This field defaults to `America/New_York`.** Not UTC, not your tenant's region. Leave it alone and every relative phrase — "today", "this week", "yesterday's meeting" — resolves in New York time. Set it deliberately.
 
 <details>
 <summary>💡 <b>Concept — why this node and not an agent node</b></summary>
@@ -1003,6 +988,7 @@ Choose Approve to send it. Leave ChangeRequest empty to send the draft exactly
 as it is, or describe in one or two sentences what you want changed and it will
 be revised before sending.
 ```
+![alt text](./img/image-26.png)
 
 > 📬 **Three things to know about Human review before you build on it:**
 > 1. **The field name states the rule** — *Assigned to (first to respond)*. If you assign three people, only the first submission is processed.
@@ -1035,17 +1021,7 @@ Each input you define becomes a dynamic-content token carrying the human's answe
    Open its **⋯** menu and choose **Make optional**.
 
 3. Select **Save**.
-
-> 🚨 **This is the single most dangerous step in the pack — read it twice.**
-> Both the input **label** boxes and the dropdown **option** boxes arrive with placeholder text already
-> inside them. Typing **appends** rather than replaces, so you silently end up with `TextDecision` and
-> `First optionApprove`.
->
-> A wrong option value does **not** error. The approver picks it, the value never equals `Approve`,
-> your If/Else quietly takes the **Else** path, nothing is sent — and the run still reports
-> **Succeeded** with a green tick. There is no clue anywhere.
->
-> **Always Ctrl+A, Delete before typing**, then re-read both boxes before you save.
+![alt text](./img/image-27.png)
 
 <details>
 <summary>💡 <b>Concept — a review gate is not just an approval button</b></summary>
@@ -1075,6 +1051,7 @@ You just placed this gate deliberately — *human-in-the-loop by design*. The al
    | **Value** | type `Approve` |
 
 3. Rename the node to `Approved?`
+![alt text](./img/image-28.png)
 4. On the **Else** branch, select **Add a step ▸ Microsoft Teams ▸ Post message in a chat or channel**:
 
    | Parameter | Value |
@@ -1085,6 +1062,7 @@ You just placed this gate deliberately — *human-in-the-loop by design*. The al
    | Message | `Reply suppressed by reviewer - ` then insert `/Subject` |
 
 5. Rename it to `Tell me it was suppressed`. Select **Save**.
+![alt text](./img/image-29.png)
 
 ---
 
@@ -1096,27 +1074,29 @@ You just placed this gate deliberately — *human-in-the-loop by design*. The al
 2. Leave **Agent** on **New agent for this workflow**. Rename the node to `Apply reviewer feedback`.
 3. In **Instructions**, enter:
 
-```
-You finalise an email reply just before it is sent.
-Return only the final email body. No preamble, no explanation, no subject line,
-no signature, no quotation marks around the result.
+   ```
+   You finalise an email reply just before it is sent.
+   Return only the final email body. No preamble, no explanation, no subject line,
+   no signature, no quotation marks around the result.
 
-DRAFTED REPLY:
-⟨insert /Body / Response from Draft reply with Copilot⟩
+   DRAFTED REPLY:
+   ⟨insert /Body / Response from Draft reply with Copilot⟩
 
-REVIEWER'S CHANGE REQUEST:
-⟨insert /ChangeRequest from Approve the reply⟩
+   REVIEWER'S CHANGE REQUEST:
+   ⟨insert /ChangeRequest from Approve the reply⟩
 
-Rules:
-- If the change request is empty, return the drafted reply completely unchanged.
-  Do not "improve" it. Do not reword it.
-- If the change request has content, apply it faithfully and return the full
-  revised reply.
-- Never add a fact that appears in neither the draft nor the change request.
-- Keep the language of the draft.
-```
+   Rules:
+   - If the change request is empty, return the drafted reply completely unchanged.
+   Do not "improve" it. Do not reword it.
+   - If the change request has content, apply it faithfully and return the full
+   revised reply.
+   - Never add a fact that appears in neither the draft nor the change request.
+   - Keep the language of the draft.
+   ```
+   ![alt text](./img/image-30.png)
 
 4. Leave **Output** on **Text response**. Add **no tools** — this agent only needs to read and reason.
+![alt text](./img/image-31.png)
 5. Select **Save**.
 
 <details>
@@ -1136,21 +1116,11 @@ Tools let an agent *act*; without them it can only read and reason. Here, reason
    | **Message ID** | `Message Id` *(from New question email)* |
    | **To** | `From` *(from New question email)* |
    | **Body** | `Agent Response` *(from Apply reviewer feedback)* |
-   | Reply all | leave off |
+   | Reply all | False (default) |
+
+   ![alt text](./img/image-32.png)
 
 3. Rename the node to `Send the approved reply`. Select **Save**.
-
-> ⚠️ **Fill in `To` even though it is optional — otherwise this step fails.** The field is marked optional and it is tempting to leave it blank on the assumption that a *reply* already knows who it is going to. It does not always. When you test by emailing **yourself** — which is exactly what this lab asks you to do — the connector can end up with no recipient to resolve and the action fails with:
->
-> ```
-> Action 'Send_the_approved_reply' failed: A message needs to have at least one recipient.
-> ```
->
-> The failure lands at the very end of the run, *after* the draft, *after* the human approval, so you lose the whole cycle and have to re-approve to try again. Binding **To** to the trigger's `From` token costs five seconds and makes the step correct for both self-tests and real senders.
->
-> `From` is described in the picker as *"The mailbox owner and sender of the message"* and previews as the sender's address. Insert it with the **Insert dynamic content** button on the **To** field rather than typing `/From` — see the note below.
-
-> 🐌 **Insert this token with the button, not the keyboard.** The `/` shortcut works, but the filter box scrambles fast keystrokes: typing `From` frequently lands as `Fomr` and the panel reports *No results for "Fomr"*. Worse, the stray letters stay behind in the field **next to** the chip once you do pick the token, so you end up with `From` + `Fomr` and an invalid address. Use the small **Insert dynamic content** button on the field, expand **When a new email arrives**, and click **From** in the list. If you do end up with leftover characters, click into the field, press **End**, and backspace them away — the chip itself deletes as a single unit.
 
 > 📤 **An agent set to Text response returns one token: `Agent Response`** (described as "The agent response text"), prefixed by its node name — so the chip reads `Apply reviewer feedback.Agent Response`.
 
@@ -1182,27 +1152,18 @@ Tools let an agent *act*; without them it can only read and reason. Here, reason
    > 🔒 **Outlook only:** if Outlook shows a **"blocked content"** banner, click **Show blocked content** — the interactive form will not render until you do.
    >
    > ⏱️ **If nothing arrives, do not assume you built it wrong.** The node shows **Waiting** and the run reports no error whether the card arrives in ten seconds or not at all — there is no failure to read.
->
-> Outlook delivery is **inconsistent**: sometimes it lands in under a minute, sometimes not at all. Teams is reliable. **If you are working to a fixed schedule, set Channel to Teams and republish.**
->
-> Do not go looking in the Power Automate **Approvals** portal — it reads *"You don't have any pending approvals"* even while requests are genuinely open, so it cannot tell you anything.
 
 5. Respond on separate test emails to see all three paths. **Write the change request so you can prove it was applied** — ask for something measurable *and* for a specific word that does not appear anywhere in the draft:
    - **Run 1** — `Decision` = `Approve`, `ChangeRequest` = *empty*. Select **Submit**.
    - **Run 2** — `Decision` = `Approve`, `ChangeRequest` = `Make it much shorter - two sentences maximum - and add that I will confirm the approved method by Wednesday.` Select **Submit**.
    - **Run 3** — `Decision` = `Reject`. Leave `ChangeRequest` empty.
 6. The workflow resumes within a minute of each submission.
+![alt text](./img/image-34.png)
+![alt text](./img/image-33.png)
+![alt text](./img/image-35.png)
+![alt text](./img/image-36.png)
 
-> 🔁 **Expect one extra run after every approved reply, and know why.** The reply you just sent keeps `[Ask]` in its subject (`RE: [Ask] …`) and — because you are testing by emailing **yourself** — it lands straight back in the inbox the trigger is watching. The workflow fires on its own output. You will see a run appear roughly a minute after each successful reply, drafting an answer to your own answer.
->
-> It does not run away, because it stops at the review gate and waits for a human who is not going to approve it. But it does leave stray **Waiting** runs behind, and if someone approves one out of curiosity, it replies again and the cycle repeats. Two ways to keep the lab tidy:
->
-> - Leave them. Cancel the stray runs at the end from **Activity ▸ Run actions ▸ Cancel**.
-> - Or make the trigger ignore its own output: open the trigger's **Advanced parameters**, and set the **From** filter to the address of whoever sends your test mail, so replies from your own mailbox are not picked up.
->
-> **Run 3 is the exception:** a rejected run sends nothing, so nothing re-enters the inbox and no extra run appears. That contrast is worth pointing out — the loop is caused by the *reply*, not by the workflow running.
->
-> This is not a quirk of the lab — it is the standard failure mode of any workflow that writes into the same place it reads from. Seeing it here, at a harmless scale, is worth more than being warned about it in the abstract.
+> **Run 3:** a rejected run sends nothing, so nothing re-enters the inbox and no extra run appears.
 
 ### ✅ Verify
 
@@ -1215,21 +1176,6 @@ Tools let an agent *act*; without them it can only read and reason. Here, reason
 | **Activity** panel | A run showing **Waiting** while the gate is open, then **Succeeded** |
 
 > 🔍 **How to prove the branch really fired, not just that "something happened".** Open the finished run, select the **Approved?** node, and read its inputs. It states the comparison in plain text — for a rejected run:
->
-> ```
-> Approve the reply → Reject   is equal to   Approve   →   False
-> ```
->
-> `False` means the **Else** branch ran. On an approved run the same panel reads `expressionResult: true`. This is the single most reliable way to diagnose a branch, and it is the check that catches the pre-filled-dropdown trap from Step 4 — where a wrong option value produces `False` on a run that still reports **Succeeded**.
-
-> 🧪 **The run must finish `Succeeded`, not just "send something".** The last step is where this scenario most often breaks, and it breaks *after* the human has already approved — so the approval is spent and you have to send a fresh test email to try again. If the run ends **Failed**, open the failed action and read the message:
->
-> | Error text | Cause | Fix |
-> |---|---|---|
-> | *A message needs to have at least one recipient* | **To** was left empty | Bind **To** to the trigger's `From` token (Step 5b) |
-> | *Input parameter 'replyParameters/To' is required to be of type 'String/email'. The runtime value `"someone@contoso.com\n"` …* | A stray line break is sitting in the **To** box next to the token | Click into **To**, **Ctrl+A**, **Delete** until the box is completely empty, then re-insert the token with the **Insert dynamic content** button and save without typing anything else |
-
-Watching the run sit in **Waiting** until you submit the form is the moment the human-in-the-loop concept lands. Point at it.
 
 ### Optional extensions
 
@@ -1240,15 +1186,9 @@ Watching the run sit in **Waiting** until you submit the form is the moment the 
 | **Route the approval by topic.** Add an If/Else before the review node and set **Assigned to** differently per topic, so pricing questions go to one approver and technical questions to another. |
 | **Switch the gate to Teams.** Change **Channel** to `Teams` and compare the reviewer experience. |
 
-### Talking points for the facilitator
-
-- **This is the pattern that gets AI automation past a security review.** Nothing leaves the tenant without a named human pressing Submit, and every decision is recorded.
-- **Two AI nodes, two different jobs.** M365 Copilot brings organisational context. The agent node enforces automation-specific behaviour. Neither replaces the other.
-- **The `ChangeRequest` field is the whole design.** A reviewer who can only say yes or no eventually says yes to everything.
-
 ---
 
-# Scenario 3 — Daily Brief 0800
+# Scenario 3 — Daily Brief 8AM
 
 **Core nodes: Recurrence trigger · M365 Copilot · Agent · Teams**
 
@@ -1283,23 +1223,8 @@ Microsoft 365 Copilot can already answer all of it. What it cannot do on its own
 1. **Workflows ▸ New workflow**. Rename the title to:
 
    ```
-   Daily Brief 0800
+   Daily Brief 8AM
    ```
-
-   > 📛 **Two naming rules bite here, and they report at different moments.**
-   >
-   > | Rule | Allowed | When you find out |
-   > |---|---|---|
-   > | **Characters** | Letters, digits, spaces, emoji, and `.` `_` `-` `(` `)` — **nothing else** | Immediately, as you type |
-   > | **First character** | Must be a **letter** | Only when you commit (press Enter) |
-   >
-   > This rules out the two names you would most naturally reach for. `08:00 Daily Brief` fails **both** rules, and even `Daily Brief 08:00` fails — the colon is not on the allow-list:
-   >
-   > *"Workflow name contains characters that aren't allowed. Use letters, digits, spaces, emoji, and the punctuation . \_ - ( ) only."*
-   >
-   > Use `Daily Brief 0800`. If you prefer the time to read as a time, `Daily Brief 08.00` and `Daily Brief (08.00)` are both legal, because `.` and `( )` are on the list. `Morning Brief` is fine too — but the rest of this scenario refers to the workflow as **Daily Brief 0800**, so stick with that unless you enjoy translating.
-
-   **To rename:** click the workflow title in the header bar — it shows a *"Click to rename"* hint — type the new name, press **Enter**. There is no Rename command on the workflows list; the `⋯` menu on a list row offers only **Delete**.
 
 2. Select the **Start** node and set **Trigger type** to **Recurrence** (*Run on a schedule*) — the clock option, between Manual and Connector.
 
@@ -1316,7 +1241,8 @@ Microsoft 365 Copilot can already answer all of it. What it cannot do on its own
 
    > 📎 **What the fields actually look like.** *On these days* is a row of seven **checkboxes** (Sun–Sat) — `Sun` is ticked by default, so untick it. *At these hours* and *At these minutes* are comma-separated **text boxes**; the greyed `9, 17` and `0, 30` you see are placeholder hints, not values. **Time zone** and **Start time** sit below an **Advanced** divider, and Time zone defaults to *(UTC) Coordinated Universal Time*.
 
-4. Rename the node to `Every weekday at 08:00`. Select **Save**.
+4. Select **Save**.
+![alt text](./img/image-37.png)
 
 <details>
 <summary>💡 <b>Concept — this is the other half of "trigger"</b></summary>
@@ -1370,6 +1296,7 @@ Rules:
    ```
 
 5. Rename the node to `Read my day`. Select **Save**.
+![alt text](./img/image-38.png)
 
 <details>
 <summary>💡 <b>Concept — grounding is the whole point</b></summary>
@@ -1442,6 +1369,7 @@ Rules:
 
 4. Leave **Output** on **Text response** — the whole point of this node is one clean block of text.
 5. Add **no tools**. Select **Save**.
+![alt text](./img/image-39.png)
 
 > ✅ **Verify the chip before you type the rest.** After inserting the token you should see a chip reading `Read my day.Body / Response`. If it did not insert, the picker stays open and swallows every character you type next — you will end up with instructions that stop at "RAW BRIEF:" and an agent that invents a brief from nothing.
 
@@ -1480,6 +1408,7 @@ Open the **Run node** tab on this node and select **Run**. Compare its output wi
    ```
 
 4. Rename the node to `Send the brief` and select **Save**.
+![alt text](./img/image-40.png)
 
 <details>
 <summary>💡 <b>Why Teams and not email</b></summary>
@@ -1493,9 +1422,9 @@ The brief competes with the inbox it is summarising. Putting it anywhere other t
 ## Step 5 — Publish, run the test, verify
 
 1. Select **Publish** and wait for the badge to read **Published**.
-2. Select the **Test** button in the top command bar.
+2. Select the **Run** button in the top command bar.
 
-   > ⏱️ **What happens with a scheduled trigger.** You do not wait until tomorrow morning. Pressing **Test** starts a run immediately — there is no menu or dialog to confirm. This is how you demo a scheduled workflow in a 30-minute session.
+   > ⏱️ **What happens with a scheduled trigger.** You do not wait until tomorrow morning. Pressing **Run** starts a run immediately — there is no menu or dialog to confirm. This is how you demo a scheduled workflow in a 30-minute session.
 
 3. Open the **Activity** tab. The run appears and moves to **Succeeded**. Expect roughly 1–1½ minutes end to end — the Copilot node is the slow part (about a minute), the agent about 12 seconds, the Teams post about 2 seconds.
 4. Select the run to load it onto the canvas and inspect each node's real inputs and outputs.
@@ -1509,7 +1438,8 @@ The brief competes with the inbox it is summarising. Putting it anywhere other t
 | **TOP 3** | Three items that are *prioritised*, not just the first three things from the lists above |
 | **Activity** panel | A **Succeeded** run — open **Read my day** and **Format the brief** and compare the two outputs |
 
-Tomorrow at 08:00 it arrives on its own. That is the point of the scenario, and it is worth saying out loud: **nothing you built today needs you to be present for it to work.**
+![alt text](./img/image-42.png)
+![alt text](./img/image-41.png)
 
 ### Optional extensions
 
@@ -1519,12 +1449,6 @@ Tomorrow at 08:00 it arrives on its own. That is the point of the scenario, and 
 | **Archive every brief.** Add **Excel Online (Business) ▸ Add a row into a table** writing the date and the brief text. Three months later you have a searchable record of what mattered each day. |
 | **Add external context.** Add a second M365 Copilot node asking for recent news on the customer you are meeting today, and append its **Body / Response** to the brief. |
 | **End-of-day version.** Duplicate the workflow, change the schedule to 17:30, and rewrite the Message to ask what moved, what slipped and what to carry to tomorrow. |
-
-### Talking points for the facilitator
-
-- **A chat assistant answers when asked. A workflow shows up.** This scenario is the shortest route to that distinction.
-- **Retrieval versus prioritisation.** Point at the TOP 3. Everything above it is retrieval; that line is judgement. Ask the room which one they actually wanted.
-- **Two time zones, two formats, two jobs.** One decides when the workflow runs, one decides what "today" means. This is the most reliable "gotcha" moment in the pack.
 
 ---
 
@@ -1582,29 +1506,32 @@ This workflow reads the tracker, does the translation, and asks a human to appro
    |---|---|---|
    | 1 | **Frequency** | `Week` |
    | 2 | **Interval** | `1` |
-   | 3 | **On these days** | tick `Fri` only (untick `Sun`) |
+   | 3 | **On these days** | tick `Fri` only |
    | 4 | **At these hours** | `16` |
    | 5 | **At these minutes** | `0` |
    | 6 | **Advanced ▸ Time zone** | `(UTC+09:00) Seoul` |
 
-3. Rename the node to `Every Friday at 16:00`. Select **Save**.
+3. Select **Save**.
+![alt text](./img/image-43.png)
 
 ---
 
 ## Step 2 — Read the tracker from Excel
 
 1. Below the trigger, select **Add a step**, search for `List rows present in a table`, and choose it under **Excel Online (Business)**.
+![alt text](./img/image-44.png)
 2. Create the connection if prompted (Section 1.3).
 3. Configure — each field loads the next:
 
    | Parameter | Value |
    |---|---|
    | Location | `OneDrive for Business` |
-   | Document library | `OneDrive` — note it is **not** first in the list; `PersonalCacheLibrary` usually is |
+   | Document library | `OneDrive` |
    | File | click **Change**, then select `Workflows-Lab.xlsx` in the tree |
    | Table | `ProjectTracker` |
 
 4. Rename the node to `List project rows`. Select **Save**.
+![alt text](./img/image-45.png)
 5. Open the node's **Run node** tab and select **Run**. You should see six project objects come back.
 
 > ⚠️ **Do run this test.** It takes ten seconds and it is what makes the next node's test meaningful — the agent test can then reuse real rows instead of running against nothing.
@@ -1670,7 +1597,7 @@ or "None" if there are none. A tracker row nobody has touched is itself a risk.
 Use only the data above. Never invent a project, an owner, a date or a number.
 Never soften a status: if a project is Blocked, the roll-up says Blocked.
 ```
-
+![alt text](./img/image-46.png)
 > 📤 **The rows arrive as one token called `Value`** (an array), under the **List project rows** group. There is no `/value` in lower case and no per-column tokens at this point — the agent receives the whole collection and reads the columns itself.
 
 ### 3b — Shape the output
@@ -1678,20 +1605,21 @@ Never soften a status: if a project is Blocked, the roll-up says Blocked.
 1. Scroll to the **bottom** of the panel, open **Output** and select **Custom structured output**.
 2. Paste this schema into the **JSON Schema** box:
 
-```json
-{
-  "type": "object",
-  "properties": {
-    "headline":       { "type": "string",  "description": "One sentence, maximum 18 words, leading with the exception" },
-    "exec_summary":   { "type": "string",  "description": "3 to 5 lines, each starting with '- '" },
-    "at_risk_count":  { "type": "integer", "description": "Count of projects that are At risk or Blocked" },
-    "at_risk_detail": { "type": "string",  "description": "Project, owner, percent complete and likely reason for each at-risk project" },
-    "help_needed":    { "type": "string",  "description": "One sentence naming the single most valuable unblock" },
-    "stale_projects": { "type": "string",  "description": "Names of rows not updated in over 5 days, or 'None'" }
-  },
-  "required": ["headline", "exec_summary", "at_risk_count", "at_risk_detail", "help_needed", "stale_projects"]
-}
-```
+   ```json
+   {
+   "type": "object",
+   "properties": {
+      "headline":       { "type": "string",  "description": "One sentence, maximum 18 words, leading with the exception" },
+      "exec_summary":   { "type": "string",  "description": "3 to 5 lines, each starting with '- '" },
+      "at_risk_count":  { "type": "integer", "description": "Count of projects that are At risk or Blocked" },
+      "at_risk_detail": { "type": "string",  "description": "Project, owner, percent complete and likely reason for each at-risk project" },
+      "help_needed":    { "type": "string",  "description": "One sentence naming the single most valuable unblock" },
+      "stale_projects": { "type": "string",  "description": "Names of rows not updated in over 5 days, or 'None'" }
+   },
+   "required": ["headline", "exec_summary", "at_risk_count", "at_risk_detail", "help_needed", "stale_projects"]
+   }
+   ```
+   ![alt text](./img/image-47.png)
 
 3. Leave **Tools** empty — every fact this agent needs was handed to it in the instructions.
 4. Select **Save**.
@@ -1725,51 +1653,50 @@ You know the right answer for this dataset, so you can tell instantly whether th
 1. Below the agent, select **Add a step** and choose the **Human review** tile. Rename it to `Team lead approval`.
 2. Fill the fields:
 
-| Field | What to enter |
-|---|---|
-| **Title** | `Approve the weekly project roll-up` |
-| **Message** | The block below — insert tokens where shown |
-| **Assigned to (first to respond)** | Your own email address (in the real version, the team lead's) |
-| **Channel** | Leave on `Outlook` |
+   | Field | What to enter |
+   |---|---|
+   | **Title** | `Approve the weekly project roll-up` |
+   | **Message** | The block below — insert tokens where shown |
+   | **Assigned to (first to respond)** | Your own email address (in the real version, the team lead's) |
+   | **Channel** | Leave on `Outlook` |
 
-**Message:**
+   **Message:**
 
-```
-The weekly project roll-up is ready for your approval.
+   ```
+   The weekly project roll-up is ready for your approval.
 
-HEADLINE
-⟨insert /Headline⟩
+   HEADLINE
+   ⟨insert /Headline⟩
 
-SUMMARY
-⟨insert /Exec_summary⟩
+   SUMMARY
+   ⟨insert /Exec_summary⟩
 
-AT RISK - ⟨insert /At_risk_count⟩ project(s)
-⟨insert /At_risk_detail⟩
+   AT RISK - ⟨insert /At_risk_count⟩ project(s)
+   ⟨insert /At_risk_detail⟩
 
-BIGGEST UNBLOCK
-⟨insert /Help_needed⟩
+   BIGGEST UNBLOCK
+   ⟨insert /Help_needed⟩
 
-NOT UPDATED RECENTLY
-⟨insert /Stale_projects⟩
+   NOT UPDATED RECENTLY
+   ⟨insert /Stale_projects⟩
 
-Approve to send this to leadership and post it to the team channel.
-Hold to stop it here - nothing is sent.
-```
-
-> 🔤 **Filter by the capitalised token names** — `Headline`, `Exec_summary`, `At_risk_count`, `At_risk_detail`, `Help_needed`, `Stale_projects`. Note `At_risk_count` and `At_risk_detail` share a prefix, so type enough letters (`At_risk_c` / `At_risk_d`) to separate them, and check each chip.
+   Approve to send this to leadership and post it to the team channel.
+   Hold to stop it here - nothing is sent.
+   ```
+   ![alt text](./img/image-48.png)
+   > 🔤 **Filter by the capitalised token names** — `Headline`, `Exec_summary`, `At_risk_count`, `At_risk_detail`, `Help_needed`, `Stale_projects`. Note `At_risk_count` and `At_risk_detail` share a prefix, so type enough letters (`At_risk_c` / `At_risk_d`) to separate them, and check each chip.
 
 3. Add the four inputs. Select **Add an input** once per row, **clearing the pre-filled label each time**:
 
-| # | Type | Name (no spaces) | Configuration |
-|---|---|---|---|
-| 1 | **Text** | `Decision` | **⋯ ▸ Add dropdown**. Clear `First option` from the **Option 1** box, type `Approve`. In **Add new option**, type `Hold`. |
-| 2 | **Text** | `LeadNote` | **⋯ ▸ Make optional** |
-| 3 | **Date** | `ReportDate` | — |
-| 4 | **Email** | `ApproverEmail` | — |
+   | # | Type | Name (no spaces) | Configuration |
+   |---|---|---|---|
+   | 1 | **Text** | `Decision` | **⋯ ▸ Add dropdown**. Clear `First option` from the **Option 1** box, type `Approve`. In **Add new option**, type `Hold`. |
+   | 2 | **Text** | `LeadNote` | **⋯ ▸ Make optional** |
+   | 3 | **Date** | `ReportDate` | — |
+   | 4 | **Email** | `ApproverEmail` | — |
 
+   ![alt text](./img/image-49.png)
 4. Select **Save**.
-
-> 🚨 **Clear every pre-filled box.** Input labels arrive as `Text`, `Text 1`, `Date`, `Email`; the dropdown's first option arrives as `First option`. Typing appends. If you end up with `First optionApprove` stored as the option value, the approver will pick a value that never equals `Approve`, Step 5's branch will quietly take **Else**, nothing will be sent — and the run will still report **Succeeded**. **Ctrl+A, Delete, then type.** Re-read the option boxes before you save.
 
 <details>
 <summary>💡 <b>Concept — you just used four of the five supported input types</b></summary>
@@ -1793,6 +1720,7 @@ Human review supports **Text**, **Yes/No**, **Email**, **Number** and **Date**, 
    | **Value** | `Approve` |
 
 2. Rename it to `Approved?`
+![alt text](./img/image-50.png)
 
 ### 5b — On the If branch: email leadership
 
@@ -1824,6 +1752,7 @@ Human review supports **Text**, **Yes/No**, **Email**, **Number** and **Date**, 
    ```
 
 3. Rename it to `Email leadership`.
+![alt text](./img/image-51.png)
 
 ### 5c — On the If branch: post to the team
 
@@ -1848,6 +1777,7 @@ Human review supports **Text**, **Yes/No**, **Email**, **Number** and **Date**, 
    ```
 
 3. Rename it to `Post to the team`.
+![alt text](./img/image-52.png)
 
 ### 5d — On the If branch: archive the report
 
@@ -1865,6 +1795,7 @@ Human review supports **Text**, **Yes/No**, **Email**, **Number** and **Date**, 
    | ApprovedBy | `ApproverEmail` *(from Team lead approval)* |
 
 2. Rename it to `Archive the roll-up`.
+![alt text](./img/image-53.png)
 
 ### 5e — On the Else branch
 
@@ -1875,6 +1806,7 @@ Human review supports **Text**, **Yes/No**, **Email**, **Number** and **Date**, 
    ```
 
 2. Rename it to `Tell me it was held`. Select **Save**.
+![alt text](./img/image-54.png)
 
 <details>
 <summary>💡 <b>Notice which nodes are on which branch</b></summary>
@@ -1888,7 +1820,7 @@ The email, the Teams post *and* the archive row all sit behind the approval. An 
 ## Step 6 — Publish, run the test, verify
 
 1. Check **Review** for problems, then select **Publish**.
-2. Select the **Test** button in the top command bar. A Recurrence trigger runs once, immediately.
+2. Select the **Run** button in the top command bar. A Recurrence trigger runs once, immediately.
 3. Watch **Activity**: `List project rows` (~3s) → `Status Analyst` (~20–30s) → the run then sits at **Waiting** on `Team lead approval`.
 4. **Check Outlook.** Open `Approve the weekly project roll-up`. Click **Show blocked content** if Outlook has suppressed the form, then fill it:
    - `Decision` = `Approve`
@@ -1898,6 +1830,12 @@ The email, the Teams post *and* the archive row all sit behind the approval. An 
    - Select **Submit**.
 5. The workflow resumes within a minute. The Activity duration includes your thinking time — a 20-minute wait shows as a 20-minute run.
 6. **Run it a second time** and choose `Hold` to prove the Else branch.
+![alt text](./img/image-55.png)
+![alt text](./img/image-56.png)
+![alt text](./img/image-57.png)
+![alt text](./img/image-58.png)
+![alt text](./img/image-59.png)
+![alt text](./img/image-60.png)
 
 > 📬 **The emailed card is the only way to respond.** Human review requests do **not** appear in the Power Automate Approvals portal, so do not go looking for them there.
 
@@ -1912,11 +1850,9 @@ The email, the Teams post *and* the archive row all sit behind the approval. An 
 | **Activity** panel | A run that sat at **Waiting** until you submitted, then **Succeeded** |
 
 > 🔎 **If the run says Succeeded but nothing was sent and `ReportArchive` is empty**, it took the **Else**
-> branch. Open the **Team lead approval** node in the loaded run and read the `Decision` value that came
-> back. Nine times out of ten it reads `First optionApprove` — the pre-filled dropdown trap from Step 4.
-> Fix the option value on the **Build** tab, publish, and run again.
+> branch. Open the **Team lead approval** node in the loaded run and read the `Decision` value that came back.
 
-Then change a row in `ProjectTracker` — set *Teams Phone migration* to `Blocked` — and run it again. The headline, the count and the escalation all change. **You changed data, not the workflow.**
+> Then change a row in `ProjectTracker` — set *Teams Phone migration* to `Blocked` — and run it again. The headline, the count and the escalation all change. **You changed data, not the workflow.**
 
 ### Optional extensions
 
@@ -1926,13 +1862,6 @@ Then change a row in `ProjectTracker` — set *Teams Phone migration* to `Blocke
 | **Nudge the owners.** After the approval, add a **Loop** over the at-risk projects and an **Office 365 Outlook ▸ Send an email** to each `Owner` asking for a one-line update. The roll-up stops being a report and starts being a process. |
 | **Escalate by count.** Add a second If/Else on `At_risk_count` with operator `is greater than` and value `2`, and route those weeks to a different recipient. |
 | **Chase stale rows.** Add an If/Else on `Stale_projects` `Does not equal` `None` and post a separate Teams nudge. |
-
-### Talking points for the facilitator
-
-- **This is the complete pattern.** Deterministic read → AI judgement → human gate → deterministic distribution → audit record. Every production-grade workflow anyone builds after this session is a variation on those five moves.
-- **The tracker was already there.** Nobody changed how the team works; the workflow changed what the tracker is worth.
-- **The instruction "never soften a status" is a governance control.** A model asked to summarise will naturally smooth the edges. If the point of the report is the exception, you have to say so explicitly.
-- **Show the silent-failure trap deliberately.** If you have five spare minutes, set the dropdown option to `First optionApprove` on purpose, run it, and let the room watch a green "Succeeded" run that did nothing. It is the most memorable lesson in the pack.
 
 ---
 
@@ -1980,31 +1909,10 @@ Work down this table before asking for help — the first eight rows cover rough
 | **My token isn't in the picker** | The upstream node has not been saved, or you are on a branch the data does not reach. | **Save** the upstream node, then reopen the picker. |
 | **All the node fields are greyed out** | You have a historical run loaded on the canvas — that view is read-only. | Switch back to the **Build** tab. |
 | **I refreshed and my canvas is empty** | The designer keeps the URL `.../flows/new` until you navigate away; reloading it opens a new blank workflow. | Your work is saved. Reopen it from the **Workflows** list. |
-| **The scheduled workflow won't run on demand** | You are waiting for the clock. | Press **Test** in the top command bar. A Recurrence trigger runs once, immediately. |
+| **The scheduled workflow won't run on demand** | You are waiting for the clock. | Press **Run** in the top command bar. A Recurrence trigger runs once, immediately. |
 | **Nothing appears in Activity** | Connector triggers poll. | Wait 1–2 minutes and refresh. Outlook triggers usually fire quickly, but the connector documents a rare worst case of up to an hour. |
 
 ---
-
-# Facilitator notes
-
-### Session shape
-
-| Block | What happens |
-|---|---|
-| Concepts and demo | What a workflow is, Event → Payload → Action, agents vs workflows, and a 2-minute run of a finished scenario |
-| **Scenario A** | Participants build |
-| Reset / questions | Not counted in the 60 |
-| **Scenario B** | Participants build |
-| Wrap-up | Where each pattern goes in their own work, stretch goals, cleanup |
-
-### The six things to check before the room arrives
-
-1. **Every participant can see Workflows in the left navigation.** If they cannot, the new experience is not enabled for them and no amount of lab time fixes it. Check this the day before.
-2. **The Excel Online (Business) and M365 Copilot connections already exist** for each participant. These are the only two that do not bind silently, and each costs about a minute and a popup mid-build.
-3. **`Workflows-Lab.xlsx` is in each participant's own OneDrive**, with real formatted tables, and closed.
-4. **Subject prefixes are agreed** — `[REQ]` and `[Ask]`. If two workflows watch one inbox with overlapping filters, both fire on every message.
-5. **The Workflows (Power Automate) app is allowed in the Teams admin center**, and — if you are on a government cloud — participants know to use **Post as: User** rather than **Flow bot**.
-6. **Everyone signs in interactively.** The Office 365 connector does not support service-principal authentication, so every connection is a real user sign-in. This is why "one identity for everything" is the first rule in the pack.
 
 ### Where the room will get stuck, in order of likelihood
 
@@ -2041,20 +1949,11 @@ If the lab environment is shared or long-lived, have participants do this before
 2. Delete the test emails and the approval requests.
 3. Keep `Workflows-Lab.xlsx` — it is the fastest way to rebuild any of this later.
 
-> ⚠️ **A scheduled workflow with a review gate does not stop politely — it waits.** Scenario 4 was left published after a session. It duly fired the following Friday at 16:00, drafted the roll-up, sent the approval request to a reviewer who had gone home, and then sat in **Running** for **2 days 23 hours** until somebody finally submitted the form. The run is not failed, not cancelled and not idle — it is an open run holding an open request, and it would have kept waiting indefinitely.
->
-> That is a mild nuisance in a lab and a genuine problem in a shared tenant, where these accumulate one per week per participant. **Turning the workflow off is the fix; there is nothing to configure.**
->
-> The flip side is reassuring: that 71-hour-old request was **still actionable**. Approval requests do not quietly expire over a weekend, so a reviewer who was on leave can still respond when they return.
-
-> ⚠️ **Say this before anyone builds.** An email-triggered workflow with a broad filter, published against a real mailbox, will fire on every message that arrives — including out-of-office replies and the workflow's own acknowledgements. The **Subject filter** is not a nicety.
-
 ### Costs and capacity — the one slide people ask about
 
 - Workflows consume **Copilot Studio capacity for each action they execute**, and features on this harness are billed as **usage-based Copilot Credits**.
 - **Testing from the designer does not consume flow capacity** — which is exactly why this pack tells you to test each node as you build it.
 - Once an environment's prepaid capacity is fully consumed, **new flow runs are blocked** until capacity is available; runs already in flight complete normally.
-- Administrators can review agent flow consumption in the **Power Platform admin center ▸ Licensing ▸ Copilot Studio**.
 
 ---
 
@@ -2148,7 +2047,7 @@ Expected analysis against these rows: `at_risk_count` = **3**; `stale_projects` 
 |---|---|---|---|
 | 1 | `IT Request Triage Desk` | Connector ▸ Outlook ▸ When a new email arrives | Inbox · Subject filter `[REQ]` |
 | 2 | `Reply Desk with Approval` | Connector ▸ Outlook ▸ When a new email arrives | Inbox · Subject filter `[Ask]` |
-| 3 | `Daily Brief 0800` | Recurrence | Week / Mon–Fri / 08 / 00 / `(UTC+09:00) Seoul` |
+| 3 | `Daily Brief 8AM` | Recurrence | Week / Mon–Fri / 08 / 00 / `(UTC+09:00) Seoul` |
 | 4 | `Friday Project Roll-up` | Recurrence | Week / Fri / 16 / 00 / `(UTC+09:00) Seoul` |
 
 ### Test emails

@@ -16,7 +16,7 @@ one-hour session — there are no dependencies between them.
 |---|---|---|---|
 | 1 | **IT Request Triage Desk** | Classifies and prioritises every request email, logs it to an Excel tracker, acknowledges the sender, and escalates urgent items to Teams. | Email arrives |
 | 2 | **Reply Desk with Approval** | Microsoft 365 Copilot drafts a grounded reply, a human approves or requests changes, an agent applies the feedback, and the workflow sends it. | Email arrives |
-| 3 | **Daily Brief 0800** | Each weekday morning, Copilot reads your calendar, mail and chats; an agent formats a fixed brief and posts it to Teams. | Schedule |
+| 3 | **Daily Brief 8AM** | Each weekday morning, Copilot reads your calendar, mail and chats; an agent formats a fixed brief and posts it to Teams. | Schedule |
 | 4 | **Friday Project Roll-up** | Reads a project tracker in Excel, an agent analyses status and risk, the team lead approves, then it emails leadership, posts to Teams and archives the report. | Schedule |
 
 ### Node coverage
@@ -25,7 +25,7 @@ one-hour session — there are no dependencies between them.
 |---|:---:|:---:|:---:|:---:|:---:|:---:|
 | **1 · IT Request Triage Desk** | ✅ | ➕ | ➕ | ✅ | ✅ | ✅ |
 | **2 · Reply Desk with Approval** | ✅ | ✅ | ✅ | ➕ | ✅ | ✅ |
-| **3 · Daily Brief 0800** | ✅ | ✅ | ➕ | ➕ | ➕ | ✅ |
+| **3 · Daily Brief 8AM** | ✅ | ✅ | ➕ | ➕ | ➕ | ✅ |
 | **4 · Friday Project Roll-up** | ✅ | ➕ | ✅ | ✅ | ✅ | ✅ |
 
 ✅ **In the core build** — you will use this node
