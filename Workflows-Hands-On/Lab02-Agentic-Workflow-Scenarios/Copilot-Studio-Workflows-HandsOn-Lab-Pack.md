@@ -46,6 +46,7 @@ This pack contains **four independent, self-contained scenarios**. There are no 
 3. In the left navigation, confirm you can see **Workflows** (below **Agents**). If **Workflows** is missing, the new experience is not enabled for you — resolve this before the session, not during it.
 
 ![The Workflows list. Every workflow you build appears here with its publish state and an Enabled toggle.](./img/01-workflows-list.png)
+
 *The Workflows list. Every workflow you build appears here with its publish state and an Enabled toggle.*
 
 4. Open three more browser tabs: **Outlook** (`outlook.office.com`), **Teams**, and **OneDrive**.
@@ -192,8 +193,8 @@ Skim this before you start. Refer back whenever a step mentions a term in **bold
 ### 2.1 Five habits that save the most time today
 
 ![The node palette on the designer canvas — the building blocks you assemble a workflow from.](./img/03-node-palette.png)
-*The node palette on the designer canvas — the building blocks you assemble a workflow from.*
 
+*The node palette on the designer canvas — the building blocks you assemble a workflow from.*
 
 1. **Rename every node as you create it.** In the configuration panel header on the right, **click the node's title once** — the hint below it reads *"Click to rename"* — and the existing text arrives pre-selected, so type straight over it and press **Enter**. (The node's **⋯** menu only offers Settings and Code view — there is no Rename command there.) Default names become unreadable by node five, and they are what you search for in the dynamic-content picker.
 
@@ -324,7 +325,6 @@ The honest trade-off: an inline agent keeps everything in one place, so the work
 
 </details>
 
-
 ---
 
 # Scenario 1 — IT Request Triage Desk
@@ -340,8 +340,8 @@ This workflow does all of it in about thirty seconds per email — and, importan
 ### What you will build
 
 ![Scenario 1 finished. Note the acknowledgement sits before the If/Else — branches never rejoin, so shared steps go above them.](./img/14-scenario1-canvas.png)
-*Scenario 1 finished. Note the acknowledgement sits before the If/Else — branches never rejoin, so shared steps go above them.*
 
+*Scenario 1 finished. Note the acknowledgement sits before the If/Else — branches never rejoin, so shared steps go above them.*
 
 ```
 [Trigger]  Office 365 Outlook — When a new email arrives
@@ -389,6 +389,7 @@ This workflow does all of it in about thirty seconds per email — and, importan
 > **Run** and **Publish** stay disabled until the workflow has at least one **action** node; hover **Publish** and the tooltip says *"Action node required to publish."*
 
 ![The designer command bar: Build / Activity / Monitor tabs on the left, and Save, Run, Review and Publish on the right.](./img/12-command-bar.png)
+
 *The right-hand icons are, left to right: Undo, Redo, Version history, Send feedback, Save, Run — then Review and Publish.*
 
 <details>
@@ -406,8 +407,8 @@ A workflow is the autonomous side of Copilot Studio. It runs on a trigger, not o
 ## Step 2 — Configure the email trigger
 
 ![The email trigger. Subject Filter lives under Advanced parameters — click Show all to reveal it.](./img/11-email-trigger.png)
-*The email trigger, already configured. Before you click **Show all** the counter reads "Showing 4 of 9" and Subject Filter is hidden.*
 
+*The email trigger, already configured. Before you click **Show all** the counter reads "Showing 4 of 9" and Subject Filter is hidden.*
 
 1. Select the **Start** node. The configuration panel opens on the right.
 ![alt text](./img/image-2.png)
@@ -474,8 +475,8 @@ This is the heart of the scenario. Everything before it moves data; this node ma
 ### 3b — Write the instructions
 
 ![An inline agent node: Agent set to 'New agent for this workflow', your instructions, and the model picker.](./img/05-agent-node-config.png)
-*An inline agent node: Agent set to 'New agent for this workflow', your instructions, and the model picker.*
 
+*An inline agent node: Agent set to 'New agent for this workflow', your instructions, and the model picker.*
 
 For an inline agent, the **Instructions** field is *both* the job description and the per-run prompt — there is no separate Message field.
 
@@ -555,8 +556,8 @@ Classification over a short email is a fast, high-volume job — exactly the cas
 ### 3d — Shape the output — the most important setting in this scenario
 
 ![Output sits at the very bottom of the agent panel. Custom structured output validates the JSON schema you supply.](./img/09-agent-output-structured.png)
-*Output sits at the very bottom of the agent panel. Custom structured output validates the JSON schema you supply.*
 
+*Output sits at the very bottom of the agent panel. Custom structured output validates the JSON schema you supply.*
 
 1. Scroll to the **bottom** of the configuration panel. **Output** sits below Tools, Knowledge, Request human assistance and Web search.
 2. Open the **Output** dropdown and select **Custom structured output**.
@@ -613,12 +614,12 @@ Node-level testing runs this step in isolation — it is fast, it does not publi
 ## Step 4 — Log the request to Excel
 
 ![Add a row into a table. Location, Document library, File and Table must all resolve before the Row fields appear.](./img/15-excel-add-row.png)
+
 *Add a row into a table. Location, Document library, File and Table must all resolve before the Row fields appear.*
 
-
 ![The dynamic-content picker. Each field of a structured output becomes its own token, with its data type shown on the right.](./img/16-token-picker.png)
-*The dynamic-content picker. Each field of a structured output becomes its own token, with its data type shown on the right.*
 
+*The dynamic-content picker. Each field of a structured output becomes its own token, with its data type shown on the right.*
 
 1. Below the agent node, select **Add a step**.
 2. Search for `Add a row into a table` and choose it under **Excel Online (Business)**.
@@ -705,8 +706,8 @@ A canned "we received your request" reply teaches the sender to ignore your auto
 ### 6a — Add the branch
 
 ![The If/Else condition builder — Property, Operator, Value. The Else branch is created automatically.](./img/07-ifelse-condition.png)
-*The If/Else condition builder — Property, Operator, Value. The Else branch is created automatically.*
 
+*The If/Else condition builder — Property, Operator, Value. The Else branch is created automatically.*
 
 1. Below **Acknowledge the sender**, select **Add a step** and choose **If/Else**.
 ![alt text](./img/image-14.png)
@@ -774,8 +775,8 @@ The agent decided *what* the priority is; the If/Else decided *what to do about 
 ## Step 7 — Publish, run and verify
 
 ![The designer command bar: Build / Activity / Monitor tabs on the left, and Save, Run, Review and Publish on the right.](./img/12-command-bar.png)
-*The designer command bar: Build / Activity / Monitor tabs on the left, and Save, Run, Review and Publish on the right.*
 
+*The designer command bar: Build / Activity / Monitor tabs on the left, and Save, Run, Review and Publish on the right.*
 
 1. Check the **Review** button in the command bar — it shows a problem count if anything is incomplete. Then select **Publish**.
 
@@ -951,10 +952,11 @@ Open the node's **Run node** tab, paste a Subject, From and Body by hand, and se
 
 ### 3a — Add the node
 
-1. Below the Copilot node, select **Add a step** and choose the **Human review** tile. That single tile adds the node — there is no sub-item to pick.
-
 ![A Human review node. Each input you define becomes a token carrying the reviewer's answer; a text input can be given dropdown options.](./img/06-human-review-inputs.png)
-*A Human review node. Each input you define becomes a token carrying the reviewer's answer; a text input can be given dropdown options.*
+
+*A Human review node. The two inputs are `Decision` and `ChangeRequest` — the label box is narrow, so the second one displays as `ChangeRe...`; type the full name. Each input becomes a token carrying the reviewer's answer, and a text input can be given dropdown options.*
+
+1. Below the Copilot node, select **Add a step** and choose the **Human review** tile. That single tile adds the node — there is no sub-item to pick.
 
 2. The connection binds automatically.
 3. Rename the node to `Approve the reply`.
@@ -1217,8 +1219,8 @@ Microsoft 365 Copilot can already answer all of it. What it cannot do on its own
 ## Step 1 — Create the workflow and the schedule
 
 ![A Recurrence trigger. Set Frequency first, then the days, hours and minutes. Time zone sits under the Advanced divider.](./img/08-recurrence-config.png)
-*A Recurrence trigger. Set Frequency first, then the days, hours and minutes. Time zone sits under the Advanced divider.*
 
+*A Recurrence trigger. Set Frequency first, then the days, hours and minutes. Time zone sits under the Advanced divider.*
 
 1. **Workflows ▸ New workflow**. Rename the title to:
 
@@ -1465,8 +1467,8 @@ This workflow reads the tracker, does the translation, and asks a human to appro
 ### What you will build
 
 ![Scenario 4 finished: a scheduled trigger, an Excel read, an agent, a human gate, then three parallel outputs on the approved branch.](./img/04-canvas-zoomed.png)
-*Scenario 4 finished: a scheduled trigger, an Excel read, an agent, a human gate, then three parallel outputs on the approved branch.*
 
+*Scenario 4 finished: a scheduled trigger, an Excel read, an agent, a human gate, then three parallel outputs on the approved branch.*
 
 ```
 [Trigger]  Recurrence — every Friday at 16:00, (UTC+09:00) Seoul
@@ -1695,7 +1697,7 @@ You know the right answer for this dataset, so you can tell instantly whether th
    | 3 | **Date** | `ReportDate` | — |
    | 4 | **Email** | `ApproverEmail` | — |
 
-   ![alt text](./img/image-49.png)
+   ![The four inputs. The label box is narrow, so `ApproverEmail` displays as `ApproverE...` — type the full name.](./img/image-49.png)
 4. Select **Save**.
 
 <details>
@@ -1868,64 +1870,101 @@ The email, the Teams post *and* the archive row all sit behind the approval. An 
 # Troubleshooting
 
 ![The Activity panel lists every run with its status and duration. Select a run to load it onto the canvas with real inputs and outputs.](./img/13-activity-runs.png)
+
 *The Activity panel lists every run with its status and duration. Select a run to load it onto the canvas with real inputs and outputs.*
 
+When you get stuck, check these eight first — they cover most of what goes wrong in this lab. If none of them fit, find your symptom in the tables below.
 
-Work down this table before asking for help — the first eight rows cover roughly nine out of ten lab failures.
+### The eight that catch most people
+
+| # | Where people get stuck | What to check |
+|---|---|---|
+| 1 | Typing `/Subject` as text instead of inserting the token | Type the slash, **wait**, then pick from the list. If it is not a coloured chip, it is not a token. |
+| 2 | Typing over pre-filled labels and option boxes | Those boxes already contain text. **Ctrl+A → Delete**, then type — otherwise the dropdown breaks silently. |
+| 3 | Picking a duplicate token after the Excel node | Read the chip: it names the node the value came from. |
+| 4 | The **Folder** and **File** pickers need a double-click | A single click only highlights. **Double-click** the item. |
+| 5 | The Excel sheet was never formatted as a **Table** | A sheet with headers is not a Table. Convert it with **Insert ▸ Table**. |
+| 6 | Forgetting to publish before testing | **Publish** is not a deployment — it is what switches the trigger on. |
+| 7 | Looking for a step after **If/Else** | Branches never rejoin. Shared steps go **above** the branch. |
+| 8 | Not waiting for the trigger to poll | It polls. Give it two minutes. It is not broken. |
+
+### Connections
+
+| Symptom | Most likely cause | Fix |
+|---|---|---|
+| **A node says "Not connected"** | No connection for that connector exists in this environment yet. On a freshly provisioned lab environment this happens for **every** connector on first use, Outlook and Teams included. | Create it: click **Not connected** ▸ **Create new connection** ▸ **Create** ▸ pick your account. Section 1.3 has the full procedure. You only do this once per connector. |
+| **"Could not load options. You can enter a value manually."** on Location / Document Library / File | The node has no connection yet, so it cannot query your OneDrive. It is not a permissions error. | Create the connection (section 1.3). The message disappears and the dropdowns populate. |
+| **The Excel node says "Not connected"** | Excel Online (Business) and M365 Copilot do not auto-bind. | Click the **chevron ⌄** on the Connection field ▸ **Create new connection** ▸ **Create** ▸ pick your account in the popup. Clicking the placeholder text in the panel body does nothing. |
+
+### Tokens and dynamic content
 
 | Symptom | Most likely cause | Fix |
 |---|---|---|
 | **A step "worked" but used the wrong data** | You inserted a token from the wrong node. After an Excel *Add a row* step exists, the picker contains **duplicate names** (`Category`, `Subject`, `Summary`…) because that action returns the row it created. | Click the chip and read it: it says **`NodeName.FieldName`**. Re-insert from the correct group. |
-| **A node says "Not connected"** | No connection for that connector exists in this environment yet. On a freshly provisioned lab environment this happens for **every** connector on first use, Outlook and Teams included. | Create it: click **Not connected** ▸ **Create new connection** ▸ **Create** ▸ pick your account. Section 1.3 has the full procedure. You only do this once per connector. |
-| **A field looks like a text box but will not accept typing** (Folder, File, Table) | These are pickers, not text fields. Clicking the box itself does nothing. | Click the small **Change** button to the right of the field to open the picker, choose the item, then press **Escape** to close it. |
-| **"Could not load options. You can enter a value manually."** on Location / Document Library / File | The node has no connection yet, so it cannot query your OneDrive. It is not a permissions error. | Create the connection (section 1.3). The message disappears and the dropdowns populate. |
-| **A field says "Fill in dependent fields first…"** | Excel's four location fields cascade: **Location → Document Library → File → Table**. Each one only loads once the one above it is set. | Set them strictly top to bottom. If one stays empty, the field above it is not really set. |
-| **A branch took the wrong path, but the run says Succeeded** | A dropdown option or input label kept its pre-filled placeholder, e.g. `First optionApprove` or `TextDecision`. The comparison never matches and the flow falls through to **Else** with no error. | Open the finished run, select the If/Else node, and read its inputs — it prints the comparison, e.g. `Reject is equal to Approve → False`. Then fix the option/label box on the **Build** tab (**Ctrl+A + Delete**, retype), publish, re-run. |
-| **The run fails on the last step with *"A message needs to have at least one recipient"*** | **Reply to email** was left with an empty **To**. It does not reliably auto-address the reply — and never does when you are testing by emailing yourself. | Bind **To** to the trigger's `From` token, publish, and send a **new** test email (the spent approval cannot be reused). |
-| **The run fails with *"…is required to be of type 'String/email'. The runtime value `"a@b.com\n"`…"*** | A stray line break is stored in the **To** box alongside the token. Token fields are rich editors, and a leftover empty line becomes part of the value. | Click into **To**, **Ctrl+A**, **Delete** repeatedly until the box is truly empty, then re-insert the token using the **Insert dynamic content** button and save without typing anything else. |
-| **An extra run appears about a minute after a successful reply** | The reply keeps `[Ask]` in its subject and lands back in the inbox the trigger watches, so the workflow triggers on its own output. | Expected in a self-test. Cancel the stray **Waiting** runs, or set a **From** filter on the trigger so your own address is ignored. |
-| **The approval request never arrives, but nothing shows an error** | The node sits in **Waiting** whether or not the card was delivered; there is no failure to read. Outlook delivery can lag many minutes on trial tenants. | Switch the node's **Channel** to **Teams** and republish. Do not check the Power Automate **Approvals** portal — pending human-review requests never appear there. |
 | **My instructions are truncated after a token** | The token failed to insert. The picker stayed open and swallowed every character you typed afterwards. | Clear the field and rebuild it. Type `/`, **pause**, filter, click, **confirm the chip appeared**, then continue. |
 | **A token came out as literal text like `/Frmo`** | You typed the filter too fast and the characters scrambled, so nothing matched. | Delete the text. Type `/`, wait for *Insert dynamic content*, then type slowly. |
-| **The workflow never runs when I send the test email** | It was never published. A workflow only listens for its trigger **after** you publish. | **Save**, then **Publish**. Then send a *new* test email — the one you sent before publishing is gone. |
-| **Publish is greyed out or fails** | The workflow contains errors. | The **Review** button in the command bar shows the count; open it and clear each one. |
-| **The Table dropdown in the Excel step is empty** | The sheet has headers but no **formatted Excel Table**. | Select the header row ▸ **Insert ▸ Table** ▸ tick *My table has headers*, then set the **Table Name** under **Table Design**. Also close the file in your browser. |
+| **My token isn't in the picker** | The upstream node has not been saved, or you are on a branch the data does not reach. | **Save** the upstream node, then reopen the picker. |
+
+### Cannot find it, or cannot type into it
+
+| Symptom | Most likely cause | Fix |
+|---|---|---|
+| **A field looks like a text box but will not accept typing** (Folder, File, Table) | These are pickers, not text fields. Clicking the box itself does nothing. | Click the small **Change** button to the right of the field to open the picker, choose the item, then press **Escape** to close it. |
 | **I can't select the Folder or the File** | Both are **tree** pickers, not dropdowns. | **Double-click** the item. A single click only highlights it. |
 | **I can't find the Subject filter** | It is one of the hidden advanced parameters. | Under **Advanced parameters** (*Showing 4 of 9*) click **Show all**. |
 | **I can't find the Output / JSON schema on an agent node** | It is at the **bottom** of the panel. | Scroll past Tools, Knowledge, Request human assistance and Web search. |
 | **There's no Rename in the node's ⋯ menu** | Rename is not on that menu (it has only Settings and Code view). | **Double-click the node title in the configuration panel header** and type over it. |
 | **I can't find a "Condition" node** | It is called **If/Else**. | Search `If/Else`, or pick the tile directly in the **Add** dialog. |
 | **I can't put a step after the branch** | An **If/Else** does not rejoin — each branch simply ends. | Put shared steps **before** the branch, or duplicate them into both. |
-| **The Excel node says "Not connected"** | Excel Online (Business) and M365 Copilot do not auto-bind. | Click the **chevron ⌄** on the Connection field ▸ **Create new connection** ▸ **Create** ▸ pick your account in the popup. Clicking the placeholder text in the panel body does nothing. |
+| **All the node fields are greyed out** | You have a historical run loaded on the canvas — that view is read-only. | Switch back to the **Build** tab. |
+| **I refreshed and my canvas is empty** | The designer keeps the URL `.../flows/new` until you navigate away; reloading it opens a new blank workflow. | Your work is saved. Reopen it from the **Workflows** list. |
+
+### Excel
+
+| Symptom | Most likely cause | Fix |
+|---|---|---|
+| **A field says "Fill in dependent fields first…"** | Excel's four location fields cascade: **Location → Document Library → File → Table**. Each one only loads once the one above it is set. | Set them strictly top to bottom. If one stays empty, the field above it is not really set. |
+| **The Table dropdown in the Excel step is empty** | The sheet has headers but no **formatted Excel Table**. | Select the header row ▸ **Insert ▸ Table** ▸ tick *My table has headers*, then set the **Table Name** under **Table Design**. Also close the file in your browser. |
 | **The run succeeded but the Excel row is not there** | Write latency, or you are looking at row 2. | Refresh the workbook after ~30 seconds. Remember the first written row lands in **row 3** — row 2 is the table's blank starter row. |
+
+### Human review and approvals
+
+| Symptom | Most likely cause | Fix |
+|---|---|---|
+| **The approval request never arrives, but nothing shows an error** | The node sits in **Waiting** whether or not the card was delivered; there is no failure to read. Outlook delivery can lag many minutes on trial tenants. | Switch the node's **Channel** to **Teams** and republish. Do not check the Power Automate **Approvals** portal — pending human-review requests never appear there. |
 | **The approval email never arrives** | Assigned to an external address, or it is in Junk. | Human review requests **cannot be sent outside your tenant**. Use an internal address and check Junk. |
 | **The approval email arrives but has no form** | Outlook has suppressed the active content. | Click **Show blocked content** in the message banner. |
 | **I can't find my approval in Power Automate** | Human review does not use the Approvals portal. | Respond from the emailed card. It is the only route. |
 | **Several people were assigned and only one answer was used** | Working as designed — the field is literally named *Assigned to (first to respond)*. | Assign to one person, or accept first-wins. |
+
+### Sending mail
+
+| Symptom | Most likely cause | Fix |
+|---|---|---|
+| **The run fails on the last step with *"A message needs to have at least one recipient"*** | **Reply to email** was left with an empty **To**. It does not reliably auto-address the reply — and never does when you are testing by emailing yourself. | Bind **To** to the trigger's `From` token, publish, and send a **new** test email (the spent approval cannot be reused). |
+| **The run fails with *"…is required to be of type 'String/email'. The runtime value `"a@b.com\n"`…"*** | A stray line break is stored in the **To** box alongside the token. Token fields are rich editors, and a leftover empty line becomes part of the value. | Click into **To**, **Ctrl+A**, **Delete** repeatedly until the box is truly empty, then re-insert the token using the **Insert dynamic content** button and save without typing anything else. |
+| **An extra run appears about a minute after a successful reply** | The reply keeps `[Ask]` in its subject and lands back in the inbox the trigger watches, so the workflow triggers on its own output. | Expected in a self-test. Cancel the stray **Waiting** runs, or set a **From** filter on the trigger so your own address is ignored. |
+
+### AI node output
+
+| Symptom | Most likely cause | Fix |
+|---|---|---|
 | **M365 Copilot returns the wrong day** | **Time zone** is still the default `America/New_York`. | Set it to `Asia/Seoul` (IANA format) on the **node**. Remember the *Recurrence trigger* uses a different format, `(UTC+09:00) Seoul`. |
 | **M365 Copilot returns "I could not find…"** | There genuinely is nothing in that mailbox on that topic. | This is correct behaviour, not a bug. Test with a topic that really exists in your mail. |
 | **The agent invents projects, meetings or people** | The real data was never passed in, or the "never invent" rule is missing. | Confirm the `/` token is actually a chip — a token that was *typed* as text is just text. Then add an explicit `Use only the data above. Never invent…` rule. |
+
+### Publishing, running and schedules
+
+| Symptom | Most likely cause | Fix |
+|---|---|---|
+| **A branch took the wrong path, but the run says Succeeded** | A dropdown option or input label kept its pre-filled placeholder, e.g. `First optionApprove` or `TextDecision`. The comparison never matches and the flow falls through to **Else** with no error. | Open the finished run, select the If/Else node, and read its inputs — it prints the comparison, e.g. `Reject is equal to Approve → False`. Then fix the option/label box on the **Build** tab (**Ctrl+A + Delete**, retype), publish, re-run. |
+| **The workflow never runs when I send the test email** | It was never published. A workflow only listens for its trigger **after** you publish. | **Save**, then **Publish**. Then send a *new* test email — the one you sent before publishing is gone. |
+| **Publish is greyed out or fails** | The workflow contains errors. | The **Review** button in the command bar shows the count; open it and clear each one. |
 | **The workflow name won't save** | It starts with a digit. | Workflow names **must start with a letter**. |
-| **My token isn't in the picker** | The upstream node has not been saved, or you are on a branch the data does not reach. | **Save** the upstream node, then reopen the picker. |
-| **All the node fields are greyed out** | You have a historical run loaded on the canvas — that view is read-only. | Switch back to the **Build** tab. |
-| **I refreshed and my canvas is empty** | The designer keeps the URL `.../flows/new` until you navigate away; reloading it opens a new blank workflow. | Your work is saved. Reopen it from the **Workflows** list. |
 | **The scheduled workflow won't run on demand** | You are waiting for the clock. | Press **Run** in the top command bar. A Recurrence trigger runs once, immediately. |
 | **Nothing appears in Activity** | Connector triggers poll. | Wait 1–2 minutes and refresh. Outlook triggers usually fire quickly, but the connector documents a rare worst case of up to an hour. |
 
 ---
-
-### Where the room will get stuck, in order of likelihood
-
-| # | Sticking point | Pre-empt it by saying |
-|---|---|---|
-| 1 | Typing `/Subject` as text instead of inserting the token | "Type the slash, **wait**, then pick from the list. If it is not a coloured chip, it is not a token." |
-| 2 | Typing over pre-filled labels and option boxes | "Every one of those boxes already has text in it. Ctrl+A, Delete, *then* type — or your dropdown silently breaks." |
-| 3 | Picking a duplicate token after the Excel node | "Read the chip. It says which node it came from." |
-| 4 | Double-click needed on Folder and File pickers | Demonstrate it once during setup. |
-| 5 | Excel table not formatted | Show a formatted table and an unformatted one side by side during setup. |
-| 6 | Forgetting to publish before testing | "Publish is not deployment. It is what makes the trigger start listening." |
-| 7 | Looking for a step after an If/Else | "Branches don't rejoin. Shared steps go above the branch." |
-| 8 | Impatience with trigger polling | "It polls. Give it two minutes. This is not broken." |
 
 ### Verifying a schedule actually fired
 
