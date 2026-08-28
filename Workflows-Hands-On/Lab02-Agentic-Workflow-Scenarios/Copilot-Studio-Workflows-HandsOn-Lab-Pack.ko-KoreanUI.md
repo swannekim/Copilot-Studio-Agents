@@ -621,17 +621,17 @@ and do not include a signature.
 
 
 1. 에이전트 노드 아래에서 **Add a step (단계 추가)**을 선택합니다.
-2. `Add a row into a table`를 검색하고 **Excel Online (Business)** 아래에서 선택합니다.
+2. `Add a row into a table` (테이블에 행 추가)를 검색하고 **Excel Online (Business)** 아래에서 선택합니다.
 ![alt text](./img/image-9.png)
 3. 노드에 **Not connected**가 표시되면 **연결을 만듭니다**
 4. 위치 매개변수를 순서대로 설정합니다 — 각 항목이 다음 항목을 불러옵니다:
 
    | 매개변수 | 값 |
    |---|---|
-   | Location | `OneDrive for Business` |
-   | Document library | `OneDrive` — 목록에서 **첫 번째가 아니라는** 점에 주의하세요. 보통 첫 번째는 `PersonalCacheLibrary`입니다 |
-   | File | **Change (변경)**를 클릭한 뒤 파일 트리에서 `Workflows-Lab.xlsx`를 선택합니다 |
-   | Table | `RequestLog` |
+   | Location (위치) | `OneDrive for Business` |
+   | Document library (문서 라이브러리) | `OneDrive` — 목록에서 **첫 번째가 아니라는** 점에 주의하세요. 보통 첫 번째는 `PersonalCacheLibrary`입니다 |
+   | File (파일) | **Change (변경)**를 클릭한 뒤 파일 트리에서 `Workflows-Lab.xlsx`를 선택합니다 |
+   | Table (테이블) | `RequestLog` |
 
    ![alt text](./img/image-10.png)
 
@@ -673,7 +673,7 @@ and do not include a signature.
 이 단계는 긴급 여부와 관계없이 **모든** 요청에 대해 실행됩니다 — 그래서 분기 *앞*에 위치합니다.
 
 1. **Log to request tracker** 아래에서 **Add a step (단계 추가)**을 선택합니다.
-2. `Reply to email`을 검색하고 **Office 365 Outlook** 아래에서 선택합니다.
+2. `Reply to email` (메일에 회신)을 검색하고 **Office 365 Outlook** 아래에서 선택합니다.
 ![alt text](./img/image-12.png)
 3. 다음과 같이 구성합니다:
 
@@ -681,7 +681,7 @@ and do not include a signature.
    |---|---|
    | **Message ID** | `Message Id` *(New request email에서)* |
    | **Body (본문)** | `Ack_message` *(Request Triage Agent에서)* |
-   | Reply all | False (default) |
+   | Reply all (모두 회신) | False (default) |
 
    ![alt text](./img/image-13.png)
 
@@ -727,7 +727,7 @@ and do not include a signature.
 ### 6b — If 분기에 에스컬레이션 게시하기
 
 1. **If** 분기에서 **Add a step (단계 추가)**을 선택합니다.
-2. `Post message in a chat or channel`을 검색하고 **Microsoft Teams** 아래에서 선택합니다.
+2. `Post message in a chat or channel` (채팅 또는 채널에서 메시지 게시)을 검색하고 **Microsoft Teams** 아래에서 선택합니다.
 ![alt text](./img/image-17.png)
 3. 다음과 같이 설정합니다:
 
@@ -1056,10 +1056,10 @@ be revised before sending.
 
    | 매개변수 | 값 |
    |---|---|
-   | Post as | `Flow bot` |
-   | Post in | `Chat with Flow bot` |
+   | Post as (다음으로 게시) | `Flow bot` (흐름 봇) |
+   | Post in (게시 위치) | `Chat with Flow bot` (흐름 봇과 채팅) |
    | Recipient | 자신의 메일 주소 |
-   | Message | `Reply suppressed by reviewer - ` 뒤에 `/Subject` 삽입 |
+   | Message (메시지) | `Reply suppressed by reviewer - ` 뒤에 `/Subject` 삽입 |
 
 5. 이름을 `Tell me it was suppressed` 로 바꿉니다. **Save (저장)** 를 선택합니다.
 ![alt text](./img/image-29.png)
@@ -1116,7 +1116,7 @@ be revised before sending.
    | **Message ID** | `Message Id` *(New question email에서)* |
    | **To (받는 사람)** | `From` *(New question email에서)* |
    | **Body (본문)** | `Agent Response` *(Apply reviewer feedback에서)* |
-   | Reply all | False (default) |
+   | Reply all (모두 회신) | False (default) |
 
    ![alt text](./img/image-32.png)
 
@@ -1518,17 +1518,17 @@ M365 Copilot 노드는 *무엇을 아는가* 때문에 선택되었습니다. �
 
 ## Step 2 — Excel에서 추적표 읽기
 
-1. 트리거 아래에서 **Add a step (단계 추가)** 를 선택하고,  검색한 뒤, **Excel Online (Business)** 아래에서  `List rows present in a table` 을 선택합니다.
+1. 트리거 아래에서 **Add a step (단계 추가)** 를 선택하고,  검색한 뒤, **Excel Online (Business)** 아래에서  `List rows present in a table` (테이블에 있는 행 나열) 을 선택합니다.
 ![alt text](./img/image-44.png)
 2. 안내가 나오면 연결을 만듭니다.
 3. 구성합니다 — 각 필드가 다음 필드를 로드합니다:
 
    | Parameter | Value |
    |---|---|
-   | Location | `OneDrive for Business` |
-   | Document library | `OneDrive` |
-   | File | **Change (변경)** 를 클릭한 뒤, 트리에서 `Workflows-Lab.xlsx` 를 선택 |
-   | Table | `ProjectTracker` |
+   | Location (위치) | `OneDrive for Business` |
+   | Document library (문서 라이브러리) | `OneDrive` |
+   | File (파일) | **Change (변경)** 를 클릭한 뒤, 트리에서 `Workflows-Lab.xlsx` 를 선택 |
+   | Table (테이블) | `ProjectTracker` |
 
 4. 노드 이름을 `List project rows` 로 바꿉니다. **Save (저장)** 를 선택합니다.
 ![alt text](./img/image-45.png)
@@ -1724,7 +1724,7 @@ Human review는 **Text**, **Yes/No**, **Email**, **Number**, **Date** 를 지원
 
 ### 5b — If 분기: 리더십에 이메일 보내기
 
-1. **Add a step (단계 추가)** 에서 `Send an email` 을 검색하고, **Office 365 Outlook** 제목 아래에 있는 것을 고릅니다.
+1. **Add a step (단계 추가)** 에서 `Send an email` (메일 보내기) 을 검색하고, **Office 365 Outlook** 제목 아래에 있는 것을 고릅니다.
 
    > ⚠️ **여기서 두 액션이 똑같아 보입니다.** 검색 결과에는 **Mail** 커넥터의 **"Send an email notification"** 도 함께 나옵니다. 이것을 고르면 별도의 *Connect to Mail* 연결이 필요하고, 여러분의 Outlook 신원을 사용하지 않습니다. 클릭하기 전에 그룹 제목을 확인하세요.
 
@@ -1732,9 +1732,9 @@ Human review는 **Text**, **Yes/No**, **Email**, **Number**, **Date** 를 지원
 
    | Parameter | 값 |
    |---|---|
-   | To | 자신의 주소(실제 버전에서는 관리자의 주소) |
-   | Subject | `Weekly project roll-up - ` 다음에 `/Headline` 삽입 |
-   | Body | 아래 블록 |
+   | To (받는 사람) | 자신의 주소(실제 버전에서는 관리자의 주소) |
+   | Subject (제목) | `Weekly project roll-up - ` 다음에 `/Headline` 삽입 |
+   | Body (본문) | 아래 블록 |
 
    ```
    ⟨insert /LeadNote⟩
@@ -1785,10 +1785,10 @@ Human review는 **Text**, **Yes/No**, **Email**, **Number**, **Date** 를 지원
 
    | Parameter | 값 |
    |---|---|
-   | Location | `OneDrive for Business` |
-   | Document library | `OneDrive` — 목록의 첫 번째가 **아니라는** 점에 유의하세요. 보통 `PersonalCacheLibrary` 가 첫 번째입니다 |
-   | File | **Change (변경)** 를 클릭한 뒤 `Workflows-Lab.xlsx` 선택 |
-   | Table | `ReportArchive` |
+   | Location (위치) | `OneDrive for Business` |
+   | Document library (문서 라이브러리) | `OneDrive` — 목록의 첫 번째가 **아니라는** 점에 유의하세요. 보통 `PersonalCacheLibrary` 가 첫 번째입니다 |
+   | File (파일) | **Change (변경)** 를 클릭한 뒤 `Workflows-Lab.xlsx` 선택 |
+   | Table (테이블) | `ReportArchive` |
    | GeneratedAt | `ReportDate` *(Team lead approval에서)* |
    | Headline | `Headline` *(Status Analyst에서)* |
    | AtRiskCount | `At_risk_count` *(Status Analyst에서)* |
@@ -1967,7 +1967,7 @@ Recurrence 트리거는 테스트로 증명할 수 없습니다 — 수동 **Run
 
 | 노드 | 사용할 때 | 주요 설정 |
 |---|---|---|
-| **Agent (에이전트)**(inline) | 단계에 판단, 다단계 추론, 또는 워크플로와 함께 이동하는 통제된 출력 형태가 필요할 때 | **Agent (에이전트)**: `New agent for this workflow` · **Instructions (안내)**(실행별 프롬프트 역할 겸함) · Instructions 헤더 *안* 의 모델 드롭다운 · **Tools (도구)** · **Knowledge (지식)** · **Request human assistance (사람의 도움 요청)** · **Web search (웹 검색)** · **Output (출력)** *(맨 아래)*: Text response / Structured output / Custom structured output |
+| **Agent (에이전트)**(inline) | 단계에 판단, 다단계 추론, 또는 워크플로와 함께 이동하는 통제된 출력 형태가 필요할 때 | **Agent (에이전트)**: `New agent for this workflow` (이 워크플로의 새 에이전트) · **Instructions (안내)**(실행별 프롬프트 역할 겸함) · Instructions 헤더 *안* 의 모델 드롭다운 · **Tools (도구)** · **Knowledge (지식)** · **Request human assistance (사람의 도움 요청)** · **Web search (웹 검색)** · **Output (출력)** *(맨 아래)*: Text response / Structured output / Custom structured output |
 | **Agent (에이전트)**(기존) | 같은 에이전트를 여러 워크플로가 공유하거나 다른 팀이 소유할 때 | **Agent (에이전트)**: 게시된 에이전트 선택 · 실행별 프롬프트용 **Message** 필드 |
 | **M365 Copilot** | 단계에 실행 중인 사용자 본인의 Microsoft 365 맥락 — 메일, 파일, 캘린더, 채팅 — 이 필요할 때 | **M365 agent** *(선택 — 대화할 특정 Copilot 에이전트)* · **Message** · **Advanced parameters (고급 매개 변수) ▸ Time zone** *(IANA, 기본값 `America/New_York`)* · **Prefer async** |
 | **Classify (분류)** | 단순 라우팅만 — 텍스트 한 조각을 여러분이 정의한 범주로 분류 | 분류할 텍스트 · 여러분의 범주 목록 |
@@ -2006,9 +2006,9 @@ Recurrence 트리거는 테스트로 증명할 수 없습니다 — 수동 **Run
 
 | 커넥터 | 사용하는 액션 | 연결 동작 |
 |---|---|---|
-| **Office 365 Outlook** | *When a new email arrives*(트리거) · *Send an email* · *Reply to email* | 조용히 바인딩됨 |
-| **Microsoft Teams** | *Post message in a chat or channel* | 조용히 바인딩됨 |
-| **Excel Online (Business)** | *List rows present in a table* · *Add a row into a table* | **직접 만들어야 함** |
+| **Office 365 Outlook** | *When a new email arrives* (새 메일이 도착하면)(트리거) · *Send an email* (메일 보내기) · *Reply to email* (메일에 회신) | 조용히 바인딩됨 |
+| **Microsoft Teams** | *Post message in a chat or channel* (채팅 또는 채널에서 메시지 게시) | 조용히 바인딩됨 |
+| **Excel Online (Business)** | *List rows present in a table* (테이블에 있는 행 나열) · *Add a row into a table* (테이블에 행 추가) | **직접 만들어야 함** |
 | **M365 Copilot** | M365 Copilot node | **직접 만들어야 함** |
 | **Human review (인적 검토)** | Human review node | 조용히 바인딩됨 |
 | **Agents (에이전트)** | Agent node | 조용히 바인딩됨 |
