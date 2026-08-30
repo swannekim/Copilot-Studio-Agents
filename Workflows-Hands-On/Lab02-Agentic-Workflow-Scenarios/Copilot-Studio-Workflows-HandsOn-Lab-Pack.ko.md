@@ -45,7 +45,7 @@
    > 여기에 해당하면 전환할 때 다시 로그인하라는 화면이 나올 수 있고, URL도 위와 다를 수 있습니다.
    > 정상이며 — 중요한 것은 선택기에 올바른 환경 이름이 보이는지입니다.
 
-3. 왼쪽 탐색 메뉴에서 **Workflows**(**Agents** 아래)가 보이는지 확인합니다. **Workflows** 가 없다면 새 환경이 아직 활성화되지 않은 것입니다 — 세션 중이 아니라 세션 전에 해결하세요.
+3. 왼쪽 탐색 메뉴에서 **Workflows (워크플로)**(**Agents (에이전트)** 아래)가 보이는지 확인합니다. **Workflows (워크플로)** 가 없다면 새 환경이 아직 활성화되지 않은 것입니다 — 세션 중이 아니라 세션 전에 해결하세요.
 
 ![Workflows 목록. 만든 모든 워크플로가 게시 상태와 Enabled 토글과 함께 여기에 표시됩니다.](./img/01-workflows-list.png)
 
@@ -160,10 +160,10 @@ Excel Online (Business)은 **서식이 지정된 Excel Table** 안에 있는 셀
 
 두 가지 선택지가 있습니다. 이번 실습에서는 A 권장.
 
-- **옵션 A — 나에게 메시지 보내기 (가장 빠르고, 준비 필요 없음).** Teams 게시 단계에서 **Post in** 을 **Chat with Flow bot** 으로, **Recipient** 를 본인 메일 주소로 설정합니다. 미리 만들 것이 없습니다.
+- **옵션 A — 나에게 메시지 보내기 (가장 빠르고, 준비 필요 없음).** Teams 게시 단계에서 **Post in (게시 위치)** 을 **Chat with Flow bot** 으로, **Recipient** 를 본인 메일 주소로 설정합니다. 미리 만들 것이 없습니다.
 - **옵션 B — 실제 채널 (더 현실적).** `Workflow Lab` 이라는 팀을 만들고 `Alerts` 라는 **표준(standard)** 채널을 만듭니다.
 
-> ⚠️ **세션 전에 확인할 Teams 제약 두 가지.** **비공개(private) 채널 게시는 지원되지 않습니다** — `Alerts` 는 표준 채널로 만드세요. 그리고 **Flow bot** 게시자는 **상용 테넌트에서만** 사용할 수 있습니다. 정부 클라우드에서는 **Post as** 를 **User** 로 설정하세요. 두 작업 모두 Teams 관리 센터에서 Workflows (Power Automate) 앱이 **허용(allow)** 상태여야 합니다.
+> ⚠️ **세션 전에 확인할 Teams 제약 두 가지.** **비공개(private) 채널 게시는 지원되지 않습니다** — `Alerts` 는 표준 채널로 만드세요. 그리고 **Flow bot (흐름 봇)** 게시자는 **상용 테넌트에서만** 사용할 수 있습니다. 정부 클라우드에서는 **Post as (다음으로 게시)** 를 **User** 로 설정하세요. 두 작업 모두 Teams 관리 센터에서 Workflows (Power Automate) 앱이 **허용(allow)** 상태여야 합니다.
 
 ---
 
@@ -174,20 +174,20 @@ Excel Online (Business)은 **서식이 지정된 Excel Table** 안에 있는 셀
 | 개념 | 여기서의 의미 |
 |---|---|
 | **Workflow** | Copilot Studio의 자율 실행 단위입니다. 대화 턴이 아니라 **트리거**로 실행되므로, 아무도 보고 있지 않아도 백그라운드에서 일이 처리됩니다. 워크플로는 기본적으로 **결정적(deterministic)** 입니다. 같은 입력은 같은 규칙 경로를 따릅니다. |
-| **Trigger** | 워크플로를 시작시키는 이벤트입니다. 다섯 가지 유형은 **Manual**, **Recurrence**(일정), **Connector**(서비스에서 어떤 일이 발생), **When a HTTP request is received**, **When an agent calls the workflow** 입니다. 이 팩은 Connector와 Recurrence를 사용합니다. |
+| **Trigger** | 워크플로를 시작시키는 이벤트입니다. 다섯 가지 유형은 **Manual (수동)**, **Recurrence (되풀이)**(일정), **Connector (커넥터)**(서비스에서 어떤 일이 발생), **When a HTTP request is received**, **When an agent calls the workflow** 입니다. 이 팩은 Connector와 Recurrence를 사용합니다. |
 | **Event → Payload → Action** | 오늘 만드는 모든 것의 사고 모델입니다. 트리거가 **이벤트**로 발동하고, 워크플로에 **페이로드**(메일의 Subject, Body, From)를 넘기고, 뒤따르는 **액션**들이 그 페이로드를 가지고 동작합니다. |
 | **Node** | 캔버스 위의 한 단계: 트리거, 액션, 분기, 에이전트 등. |
 | **Dynamic content (`/` 토큰)** | 앞선 노드가 만들어 낸 데이터에 대한 참조입니다. 거의 모든 텍스트 필드에서 `/` 를 입력하면 **Insert dynamic content** 패널이 열리고, 거기서 값을 고릅니다. 이것이 워크플로가 고정된 문자열이 아니라 실행 시점의 *실제* 항목을 가지고 동작하게 만드는 장치입니다. **실행마다 달라져야 할 값을 직접 타이핑하고 있다면, 토큰을 넣어야 하는 상황입니다.** |
-| **Agent node (inline agent)** | 한 단계를 AI 에이전트에게 맡깁니다. 에이전트는 추론하고, 도구를 호출하고, 결과를 돌려줍니다. **Agent** 를 **New agent for this workflow** 로 두면 인라인 에이전트가 만들어집니다 — 지시문, 모델, 출력 형태가 이 노드 안에 있고 워크플로와 함께 움직입니다. 판단이 필요한 단계에 사용하세요. |
-| **Agent node — 출력 형태(Output shape)** | 패널 *맨 아래* 의 **Output** 드롭다운이 다음 단계가 무엇을 받을지를 결정합니다: **Text response**(문자열 하나), **Structured output**(미리 정의된 필드), **Custom structured output**(직접 정의한 JSON 스키마에 맞는 객체). 구조화된 출력을 쓰면 **각 필드가 각각의 동적 콘텐츠 토큰이 됩니다** — 그래서 `priority` 로 분기하거나 Excel 열에 바로 쓸 수 있습니다. |
+| **Agent node (inline agent)** | 한 단계를 AI 에이전트에게 맡깁니다. 에이전트는 추론하고, 도구를 호출하고, 결과를 돌려줍니다. **Agent (에이전트)** 를 **New agent for this workflow (이 워크플로의 새 에이전트)** 로 두면 인라인 에이전트가 만들어집니다 — 지시문, 모델, 출력 형태가 이 노드 안에 있고 워크플로와 함께 움직입니다. 판단이 필요한 단계에 사용하세요. |
+| **Agent node — 출력 형태(Output shape)** | 패널 *맨 아래* 의 **Output (출력)** 드롭다운이 다음 단계가 무엇을 받을지를 결정합니다: **Text response (텍스트 응답)**(문자열 하나), **Structured output (구조적 출력)**(미리 정의된 필드), **Custom structured output (사용자 지정 구조적 출력)**(직접 정의한 JSON 스키마에 맞는 객체). 구조화된 출력을 쓰면 **각 필드가 각각의 동적 콘텐츠 토큰이 됩니다** — 그래서 `priority` 로 분기하거나 Excel 열에 바로 쓸 수 있습니다. |
 | **M365 Copilot node** | 한 단계를 Microsoft 365 Copilot 자체에 맡깁니다. **실행 중인 사용자의 메일, 파일, 캘린더, 채팅에 그라운딩** 됩니다. **Message** 를 작성하면, 답변이 **Body / Response** 토큰으로 돌아옵니다. |
 | **Agent node vs. M365 Copilot node** | Microsoft 365에 이미 존재하는 내용을 활용하려면 **M365 Copilot node** 를 쓰세요 — 그라운딩이 내장되어 있고 연결된 사용자로 실행됩니다. 자동화에 특화된 지시문과 통제된 출력 형태가 필요하면 **agent node** 를 쓰세요. 시나리오 2와 3은 이 순서로 둘 다 사용하며, 그것이 핵심입니다. |
-| **Human review** | 워크플로를 일시 정지하고, 지정한 사람(들)에게 양식을 보내고, 누군가 제출하면 다시 진행합니다. 정의한 모든 입력은 사람이 답한 값을 담은 동적 콘텐츠 토큰이 됩니다. 그동안 실행은 **Waiting** 상태로 머뭅니다. |
-| **Human-in-the-loop: 설계로 vs. 판단으로** | *설계로(by design)* = 제작자인 여러분이 특정 지점에 Human review 노드를 배치합니다. *판단으로(by judgement)* = agent node에서 **Request human assistance** 를 켜고 에이전트가 스스로 에스컬레이션하게 합니다. 시나리오 2와 4는 *설계로* 를 사용합니다. |
+| **Human review (인적 검토)** | 워크플로를 일시 정지하고, 지정한 사람(들)에게 양식을 보내고, 누군가 제출하면 다시 진행합니다. 정의한 모든 입력은 사람이 답한 값을 담은 동적 콘텐츠 토큰이 됩니다. 그동안 실행은 **Waiting** 상태로 머뭅니다. |
+| **Human-in-the-loop: 설계로 vs. 판단으로** | *설계로(by design)* = 제작자인 여러분이 특정 지점에 Human review 노드를 배치합니다. *판단으로(by judgement)* = agent node에서 **Request human assistance (사람의 도움 요청)** 를 켜고 에이전트가 스스로 에스컬레이션하게 합니다. 시나리오 2와 4는 *설계로* 를 사용합니다. |
 | **결정적 단계 vs. AI 단계** | 규칙이 명확하면 결정적 단계를 쓰세요 — 더 저렴하고 예측 가능합니다. 규칙으로 표현할 수 없는 추론이 필요하면 AI 단계를 쓰세요. 좋은 워크플로는 대부분 결정적이고, 판단이 정말 필요한 두세 지점에만 AI가 들어갑니다. |
-| **노드 하나 테스트 vs. 전체 흐름 테스트** | 노드의 **Run node** 탭은 *그 단계만* 실행하며, 실제로 참조하는 상위 값만 임의로 채워 넣게 해 줍니다 — 빠르고, 게시(publish)하지 않습니다. 상단 명령 모음의 **Run** 버튼은 전체 그래프를 실행합니다. 프롬프트를 다듬는 중이라면 노드만, 트리거 로직을 검증한다면 전체를 실행하세요. |
-| **Publish** | 워크플로는 **게시한 뒤에야** 트리거를 수신하기 시작합니다. 오류가 있는 워크플로는 게시할 수 없습니다 — 명령 모음의 **Review** 버튼이 오류 개수를 보여줍니다. |
-| **Activity** | 실행 기록 탭입니다. 실행을 선택하면 각 노드의 실제 입력과 출력이 캔버스에 로드됩니다. 디버깅은 여기서 합니다. |
+| **노드 하나 테스트 vs. 전체 흐름 테스트** | 노드의 **Run node (노드 실행)** 탭은 *그 단계만* 실행하며, 실제로 참조하는 상위 값만 임의로 채워 넣게 해 줍니다 — 빠르고, 게시(publish)하지 않습니다. 상단 명령 모음의 **Run** 버튼은 전체 그래프를 실행합니다. 프롬프트를 다듬는 중이라면 노드만, 트리거 로직을 검증한다면 전체를 실행하세요. |
+| **Publish (게시)** | 워크플로는 **게시한 뒤에야** 트리거를 수신하기 시작합니다. 오류가 있는 워크플로는 게시할 수 없습니다 — 명령 모음의 **Review (검토)** 버튼이 오류 개수를 보여줍니다. |
+| **Activity (활동)** | 실행 기록 탭입니다. 실행을 선택하면 각 노드의 실제 입력과 출력이 캔버스에 로드됩니다. 디버깅은 여기서 합니다. |
 
 ![모든 노드에는 자체 Run node 탭이 있어, 다음 노드를 추가하기 전에 한 단계만 따로 테스트할 수 있습니다.](./img/10-run-node-tab.png)
 
@@ -253,7 +253,7 @@ Copilot Studio에서 만드는 모든 것은 **harness** 위에서 돌아갑니�
 | 상황 | 알아 둘 것 |
 |---|---|
 | 이미 쓰고 있는 cloud flow를 옮기고 싶음 | **agent flow로만** 변환됩니다. workflow로는 변환되지 않으니, workflow로 만들려면 새로 만들어야 합니다. 변환은 **되돌릴 수 없습니다.** |
-| 조직 내에서 누군가는 "agent flow", 누군가는 "workflow"라고 말함 | 둘은 **동의어가 아닙니다.** harness도 캔버스도 다릅니다. 헷갈리면 어떤 버튼을 눌렀는지 물어보세요: **New agent flow**(standard) 인지 **New workflow**(GitHub Copilot) 인지. |
+| 조직 내에서 누군가는 "agent flow", 누군가는 "workflow"라고 말함 | 둘은 **동의어가 아닙니다.** harness도 캔버스도 다릅니다. 헷갈리면 어떤 버튼을 눌렀는지 물어보세요: **New agent flow**(standard) 인지 **New workflow (새 워크플로)**(GitHub Copilot) 인지. |
 | GitHub Copilot harness에서 agent flow를 열었을 때 | 다른 경험으로 넘어가는 것이므로 **새 브라우저 탭** 에서 열립니다. |
 
 **여러분의 Power Automate 경험은 그대로 이어집니다.** 트리거, 액션, 커넥터, 동적 콘텐츠, 분기, 실행 기록 — 개념도 사고 방식도 같습니다. 새로운 것은 AI 노드 유형, 에이전트 핸드오프, 노드 단위 테스트입니다. 커리어를 다시 쌓는 수준이 아니라, 하루 정도 익히면 되는 차이입니다.
@@ -275,7 +275,7 @@ Copilot Studio에서 만드는 모든 것은 **harness** 위에서 돌아갑니�
 
 **차이는 지능이 어디서 오는가에 있습니다.**
 
-| | **Agent node** | **M365 Copilot node** |
+| | **Agent node (에이전트)** | **M365 Copilot node** |
 |---|---|---|
 | **지식의 출처** | *여러분이* 넣은 것 — 지시문과 동적 콘텐츠로 전달한 값 | Microsoft 365 자체 — 실행 중인 사용자의 메일, 캘린더, 채팅, 파일 |
 | **여러분이 통제하는 것** | 지시문, 모델, 도구, **출력 형태** | **Message**(보내는 요청 내용) |
@@ -306,7 +306,7 @@ Agent node         →  엄격한 지시문에 따라 검토자의 피드백을 
 
 **Inline agent vs. published agent — 기능의 차이가 아니라 설계 선택**
 
-agent node를 추가할 때 **Agent** 를 *New agent for this workflow* 로 두면 **inline agent** 가 만들어집니다. 지시문, 모델, 출력 형태가 노드 안에 있고 워크플로와 함께 움직입니다. 대신 노드가 **이미 게시된 에이전트** 를 가리키게 할 수도 있습니다.
+agent node를 추가할 때 **Agent (에이전트)** 를 *New agent for this workflow* 로 두면 **inline agent** 가 만들어집니다. 지시문, 모델, 출력 형태가 노드 안에 있고 워크플로와 함께 움직입니다. 대신 노드가 **이미 게시된 에이전트** 를 가리키게 할 수도 있습니다.
 
 | | **Inline agent** (이 팩) | **Published / referenced agent** |
 |---|---|---|
@@ -372,22 +372,22 @@ agent node를 추가할 때 **Agent** 를 *New agent for this workflow* 로 두�
 
 ## Step 1 — 워크플로 만들고 이름 짓기
 
-1. Copilot Studio 왼쪽 탐색에서 **Workflows** 를 선택합니다.
+1. Copilot Studio 왼쪽 탐색에서 **Workflows (워크플로)** 를 선택합니다.
 ![alt text](./img/image.png)
-2. **New workflow** 를 선택합니다. 디자이너("Agentic Automations")가 열리고 캔버스에 **Start** 노드 하나가 있습니다.
+2. **New workflow (새 워크플로)** 를 선택합니다. 디자이너("Agentic Automations")가 열리고 캔버스에 **Start** 노드 하나가 있습니다.
 ![alt text](./img/image-1.png)
-3. 상단의 제목(**Untitled Workflow**)을 선택하고 그 위에 입력합니다:
+3. 상단의 제목(**Untitled Workflow (제목 없는 워크플로)**)을 선택하고 그 위에 입력합니다:
 
    ```
    IT Request Triage Desk
    ```
 
-4. **Save** 를 선택합니다(또는 Ctrl+S).
+4. **Save (저장)** 를 선택합니다(또는 Ctrl+S).
 
 > 🔎 **Save 아이콘**
-> 이 아이콘은 자주 **비활성화** 된 것처럼 보이며, 그것이 정상입니다: 디자이너가 자동으로 **Draft** 를 저장해 주므로, 새로 기록할 것이 없으면 Save가 비활성화됩니다.
+> 이 아이콘은 자주 **비활성화** 된 것처럼 보이며, 그것이 정상입니다: 디자이너가 자동으로 **Draft (초안)** 를 저장해 주므로, 새로 기록할 것이 없으면 Save가 비활성화됩니다.
 >
-> **Run** 과 **Publish** 는 워크플로에 **action** 노드가 최소 하나 생기기 전까지 비활성화 상태로 유지됩니다. **Publish** 에 마우스를 올리면 툴팁에 *"Action node required to publish."* 라고 나옵니다.
+> **Run** 과 **Publish (게시)** 는 워크플로에 **action** 노드가 최소 하나 생기기 전까지 비활성화 상태로 유지됩니다. **Publish (게시)** 에 마우스를 올리면 툴팁에 *"Action node required to publish."* 라고 나옵니다.
 
 ![디자이너 명령 모음: 왼쪽에 Build / Activity / Monitor 탭, 오른쪽에 Save, Run, Review, Publish.](./img/12-command-bar.png)
 
@@ -409,28 +409,28 @@ agent node를 추가할 때 **Agent** 를 *New agent for this workflow* 로 두�
 
 ![이메일 트리거. Subject Filter는 Advanced parameters 아래에 있습니다 — Show all을 클릭해 드러내세요.](./img/11-email-trigger.png)
 
-*이메일 트리거, 구성이 완료된 모습. **Show all** 을 클릭하기 전에는 카운터가 "Showing 4 of 9" 로 표시되고 Subject Filter는 숨겨져 있습니다.*
+*이메일 트리거, 구성이 완료된 모습. **Show all (모두 보기)** 을 클릭하기 전에는 카운터가 "Showing 4 of 9" 로 표시되고 Subject Filter는 숨겨져 있습니다.*
 
 1. **Start** 노드를 선택합니다. 오른쪽에 구성 패널이 열립니다.
 ![alt text](./img/image-2.png)
 
-2. **Trigger type** 을 **Manual** 에서 **Connector** 로 바꿉니다.
+2. **Trigger type (트리거 유형)** 을 **Manual (수동)** 에서 **Connector (커넥터)** 로 바꿉니다.
 
-   Connector를 선택하면 곧바로 **Select a trigger** 대화 상자가 열립니다
+   Connector를 선택하면 곧바로 **Select a trigger (트리거 선택)** 대화 상자가 열립니다
 
-3. 그 대화 상자에서 **Office 365 Outlook** 타일을 고르고, **When a new email arrives** 를 고릅니다.
+3. 그 대화 상자에서 **Office 365 Outlook** 타일을 고르고, **When a new email arrives (새 메일이 도착하면)** 를 고릅니다.
 
-   > 이름이 거의 똑같은 트리거가 네 개 있습니다 — *When a new email arrives*, *…in a shared mailbox*, *…mentioning me arrives*, 그리고 이벤트 트리거. 평범한 **When a new email arrives** 를 고르세요.
+   > 이름이 거의 똑같은 트리거가 네 개 있습니다 — *When a new email arrives*, *…in a shared mailbox*, *…mentioning me arrives*, 그리고 이벤트 트리거. 평범한 **When a new email arrives (새 메일이 도착하면)** 를 고르세요.
 
    ![alt text](./img/image-3.png)
 
    환경에 Office 365 Outlook 연결이 이미 있다면 자동으로 바인딩되며 초록색 **Connected** 체크가 표시됩니다. **새 랩 환경에서는 대신 "Not connected" 라고 나옵니다** — 연결을 만든 다음 계속하세요.
 
-4. **Folder** 를 설정합니다. 필드 오른쪽의 작은 **Change** 버튼을 클릭하세요 — 그러면 폴더 선택기가 열립니다. 목록에서 **Inbox** 를 클릭한 다음 **Escape** 를 누르거나 패널의 다른 곳을 클릭해 선택기를 닫습니다. 이제 필드에 `Inbox` 가 표시됩니다.
+4. **Folder (폴더)** 를 설정합니다. 필드 오른쪽의 작은 **Change (변경)** 버튼을 클릭하세요 — 그러면 폴더 선택기가 열립니다. 목록에서 **Inbox** 를 클릭한 다음 **Escape** 를 누르거나 패널의 다른 곳을 클릭해 선택기를 닫습니다. 이제 필드에 `Inbox` 가 표시됩니다.
 
    > 이 선택기는 *tree* 라서 하위 항목이 있는 폴더는 펼칠 수 있습니다 — 하지만 **Inbox** 는 최상위에 있으므로, 여기서는 한 번 클릭하는 것으로 충분합니다.
 
-5. 이제 제목 필터를 설정합니다. **Advanced parameters** 아래에서 패널에 **"Showing 4 of 9"** 라고 표시됩니다 — 필터는 숨겨진 다섯 개 중 하나입니다. **Show all** 을 클릭하고(카운터가 *Showing 9 of 9* 로 바뀝니다), **Subject Filter** 를 찾아 입력합니다:
+5. 이제 제목 필터를 설정합니다. **Advanced parameters (고급 매개 변수)** 아래에서 패널에 **"Showing 4 of 9"** 라고 표시됩니다 — 필터는 숨겨진 다섯 개 중 하나입니다. **Show all (모두 보기)** 을 클릭하고(카운터가 *Showing 9 of 9* 로 바뀝니다), **Subject Filter (제목 필터)** 를 찾아 입력합니다:
 
    ```
    [REQ]
@@ -445,11 +445,11 @@ agent node를 추가할 때 **Agent** 를 *New agent for this workflow* 로 두�
    **Enter** 를 누릅니다.
    ![alt text](./img/image-5.png)
 
-7. **Save** 를 선택합니다.
+7. **Save (저장)** 를 선택합니다.
 
 > ⚠️ **트리거를 좁게 유지하세요.** **Subject filter** 가 없으면 이 워크플로는 받은 편지함에 도착하는 *모든* 메시지에 발동합니다 — 자신이 보낸 접수 확인 메일까지 포함되므로 무한 루프가 됩니다. `[REQ]` 는 이를 테스트 메시지로만 제한합니다. 이 단계를 건너뛰지 마세요.
 
-> 🔎 **토큰은 어디에서 오나요?** 이 트리거의 페이로드가 이후 모든 곳에서 사용하게 될 값입니다: **Subject**, **Body**, **From**, **Received Time**, **Message Id**. 한 노드 안에서 *Event → Payload → Action* 이 이루어지는 것입니다.
+> 🔎 **토큰은 어디에서 오나요?** 이 트리거의 페이로드가 이후 모든 곳에서 사용하게 될 값입니다: **Subject (제목)**, **Body (본문)**, **From**, **Received Time**, **Message Id (메시지 ID)**. 한 노드 안에서 *Event → Payload → Action* 이 이루어지는 것입니다.
 
 ---
 
@@ -459,17 +459,17 @@ agent node를 추가할 때 **Agent** 를 *New agent for this workflow* 로 두�
 
 ### 3a — 노드 추가하기
 
-1. 트리거 아래에서 **+**(**Add a step**) 버튼을 선택합니다.
-2. **Add** 대화 상자에서 **Agent** 타일을 선택합니다.
-3. 노드가 **Not connected** 로 열리면 먼저 연결을 만드세요 — [1.3절](#13-연결connections--처음에-무엇을-보게-되는가)을 참고하세요. 새 환경에서는 그렇게 나옵니다. 연결되고 나면 **Agent** 드롭다운과 **Instructions** 필드가 나타납니다.
-4. **Agent** 드롭다운을 **New agent for this workflow** 로 그대로 둡니다.
+1. 트리거 아래에서 **+**(**Add a step (단계 추가)**) 버튼을 선택합니다.
+2. **Add (추가)** 대화 상자에서 **Agent (에이전트)** 타일을 선택합니다.
+3. 노드가 **Not connected** 로 열리면 먼저 연결을 만드세요 — [1.3절](#13-연결connections--처음에-무엇을-보게-되는가)을 참고하세요. 새 환경에서는 그렇게 나옵니다. 연결되고 나면 **Agent (에이전트)** 드롭다운과 **Instructions (안내)** 필드가 나타납니다.
+4. **Agent (에이전트)** 드롭다운을 **New agent for this workflow (이 워크플로의 새 에이전트)** 로 그대로 둡니다.
 5. 노드 이름을 `Request Triage Agent` 로 바꿉니다.
 ![alt text](./img/image-6.png)
 
 <details>
 <summary>💡 <b>개념</b></summary>
 
-**New agent for this workflow** 는 *인라인* 에이전트를 만듭니다: 지시문, 모델, 출력 형태가 이 노드 안에 있고 워크플로와 함께 움직입니다. 다른 곳에서는 재사용할 수 없는데, 에이전트가 한 자동화에서만 쓰인다면 오히려 그게 맞습니다.
+**New agent for this workflow (이 워크플로의 새 에이전트)** 는 *인라인* 에이전트를 만듭니다: 지시문, 모델, 출력 형태가 이 노드 안에 있고 워크플로와 함께 움직입니다. 다른 곳에서는 재사용할 수 없는데, 에이전트가 한 자동화에서만 쓰인다면 오히려 그게 맞습니다.
 
 </details>
 
@@ -479,11 +479,11 @@ agent node를 추가할 때 **Agent** 를 *New agent for this workflow* 로 두�
 
 *인라인 agent 노드: Agent가 'New agent for this workflow'로 설정되어 있고, 지시문과 모델 선택기가 보입니다.*
 
-인라인 에이전트에서 **Instructions** 필드는 직무 설명이자 *동시에* 실행별 프롬프트입니다 — 별도의 Message 필드가 없습니다.
+인라인 에이전트에서 **Instructions (안내)** 필드는 직무 설명이자 *동시에* 실행별 프롬프트입니다 — 별도의 Message 필드가 없습니다.
 
-아래 텍스트를 **Instructions** 에 입력합니다. **`⟨insert /Subject⟩`** 가 보이는 곳에서는 `/` 를 입력하고, 선택기가 뜰 때까지 기다린 뒤, 몇 글자를 입력하고 그 값을 선택하세요.
+아래 텍스트를 **Instructions (안내)** 에 입력합니다. **`⟨insert /Subject⟩`** 가 보이는 곳에서는 `/` 를 입력하고, 선택기가 뜰 때까지 기다린 뒤, 몇 글자를 입력하고 그 값을 선택하세요.
 
-> 🔤 **트리거의 값이 선택기 어디에 있는가 — 지금 있는 필드에 따라 달라집니다.** **agent 노드의 Instructions** 상자 안에서는 트리거의 출력이 트리거 노드 이름이 *아니라* **Input** 이라는 제목 아래에 묶여 있습니다. 그래서 여기서는 **Input** → **Subject**, **From**, **Body** 를 찾으면 됩니다. 이후에 나오는 일반 **connector** 필드(Excel과 Outlook 단계)에서는 같은 값이 대신 트리거 노드 이름 — **New request email** — 아래에 묶이고, 앞선 각 노드에 대한 그룹도 함께 나타납니다. 어느 쪽이든 같은 토큰이며, 제목만 다를 뿐입니다.
+> 🔤 **트리거의 값이 선택기 어디에 있는가 — 지금 있는 필드에 따라 달라집니다.** **agent 노드의 Instructions** 상자 안에서는 트리거의 출력이 트리거 노드 이름이 *아니라* **Input (입력)** 이라는 제목 아래에 묶여 있습니다. 그래서 여기서는 **Input (입력)** → **Subject (제목)**, **From**, **Body (본문)** 를 찾으면 됩니다. 이후에 나오는 일반 **connector** 필드(Excel과 Outlook 단계)에서는 같은 값이 대신 트리거 노드 이름 — **New request email** — 아래에 묶이고, 앞선 각 노드에 대한 그룹도 함께 나타납니다. 어느 쪽이든 같은 토큰이며, 제목만 다를 뿐입니다.
 
 ```
 You are the IT service desk triage assistant for an enterprise IT team.
@@ -543,14 +543,14 @@ and do not include a signature.
 
 ### 3c — 모델 선택하기
 
-모델 드롭다운은 **Instructions** 헤더의 오른쪽에 있습니다.
+모델 드롭다운은 **Instructions (안내)** 헤더의 오른쪽에 있습니다.
 
 기본값은 **Claude Opus 5**, 무거운 다단계 추론 모델입니다. 이 작업에 잘 동작하므로 그대로 두어도 됩니다.
 
 <details>
 <summary>🎯 <b>다만 알아 둘 만한 점</b></summary>
 
-짧은 이메일 분류는 빠르고 양이 많은 작업이라, 채팅 계층 모델(GPT-5 Chat, Claude Sonnet)이 더 짧은 지연 시간과 더 낮은 비용으로 같은 답을 냅니다. 노드마다 모델 급을 맞춰 주는 것이 이 제품에서 가장 값싼 최적화입니다. 둘 다 시도해 보고 **Activity** 에서 실행 시간을 비교하세요.
+짧은 이메일 분류는 빠르고 양이 많은 작업이라, 채팅 계층 모델(GPT-5 Chat, Claude Sonnet)이 더 짧은 지연 시간과 더 낮은 비용으로 같은 답을 냅니다. 노드마다 모델 급을 맞춰 주는 것이 이 제품에서 가장 값싼 최적화입니다. 둘 다 시도해 보고 **Activity (활동)** 에서 실행 시간을 비교하세요.
 
 </details>
 
@@ -560,8 +560,8 @@ and do not include a signature.
 
 *Output은 agent 패널 맨 아래에 있습니다. Custom structured output은 여러분이 제공하는 JSON 스키마를 검증합니다.*
 
-1. 구성 패널 **맨 아래** 로 스크롤합니다. **Output** 은 Tools, Knowledge, Request human assistance, Web search 아래에 있습니다.
-2. **Output** 드롭다운을 열고 **Custom structured output** 을 선택합니다.
+1. 구성 패널 **맨 아래** 로 스크롤합니다. **Output (출력)** 은 Tools, Knowledge, Request human assistance, Web search 아래에 있습니다.
+2. **Output (출력)** 드롭다운을 열고 **Custom structured output (사용자 지정 구조적 출력)** 을 선택합니다.
 3. 그 아래에 **JSON Schema** 상자가 나타납니다. 다음을 붙여넣습니다:
 
 ```json
@@ -580,12 +580,12 @@ and do not include a signature.
 ```
 ![alt text](./img/image-8.png)
 
-4. **Save** 를 선택합니다.
+4. **Save (저장)** 를 선택합니다.
 
 <details>
 <summary>💡 <b>개념 — 이것이 시나리오 전체의 축입니다</b></summary>
 
-**Text response** 를 쓰면 에이전트는 산문 덩어리 하나만 돌려주고, 그걸로는 구조적인 처리를 할 수 없습니다. **Custom structured output** 을 쓰면 **각 필드가 각자의 동적 콘텐츠 토큰이 됩니다**. 덕분에 Step 4에서 `priority` 를 Excel 열에 넣고, Step 6에서 그 값으로 분기할 수 있습니다. *AI가 구조를 만들고, 결정적 단계가 그 구조를 받아 씁니다.* 이 패턴을 기억하세요 — 이 팩에서 가장 재사용성이 높은 아이디어 하나입니다.
+**Text response (텍스트 응답)** 를 쓰면 에이전트는 산문 덩어리 하나만 돌려주고, 그걸로는 구조적인 처리를 할 수 없습니다. **Custom structured output (사용자 지정 구조적 출력)** 을 쓰면 **각 필드가 각자의 동적 콘텐츠 토큰이 됩니다**. 덕분에 Step 4에서 `priority` 를 Excel 열에 넣고, Step 6에서 그 값으로 분기할 수 있습니다. *AI가 구조를 만들고, 결정적 단계가 그 구조를 받아 씁니다.* 이 패턴을 기억하세요 — 이 팩에서 가장 재사용성이 높은 아이디어 하나입니다.
 
 </details>
 
@@ -594,13 +594,13 @@ and do not include a signature.
 
 ### 3e — 더 진행하기 전에 노드 테스트하기
 
-1. agent 노드를 선택한 상태에서, 그 사이드 패널의 **Run node** 탭을 엽니다.
-2. 패널에는 여러분의 지시문이 실제로 참조하는 상위 필드만 나열됩니다 — *New request email · 3 of 34* 처럼 표시되며 **From**, **Subject**, **Body** 가 나옵니다. 직접 채워 넣으세요:
-   - **Subject** → `[REQ] Cannot sign in to Teams - MFA prompt keeps looping`
+1. agent 노드를 선택한 상태에서, 그 사이드 패널의 **Run node (노드 실행)** 탭을 엽니다.
+2. 패널에는 여러분의 지시문이 실제로 참조하는 상위 필드만 나열됩니다 — *New request email · 3 of 34* 처럼 표시되며 **From**, **Subject (제목)**, **Body (본문)** 가 나옵니다. 직접 채워 넣으세요:
+   - **Subject (제목)** → `[REQ] Cannot sign in to Teams - MFA prompt keeps looping`
    - **From** → 자신의 이메일 주소
-   - **Body** → `Since this morning the MFA prompt on Teams loops forever and I cannot get in. I have a customer call in 40 minutes. Tried restarting and clearing the cache.`
+   - **Body (본문)** → `Since this morning the MFA prompt on Teams loops forever and I cannot get in. I have a customer call in 40 minutes. Tried restarting and clearing the cache.`
 3. **Run** 을 선택합니다.
-4. **Output** 을 읽습니다. 이름이 붙은 여섯 개 필드가 돌아와야 하며, `category` = `Access`, `priority` = `High`, `owner_team` = `Identity`, `sla_hours` = `4`, 그리고 영어로 된 `ack_message` 가 나와야 합니다.
+4. **Output (출력)** 을 읽습니다. 이름이 붙은 여섯 개 필드가 돌아와야 하며, `category` = `Access`, `priority` = `High`, `owner_team` = `Identity`, `sla_hours` = `4`, 그리고 영어로 된 `ack_message` 가 나와야 합니다.
 
 <details>
 <summary>💡 <b>전체 흐름이 아니라 노드를 테스트하세요</b></summary>
@@ -621,18 +621,18 @@ and do not include a signature.
 
 *동적 콘텐츠 선택기. 구조화된 출력의 각 필드가 저마다의 토큰이 되며, 데이터 유형이 오른쪽에 표시됩니다.*
 
-1. 에이전트 노드 아래에서 **Add a step**을 선택합니다.
-2. `Add a row into a table`를 검색하고 **Excel Online (Business)** 아래에서 선택합니다.
+1. 에이전트 노드 아래에서 **Add a step (단계 추가)**을 선택합니다.
+2. `Add a row into a table` (테이블에 행 추가)를 검색하고 **Excel Online (Business)** 아래에서 선택합니다.
 ![alt text](./img/image-9.png)
 3. 노드에 **Not connected**가 표시되면 **연결을 만듭니다**
 4. 위치 매개변수를 순서대로 설정합니다 — 각 항목이 다음 항목을 불러옵니다:
 
    | 매개변수 | 값 |
    |---|---|
-   | Location | `OneDrive for Business` |
-   | Document library | `OneDrive` — 목록에서 **첫 번째가 아니라는** 점에 주의하세요. 보통 첫 번째는 `PersonalCacheLibrary`입니다 |
-   | File | **Change**를 클릭한 뒤 파일 트리에서 `Workflows-Lab.xlsx`를 선택합니다 |
-   | Table | `RequestLog` |
+   | Location (위치) | `OneDrive for Business` |
+   | Document library (문서 라이브러리) | `OneDrive` — 목록에서 **첫 번째가 아니라는** 점에 주의하세요. 보통 첫 번째는 `PersonalCacheLibrary`입니다 |
+   | File (파일) | **Change (변경)**를 클릭한 뒤 파일 트리에서 `Workflows-Lab.xlsx`를 선택합니다 |
+   | Table (테이블) | `RequestLog` |
 
    ![alt text](./img/image-10.png)
 
@@ -652,7 +652,7 @@ and do not include a signature.
 
    ![alt text](./img/image-11.png)
 
-6. 노드 이름을 `Log to request tracker`로 바꾸고 **Save**를 선택합니다.
+6. 노드 이름을 `Log to request tracker`로 바꾸고 **Save (저장)**를 선택합니다.
 
 > 📎 **필드 라벨은 다시 렌더링됩니다.** 커넥터가 표시를 위해 헤더 이름을 분리하기 때문에,
 > `ReceivedAt`는 "Received at"로, `SLAHours`는 "SLA hours"로 표시됩니다. 실제 열 자체는
@@ -663,7 +663,7 @@ and do not include a signature.
 <details>
 <summary>💡 <b>방금 무슨 일이 일어났는지 확인하세요</b></summary>
 
-아홉 개 열 중 여덟 개가 토큰으로 채워졌고, `Status`만 직접 입력했습니다. 에이전트를 **Text response**로 뒀다면 AI가 채운 여섯 개 열은 하나도 만들 수 없었을 겁니다.
+아홉 개 열 중 여덟 개가 토큰으로 채워졌고, `Status`만 직접 입력했습니다. 에이전트를 **Text response (텍스트 응답)**로 뒀다면 AI가 채운 여섯 개 열은 하나도 만들 수 없었을 겁니다.
 
 </details>
 
@@ -673,23 +673,23 @@ and do not include a signature.
 
 이 단계는 긴급 여부와 관계없이 **모든** 요청에 대해 실행됩니다 — 그래서 분기 *앞*에 위치합니다.
 
-1. **Log to request tracker** 아래에서 **Add a step**을 선택합니다.
-2. `Reply to email`을 검색하고 **Office 365 Outlook** 아래에서 선택합니다.
+1. **Log to request tracker** 아래에서 **Add a step (단계 추가)**을 선택합니다.
+2. `Reply to email` (메일에 회신)을 검색하고 **Office 365 Outlook** 아래에서 선택합니다.
 ![alt text](./img/image-12.png)
 3. 다음과 같이 구성합니다:
 
    | 매개변수 | 값 |
    |---|---|
    | **Message ID** | `Message Id` *(New request email에서)* |
-   | **Body** | `Ack_message` *(Request Triage Agent에서)* |
-   | Reply all | False (default) |
+   | **Body (본문)** | `Ack_message` *(Request Triage Agent에서)* |
+   | Reply all (모두 회신) | False (default) |
 
    ![alt text](./img/image-13.png)
 
-4. 노드 이름을 `Acknowledge the sender`로 바꾸고 **Save**를 선택합니다.
+4. 노드 이름을 `Acknowledge the sender`로 바꾸고 **Save (저장)**를 선택합니다.
 
-> 📎 **답장 텍스트는 `Body`에 들어갑니다.** 이 커넥터 버전은 **Message ID**, **To**, **CC**,
-> **BCC**, **Subject**, **Body**, **Reply all**, **Importance**, **Attachments**를 노출합니다. `Body`는
+> 📎 **답장 텍스트는 `Body`에 들어갑니다.** 이 커넥터 버전은 **Message ID**, **To (받는 사람)**, **CC (참조)**,
+> **BCC**, **Subject (제목)**, **Body (본문)**, **Reply all (모두 회신)**, **Importance (중요도)**, **Attachments (첨부 파일)**를 노출합니다. `Body`는
 > 서식 있는 텍스트 편집기입니다 — 토큰을 거기에 삽입하세요.
 
 <details>
@@ -709,17 +709,17 @@ and do not include a signature.
 
 *If/Else 조건 빌더 — Property, Operator, Value. Else 분기는 자동으로 생성됩니다.*
 
-1. **Acknowledge the sender** 아래에서 **Add a step**을 선택하고 **If/Else**를 고릅니다.
+1. **Acknowledge the sender** 아래에서 **Add a step (단계 추가)**을 선택하고 **If/Else**를 고릅니다.
 ![alt text](./img/image-14.png)
 2. 조건 행을 구성합니다 — 자유 텍스트가 아니라 세 부분으로 이루어집니다:
 
    | 부분 | 값 |
    |---|---|
-   | **Property** | **Request Triage Agent**의 `Priority` 토큰을 삽입합니다 |
-   | **Operator** | `Equals` |
-   | **Value** | `High`를 입력합니다 |
+   | **Property (속성)** | **Request Triage Agent**의 `Priority` 토큰을 삽입합니다 |
+   | **Operator (운영자)** | `Equals` |
+   | **Value (값)** | `High`를 입력합니다 |
 
-3. 노드 이름을 `Is it urgent?`로 바꾸고 **Save**를 선택합니다.
+3. 노드 이름을 `Is it urgent?`로 바꾸고 **Save (저장)**를 선택합니다.
 ![alt text](./img/image-16.png)
 > 📎 **분기의 이름은 If와 Else이며**, **Else** 분기는 자동으로 생성됩니다 —
 > 패널에 그렇게 표시됩니다. **Else**는 비워 두세요: Medium이나 Low 요청은 기록되고 접수 확인되며,
@@ -727,20 +727,20 @@ and do not include a signature.
 
 ### 6b — If 분기에 에스컬레이션 게시하기
 
-1. **If** 분기에서 **Add a step**을 선택합니다.
-2. `Post message in a chat or channel`을 검색하고 **Microsoft Teams** 아래에서 선택합니다.
+1. **If** 분기에서 **Add a step (단계 추가)**을 선택합니다.
+2. `Post message in a chat or channel` (채팅 또는 채널에서 메시지 게시)을 검색하고 **Microsoft Teams** 아래에서 선택합니다.
 ![alt text](./img/image-17.png)
 3. 다음과 같이 설정합니다:
 
    | 매개변수 | 값 |
    |---|---|
-   | Post as | `Flow bot` *(이미 기본값)* |
-   | Post in | `Chat with Flow bot` |
+   | Post as (다음으로 게시) | `Flow bot` (흐름 봇) *(이미 기본값)* |
+   | Post in (게시 위치) | `Chat with Flow bot` (흐름 봇과 채팅) |
    | Recipient | 본인 이메일 주소 |
 
-   *(실제 채널을 사용하시나요? **Post in**을 `Channel`로 설정한 뒤 `Workflow Lab`과 `Alerts`를 선택합니다.)*
+   *(실제 채널을 사용하시나요? **Post in (게시 위치)**을 `Channel` (채널)로 설정한 뒤 `Workflow Lab`과 `Alerts`를 선택합니다.)*
 
-4. **Message**에 다음을 입력하고 표시된 위치에 토큰을 삽입합니다:
+4. **Message (메시지)**에 다음을 입력하고 표시된 위치에 토큰을 삽입합니다:
 
    ```
    HIGH PRIORITY REQUEST
@@ -755,7 +755,7 @@ and do not include a signature.
    Subject: ⟨insert /Subject⟩
    ```
    ![alt text](./img/image-18.png)
-5. 노드 이름을 `Escalate to on-call`로 바꾸고 **Save**를 선택합니다.
+5. 노드 이름을 `Escalate to on-call`로 바꾸고 **Save (저장)**를 선택합니다.
 
 > 🚨 **이 단계에서는 칩을 주의 깊게 읽으세요.** 이제 Excel 노드가 생겼으므로, 선택기에는
 > `Category`라는 토큰이 **두 개**, `Subject`가 두 개, `Summary`가 두 개 하는 식으로 들어 있습니다 —
@@ -778,7 +778,7 @@ and do not include a signature.
 
 *디자이너 명령 모음: 왼쪽에 Build / Activity / Monitor 탭, 오른쪽에 Save, Run, Review, Publish.*
 
-1. 명령 모음의 **Review** 버튼을 확인합니다 — 완성되지 않은 부분이 있으면 문제 개수를 표시합니다. 그런 다음 **Publish**를 선택합니다.
+1. 명령 모음의 **Review (검토)** 버튼을 확인합니다 — 완성되지 않은 부분이 있으면 문제 개수를 표시합니다. 그런 다음 **Publish (게시)**를 선택합니다.
 
    제목 옆의 배지가 **Draft → Published**로 바뀌고 Publish 버튼이 *"No changes to publish"*와 함께 비활성화됩니다.
 
@@ -810,7 +810,7 @@ and do not include a signature.
    교체가 가능한지 확인 부탁드립니다.
    ```
 
-3. **Activity** 탭을 열고 실행이 나타날 때까지 기다린 뒤, 실행을 선택해 캔버스에 로드합니다.
+3. **Activity (활동)** 탭을 열고 실행이 나타날 때까지 기다린 뒤, 실행을 선택해 캔버스에 로드합니다.
 
    > ⏱️ 인내심을 가지세요. 메일 트리거는 폴링 방식이라 실행은 보통 1~2분 안에 나타납니다. 실행 하나가 완료되는 데는 약 30초가 걸립니다.
 
@@ -826,7 +826,7 @@ and do not include a signature.
 | **Excel** — `Workflows-Lab.xlsx`, `RequestLog` 시트 | 아홉 개 열이 모두 채워지고 `Status` = `New`인 새 행. **행 3**에 들어갑니다(행 2는 table의 빈 시작 행입니다). |
 | **Outlook** — 테스트 스레드 | *여러분*의 문제를 *여러분*의 언어로 다시 설명하고 응답 시간을 명시한 답장 |
 | **Teams** — Flow bot 채팅 | Test A와 Test C에 대한 에스컬레이션 메시지, **Test B에 대해서는 아무것도 없음** |
-| **Activity** 패널 | 노드별로 열어 볼 수 있는 **Succeeded** 실행 |
+| **Activity (활동)** 패널 | 노드별로 열어 볼 수 있는 **Succeeded** 실행 |
 
 **Else** 경로가 동작한다는 것을 증명하기 위해 일부러 Test B를 보내세요. 모든 것에 알림을 보내는 워크플로는 아무것에도 알림을 보내지 않는 워크플로와 같습니다.
 
@@ -837,8 +837,8 @@ and do not include a signature.
 | 확장 |
 |---|
 | **트리거와 에이전트 사이에 M365 Copilot node를 추가합니다.** Message: `Have we seen a request like this before? Search my mail and chats for prior cases matching:` + `/Subject`. 그 **Body / Response**를 에이전트의 지시문에 추가 맥락으로 넣어, 조직의 이력을 활용해 분류가 개선되도록 합니다. |
-| **High 우선순위에 대한 사람 게이트를 추가합니다.** **If** 분기에서 Teams 게시 앞에 **Human review** 노드를 삽입하고, Yes/No 입력 `PageOnCall` 하나를 둡니다. 사람이 확인했을 때만 호출합니다. |
-| **중복을 제거합니다.** 에이전트 앞에 **Excel Online (Business) ▸ List rows present in a table**를 추가하고 최근 제목들을 지시문에 전달해 `duplicate_of`를 표시할 수 있게 합니다. |
+| **High 우선순위에 대한 사람 게이트를 추가합니다.** **If** 분기에서 Teams 게시 앞에 **Human review (인적 검토)** 노드를 삽입하고, Yes/No 입력 `PageOnCall` 하나를 둡니다. 사람이 확인했을 때만 호출합니다. |
+| **중복을 제거합니다.** 에이전트 앞에 **Excel Online (Business) ▸ List rows present in a table (테이블에 있는 행 나열)**를 추가하고 최근 제목들을 지시문에 전달해 `duplicate_of`를 표시할 수 있게 합니다. |
 
 ---
 
@@ -875,17 +875,17 @@ Microsoft 365 Copilot은 그 맥락을 이미 알고 있습니다. 이 워크플
 
 ## Step 1 — 워크플로와 트리거 만들기
 
-1. **Workflows ▸ New workflow**. 제목을 다음으로 바꿉니다:
+1. **Workflows (워크플로) ▸ New workflow (새 워크플로)**. 제목을 다음으로 바꿉니다:
 
    ```
    Reply Desk with Approval
    ```
 
-2. **Start** 노드를 선택하고, **Trigger type** 을 **Connector** 로 설정한 뒤, 대화 상자에서 **Office 365 Outlook ▸ When a new email arrives** 를 선택합니다.
+2. **Start** 노드를 선택하고, **Trigger type (트리거 유형)** 을 **Connector (커넥터)** 로 설정한 뒤, 대화 상자에서 **Office 365 Outlook ▸ When a new email arrives (새 메일이 도착하면)** 를 선택합니다.
 3. 시나리오 1과 똑같이 구성합니다:
-   - **Folder** — **Change** 를 클릭한 뒤 트리에서 **Inbox** 를 선택합니다.
-   - **Advanced parameters ▸ Show all**, 그런 다음 **Subject filter** = `[Ask]`
-4. 노드 이름을 `New question email` 로 바꿉니다. **Save** 를 선택합니다.
+   - **Folder (폴더)** — **Change (변경)** 를 클릭한 뒤 트리에서 **Inbox** 를 선택합니다.
+   - **Advanced parameters (고급 매개 변수) ▸ Show all (모두 보기)**, 그런 다음 **Subject filter** = `[Ask]`
+4. 노드 이름을 `New question email` 로 바꿉니다. **Save (저장)** 를 선택합니다.
 ![alt text](./img/image-24.png)
 
 > ⚠️ **시나리오 1도 함께 만들었다면**, 제목 필터가 서로 달라야 합니다 — `[REQ]` 와 `[Ask]`. 같은 받은 편지함을 겹치는 필터로 감시하는 두 워크플로는 같은 메시지에 둘 다 발동하고, 남은 세션 내내 원인을 찾게 됩니다.
@@ -894,7 +894,7 @@ Microsoft 365 Copilot은 그 맥락을 이미 알고 있습니다. 이 워크플
 
 ## Step 2 — M365 Copilot으로 답장 초안 작성하기
 
-1. 트리거 아래에서 **Add a step** 를 선택하고 **M365 Copilot** 타일을 고릅니다.
+1. 트리거 아래에서 **Add a step (단계 추가)** 를 선택하고 **M365 Copilot** 타일을 고릅니다.
 2. 노드가 **Not connected** 상태로 열립니다. 연결을 만드세요: **Connection** 필드의 **셰브런 ⌄** 을 클릭 → **Create new connection** → *M365 Copilot (V2)* 대화 상자에서 **Create** → 팝업에서 랩 계정을 선택합니다. (본문에 있는 큰 *"Connect to M365 Copilot"* 자리 표시자를 클릭해도 아무 일도 일어나지 않습니다.)
 3. **Message** 필드에 아래 텍스트를 입력하되, 표시된 곳에는 `/` 로 토큰을 삽입합니다:
 
@@ -920,13 +920,13 @@ Microsoft 365 Copilot은 그 맥락을 이미 알고 있습니다. 이 워크플
    ```
    ![alt text](./img/image-23.png)
 
-4. **Time zone** 을 설정합니다. **Advanced parameters** 아래에 이미 보이며(*Showing 2 of 3*), **IANA 식별자** 를 받습니다:
+4. **Time zone** 을 설정합니다. **Advanced parameters (고급 매개 변수)** 아래에 이미 보이며(*Showing 2 of 3*), **IANA 식별자** 를 받습니다:
 
    ```
    Asia/Seoul
    ```
 
-5. 노드 이름을 `Draft reply with Copilot` 로 바꿉니다. **Save** 를 선택합니다.
+5. 노드 이름을 `Draft reply with Copilot` 로 바꿉니다. **Save (저장)** 를 선택합니다.
 ![alt text](./img/image-25.png)
 
 > ⏰ **이 필드는 기본값이 `America/New_York` 입니다.** UTC도 아니고, 여러분 테넌트의 지역도 아닙니다. 그대로 두면 "today", "this week", "yesterday's meeting" 같은 모든 상대적 표현이 뉴욕 시간으로 해석됩니다. 의도적으로 설정하세요.
@@ -942,7 +942,7 @@ M365 Copilot 노드는 **Connection 필드의 사용자로 실행** 되며, 별�
 
 ### 지금 바로 테스트
 
-노드의 **Run node** 탭을 열어 Subject, From, Body를 직접 붙여 넣고 **Run** 을 선택합니다. 초안을 읽어 보세요. 너무 길거나, 너무 격식을 차렸거나, 사실을 지어냈다면, 나중이 아니라 여기서 Message를 고치세요.
+노드의 **Run node (노드 실행)** 탭을 열어 Subject, From, Body를 직접 붙여 넣고 **Run** 을 선택합니다. 초안을 읽어 보세요. 너무 길거나, 너무 격식을 차렸거나, 사실을 지어냈다면, 나중이 아니라 여기서 Message를 고치세요.
 
 > 📤 **답은 `Body / Response` 로 돌아옵니다.** 이 노드는 여섯 개의 토큰을 반환합니다 — *Body*, *Body / Conversation ID*, *Body / Response*, *Body / Citations*, *See More URL*, *Type*. 초안 텍스트는 **Body / Response** 입니다("The response from the Copilot agent" 로 설명됨). 그냥 "Response" 라는 이름의 토큰은 없으므로, `Response` 로 필터링한 뒤 설명이 맞는 항목을 고르세요.
 
@@ -956,7 +956,7 @@ M365 Copilot 노드는 **Connection 필드의 사용자로 실행** 되며, 별�
 
 *Human review 노드. 입력 두 개는 `Decision` 과 `ChangeRequest` 입니다 — 라벨 상자가 좁아 두 번째는 `ChangeRe...` 로 잘려 보이지만, 전체 이름을 입력하세요. 각 입력은 검토자의 답을 담은 토큰이 되고, 텍스트 입력에는 드롭다운 옵션을 줄 수 있습니다.*
 
-1. Copilot 노드 아래에서 **Add a step** 를 선택하고 **Human review** 타일을 고릅니다. 그 타일 하나로 노드가 추가되며, 골라야 할 하위 항목은 없습니다.
+1. Copilot 노드 아래에서 **Add a step (단계 추가)** 를 선택하고 **Human review (인적 검토)** 타일을 고릅니다. 그 타일 하나로 노드가 추가되며, 골라야 할 하위 항목은 없습니다.
 
 2. 연결은 자동으로 바인딩됩니다.
 3. 노드 이름을 `Approve the reply` 로 바꿉니다.
@@ -1001,7 +1001,7 @@ be revised before sending.
 
 정의하는 각 입력은 사람이 답한 값을 담은 동적 콘텐츠 토큰이 됩니다.
 
-1. **Add an input** 을 선택하고 유형 **Text** 를 고릅니다.
+1. **Add an input (입력 추가)** 을 선택하고 유형 **Text** 를 고릅니다.
    - 라벨 상자가 **`Text` 로 미리 채워진 채** 나타납니다. 클릭한 뒤 **Ctrl+A**, **Delete** 를 누르고, 다음을 입력합니다:
      ```
      Decision
@@ -1016,13 +1016,13 @@ be revised before sending.
      Reject
      ```
 
-2. 다시 **Add an input** 을 선택하고 **Text** 를 고른 뒤, 미리 채워진 라벨을 지우고 이름을 지정합니다:
+2. 다시 **Add an input (입력 추가)** 을 선택하고 **Text** 를 고른 뒤, 미리 채워진 라벨을 지우고 이름을 지정합니다:
    ```
    ChangeRequest
    ```
    그 입력의 **⋯** 메뉴를 열고 **Make optional** 을 선택합니다.
 
-3. **Save** 를 선택합니다.
+3. **Save (저장)** 를 선택합니다.
 ![alt text](./img/image-27.png)
 
 <details>
@@ -1035,7 +1035,7 @@ be revised before sending.
 <details>
 <summary>💡 <b>설계로 vs. 판단으로</b></summary>
 
-방금 이 관문을 의도적으로 배치했습니다 — *설계에 의한 human-in-the-loop*. 대안은 *판단에 의한* 방식입니다: agent 노드에서 **Request human assistance** 를 켜서 에이전트가 스스로 에스컬레이션하게 하는 것입니다. 액션이 늘 위험할 때(내 이름으로 메일 보내기)는 *설계로*, 예외 상황에서만 위험할 때는 *판단으로* 를 쓰세요.
+방금 이 관문을 의도적으로 배치했습니다 — *설계에 의한 human-in-the-loop*. 대안은 *판단에 의한* 방식입니다: agent 노드에서 **Request human assistance (사람의 도움 요청)** 를 켜서 에이전트가 스스로 에스컬레이션하게 하는 것입니다. 액션이 늘 위험할 때(내 이름으로 메일 보내기)는 *설계로*, 예외 상황에서만 위험할 때는 *판단으로* 를 쓰세요.
 
 </details>
 
@@ -1043,27 +1043,27 @@ be revised before sending.
 
 ## Step 4 — 결정에 따라 분기
 
-1. 검토 노드 아래에서 **Add a step** 을 선택하고 **If/Else** 를 고릅니다.
+1. 검토 노드 아래에서 **Add a step (단계 추가)** 을 선택하고 **If/Else** 를 고릅니다.
 2. 조건을 구성합니다:
 
    | 항목 | 값 |
    |---|---|
-   | **Property** | **Approve the reply** 의 `Decision` 토큰을 삽입 |
-   | **Operator** | `Equals` |
-   | **Value** | `Approve` 입력 |
+   | **Property (속성)** | **Approve the reply** 의 `Decision` 토큰을 삽입 |
+   | **Operator (운영자)** | `Equals` |
+   | **Value (값)** | `Approve` 입력 |
 
 3. 노드 이름을 `Approved?` 로 바꿉니다.
 ![alt text](./img/image-28.png)
-4. **Else** 분기에서 **Add a step ▸ Microsoft Teams ▸ Post message in a chat or channel** 을 선택합니다:
+4. **Else** 분기에서 **Add a step (단계 추가) ▸ Microsoft Teams ▸ Post message in a chat or channel (채팅 또는 채널에서 메시지 게시)** 을 선택합니다:
 
    | 매개변수 | 값 |
    |---|---|
-   | Post as | `Flow bot` |
-   | Post in | `Chat with Flow bot` |
+   | Post as (다음으로 게시) | `Flow bot` (흐름 봇) |
+   | Post in (게시 위치) | `Chat with Flow bot` (흐름 봇과 채팅) |
    | Recipient | 자신의 메일 주소 |
-   | Message | `Reply suppressed by reviewer - ` 뒤에 `/Subject` 삽입 |
+   | Message (메시지) | `Reply suppressed by reviewer - ` 뒤에 `/Subject` 삽입 |
 
-5. 이름을 `Tell me it was suppressed` 로 바꿉니다. **Save** 를 선택합니다.
+5. 이름을 `Tell me it was suppressed` 로 바꿉니다. **Save (저장)** 를 선택합니다.
 ![alt text](./img/image-29.png)
 
 ---
@@ -1072,9 +1072,9 @@ be revised before sending.
 
 ### 5a — 마무리 에이전트 (If 분기)
 
-1. **If** 분기에서 **Add a step** 을 선택하고 **Agent** 타일을 고릅니다.
-2. **Agent** 를 **New agent for this workflow** 로 둡니다. 노드 이름을 `Apply reviewer feedback` 로 바꿉니다.
-3. **Instructions** 에 다음을 입력합니다:
+1. **If** 분기에서 **Add a step (단계 추가)** 을 선택하고 **Agent (에이전트)** 타일을 고릅니다.
+2. **Agent (에이전트)** 를 **New agent for this workflow (이 워크플로의 새 에이전트)** 로 둡니다. 노드 이름을 `Apply reviewer feedback` 로 바꿉니다.
+3. **Instructions (안내)** 에 다음을 입력합니다:
 
    ```
    You finalise an email reply just before it is sent.
@@ -1097,9 +1097,9 @@ be revised before sending.
    ```
    ![alt text](./img/image-30.png)
 
-4. **Output** 을 **Text response** 로 둡니다. **도구는 추가하지 않습니다** — 이 에이전트는 읽고 추론하기만 하면 됩니다.
+4. **Output (출력)** 을 **Text response (텍스트 응답)** 로 둡니다. **도구는 추가하지 않습니다** — 이 에이전트는 읽고 추론하기만 하면 됩니다.
 ![alt text](./img/image-31.png)
-5. **Save** 를 선택합니다.
+5. **Save (저장)** 를 선택합니다.
 
 <details>
 <summary>💡 <b>개념 — 도구가 없는 agent node도 여전히 agent node입니다</b></summary>
@@ -1110,19 +1110,19 @@ be revised before sending.
 
 ### 5b — 회신 보내기
 
-1. 같은 **If** 분기에서 에이전트 아래에 **Add a step ▸ Office 365 Outlook ▸ Reply to email** 을 선택합니다.
+1. 같은 **If** 분기에서 에이전트 아래에 **Add a step (단계 추가) ▸ Office 365 Outlook ▸ Reply to email (메일에 회신)** 을 선택합니다.
 2. 구성합니다:
 
    | 매개변수 | 값 |
    |---|---|
    | **Message ID** | `Message Id` *(New question email에서)* |
-   | **To** | `From` *(New question email에서)* |
-   | **Body** | `Agent Response` *(Apply reviewer feedback에서)* |
-   | Reply all | False (default) |
+   | **To (받는 사람)** | `From` *(New question email에서)* |
+   | **Body (본문)** | `Agent Response` *(Apply reviewer feedback에서)* |
+   | Reply all (모두 회신) | False (default) |
 
    ![alt text](./img/image-32.png)
 
-3. 노드 이름을 `Send the approved reply` 로 바꿉니다. **Save** 를 선택합니다.
+3. 노드 이름을 `Send the approved reply` 로 바꿉니다. **Save (저장)** 를 선택합니다.
 
 > 📤 **Text response로 설정된 에이전트는 토큰 하나를 반환합니다: `Agent Response`** ("The agent response text" 로 설명됨). 이 토큰에는 노드 이름이 접두어로 붙으므로 칩은 `Apply reviewer feedback.Agent Response` 로 표시됩니다.
 
@@ -1130,7 +1130,7 @@ be revised before sending.
 
 ## Step 6 — 게시, 실행, 승인, 검증
 
-1. **Publish** 를 선택합니다.
+1. **Publish (게시)** 를 선택합니다.
 2. 자신에게 테스트 메일을 보냅니다. **메일함에 실제로 존재하는 주제를 고르세요** — 그래야 Copilot 그라운딩이 뻔한 답이 아니라 눈에 보이게 드러납니다.
 
    **Test A — 그라운딩된 질문**
@@ -1148,7 +1148,7 @@ be revised before sending.
    I need the approved figure before I submit the forecast.
    ```
 
-3. **Activity** 를 지켜보세요. 실행은 검토 노드에 도달해 **Waiting** 을 표시합니다.
+3. **Activity (활동)** 를 지켜보세요. 실행은 검토 노드에 도달해 **Waiting** 을 표시합니다.
 4. **Step 4에서 고른 채널을 여세요.** `Approve reply: [Ask] …` 라는 제목의 요청을 받게 되며, 여기에는 원본 메시지, 초안, 양식이 담겨 있습니다.
 
    > 🔒 **Outlook 한정:** Outlook이 **"blocked content"** 배너를 표시하면 **Show blocked content** 를 클릭하세요 — 그러기 전까지 대화형 양식이 렌더링되지 않습니다.
@@ -1175,7 +1175,7 @@ be revised before sending.
 | **Outlook** — Run 1 스레드 | 초안과 **단어 하나까지 일치** 하는 회신 |
 | **Outlook** — Run 2 스레드 | 여러분이 요구한 길이로 줄어들고 **요청한 단어를 포함** 한 회신(`Wednesday`) — 에이전트가 재전송이 아니라 수정했다는 증거 |
 | **Teams** — Run 3 | `Reply suppressed by reviewer - [Ask] …`, 그리고 Outlook 스레드에는 여전히 **정확히 한 개의 메시지** — 회신 없는 원본만 남음 |
-| **Activity** 패널 | 게이트가 열려 있는 동안 **Waiting**, 그다음 **Succeeded** 를 보이는 실행 |
+| **Activity (활동)** 패널 | 게이트가 열려 있는 동안 **Waiting**, 그다음 **Succeeded** 를 보이는 실행 |
 
 > **human-in-the-loop**: 양식을 제출할 때까지 실행이 **Waiting** 에 머무는 것을 통해 확인 가능합니다.
 
@@ -1183,7 +1183,7 @@ be revised before sending.
 
 | 확장 |
 |---|
-| **감사 추적.** 회신 뒤에 **Excel Online (Business) ▸ Add a row into a table** 를 추가해 `ReceivedAt`, `Subject`, `Decision`, `ChangeRequest` 를 로그 테이블에 기록합니다. 규제 환경에서는 대개 이 단계가 워크플로를 운영 승인받게 만드는 단계입니다. |
+| **감사 추적.** 회신 뒤에 **Excel Online (Business) ▸ Add a row into a table (테이블에 행 추가)** 를 추가해 `ReceivedAt`, `Subject`, `Decision`, `ChangeRequest` 를 로그 테이블에 기록합니다. 규제 환경에서는 대개 이 단계가 워크플로를 운영 승인받게 만드는 단계입니다. |
 | **전문 에이전트를 지정.** M365 Copilot 노드에서 **M365 agent** 필드를 전문 에이전트로 설정하고 초안을 기본값과 비교합니다. |
 | **주제별로 승인을 라우팅.** 검토 노드 앞에 If/Else 를 추가하고 주제마다 **Assigned to** 를 다르게 설정해, 가격 질문은 한 승인자에게, 기술 질문은 다른 승인자에게 가게 합니다. |
 | **게이트를 Teams로 전환.** **Channel** 을 `Teams` 로 바꾸고 검토자 경험을 비교합니다. |
@@ -1222,28 +1222,28 @@ Microsoft 365 Copilot은 그 질문들에 이미 답할 수 있습니다. 다만
 
 *Recurrence 트리거. Frequency를 먼저 설정한 다음 요일, 시, 분을 지정합니다. Time zone은 Advanced 구분선 아래에 있습니다.*
 
-1. **Workflows ▸ New workflow**. 제목을 다음으로 바꿉니다:
+1. **Workflows (워크플로) ▸ New workflow (새 워크플로)**. 제목을 다음으로 바꿉니다:
 
    ```
    Daily Brief 8AM
    ```
 
-2. **Start** 노드를 선택하고 **Trigger type** 을 **Recurrence**(*Run on a schedule*)로 설정합니다 — Manual과 Connector 사이에 있는 시계 옵션입니다.
+2. **Start** 노드를 선택하고 **Trigger type (트리거 유형)** 을 **Recurrence (되풀이)**(*Run on a schedule*)로 설정합니다 — Manual과 Connector 사이에 있는 시계 옵션입니다.
 
 3. 되풀이 실행을 **이 순서대로** 구성합니다. 필드들이 서로 의존하기 때문입니다:
 
    | # | 매개변수 | 값 | 참고 |
    |---|---|---|---|
-   | 1 | **Frequency** | `Week` | 이것을 **먼저** 설정 |
-   | 2 | **Interval** | `1` | 이미 기본값 |
-   | 3 | **On these days** | `Mon` `Tue` `Wed` `Thu` `Fri` 체크 | Frequency = Week일 때만 **표시됨** |
-   | 4 | **At these hours** | `8` | |
-   | 5 | **At these minutes** | `0` | |
-   | 6 | **Advanced ▸ Time zone** | `(UTC+09:00) Seoul` | |
+   | 1 | **Frequency (빈도)** | `Week` | 이것을 **먼저** 설정 |
+   | 2 | **Interval (간격)** | `1` | 이미 기본값 |
+   | 3 | **On these days (선택한 요일)** | `Mon` `Tue` `Wed` `Thu` `Fri` 체크 | Frequency = Week일 때만 **표시됨** |
+   | 4 | **At these hours (이 시간에는)** | `8` | |
+   | 5 | **At these minutes (이 분에)** | `0` | |
+   | 6 | **Advanced (고급) ▸ Time zone** | `(UTC+09:00) Seoul` | |
 
-   > 📎 **필드가 실제로 어떻게 보이는가.** *On these days* 는 일곱 개의 **체크박스**(Sun–Sat) 행입니다 — `Sun` 이 기본으로 체크되어 있으니 해제하세요. *At these hours* 와 *At these minutes* 는 쉼표로 구분된 **텍스트 상자** 입니다. 흐릿하게 보이는 `9, 17` 과 `0, 30` 은 안내용 힌트일 뿐 값이 아닙니다. **Time zone** 과 **Start time** 은 **Advanced** 구분선 아래에 있고, Time zone은 기본값이 *(UTC) Coordinated Universal Time* 입니다.
+   > 📎 **필드가 실제로 어떻게 보이는가.** *On these days* 는 일곱 개의 **체크박스**(Sun–Sat) 행입니다 — `Sun` 이 기본으로 체크되어 있으니 해제하세요. *At these hours* 와 *At these minutes* 는 쉼표로 구분된 **텍스트 상자** 입니다. 흐릿하게 보이는 `9, 17` 과 `0, 30` 은 안내용 힌트일 뿐 값이 아닙니다. **Time zone** 과 **Start time (시작 시간)** 은 **Advanced (고급)** 구분선 아래에 있고, Time zone은 기본값이 *(UTC) Coordinated Universal Time* 입니다.
 
-4. **Save** 를 선택합니다.
+4. **Save (저장)** 를 선택합니다.
 ![alt text](./img/image-37.png)
 
 <details>
@@ -1259,7 +1259,7 @@ Microsoft 365 Copilot은 그 질문들에 이미 답할 수 있습니다. 다만
 
 ## Step 2 — M365 Copilot으로 하루 읽기
 
-1. 트리거 아래에서 **Add a step** 을 선택하고 **M365 Copilot** 타일을 고릅니다.
+1. 트리거 아래에서 **Add a step (단계 추가)** 을 선택하고 **M365 Copilot** 타일을 고릅니다.
 2. 노드에 **Not connected** 가 표시되면 **chevron ⌄ ▸ Create new connection ▸ Create** 로 연결을 만듭니다([1.3절](#13-연결connections--처음에-무엇을-보게-되는가)). 시나리오 2를 먼저 만들었다면 조용히 바인딩됩니다.
 3. **Message** 필드에 다음을 정확히 입력합니다:
 
@@ -1291,13 +1291,13 @@ Rules:
 - Return plain text. No tables.
 ```
 
-4. **Time zone**(**Advanced parameters** 아래, 이미 표시됨)을 다음으로 설정합니다:
+4. **Time zone**(**Advanced parameters (고급 매개 변수)** 아래, 이미 표시됨)을 다음으로 설정합니다:
 
    ```
    Asia/Seoul
    ```
 
-5. 노드 이름을 `Read my day` 로 바꿉니다. **Save** 를 선택합니다.
+5. 노드 이름을 `Read my day` 로 바꿉니다. **Save (저장)** 를 선택합니다.
 ![alt text](./img/image-38.png)
 
 <details>
@@ -1311,7 +1311,7 @@ Rules:
 
 ### 지금 테스트하기
 
-노드의 **Run node** 탭을 열고 **Run** 을 선택합니다. Recurrence 트리거는 모의로 채울 입력이 없으므로 즉시 실행됩니다. 최대 1분 정도 걸릴 수 있습니다.
+노드의 **Run node (노드 실행)** 탭을 열고 **Run** 을 선택합니다. Recurrence 트리거는 모의로 채울 입력이 없으므로 즉시 실행됩니다. 최대 1분 정도 걸릴 수 있습니다.
 
 출력을 비판적으로 읽으세요:
 
@@ -1331,9 +1331,9 @@ Rules:
 
 Copilot의 답변은 정확하지만 그 형태가 날마다 바뀝니다. 매일 아침 08:00에 읽는 브리핑은 *매일 아침 같은 형태* 여야 합니다 — 그렇지 않으면 훑는 대신 읽게 됩니다.
 
-1. Copilot 노드 아래에서 **Add a step** 을 선택하고 **Agent** 타일을 고릅니다.
-2. **Agent** 를 **New agent for this workflow** 로 둡니다. 노드 이름을 `Format the brief` 로 바꿉니다.
-3. **Instructions** 에 다음을 입력합니다:
+1. Copilot 노드 아래에서 **Add a step (단계 추가)** 을 선택하고 **Agent (에이전트)** 타일을 고릅니다.
+2. **Agent (에이전트)** 를 **New agent for this workflow (이 워크플로의 새 에이전트)** 로 둡니다. 노드 이름을 `Format the brief` 로 바꿉니다.
+3. **Instructions (안내)** 에 다음을 입력합니다:
 
 ```
 You turn a raw morning brief into a short Teams message that a busy person
@@ -1371,8 +1371,8 @@ Rules:
 - Write in the same language as the raw brief.
 ```
 
-4. **Output** 을 **Text response** 로 둡니다 — 이 노드의 출력은 텍스트 한 덩어리입니다.
-5. **도구는 추가하지 않습니다.** **Save** 를 선택합니다.
+4. **Output (출력)** 을 **Text response (텍스트 응답)** 로 둡니다 — 이 노드의 출력은 텍스트 한 덩어리입니다.
+5. **도구는 추가하지 않습니다.** **Save (저장)** 를 선택합니다.
 ![alt text](./img/image-39.png)
 
 > ✅ **나머지를 입력하기 전에 칩을 확인하세요.** 토큰을 삽입하고 나면 `Read my day.Body / Response` 라고 표시된 칩이 보여야 합니다. 삽입되지 않았다면 선택기가 계속 열린 채로 다음에 입력하는 모든 문자를 삼켜 버립니다 — 결국 "RAW BRIEF:"에서 멈춘 지시문과, 아무것도 없는 데서 브리핑을 지어내는 에이전트가 남습니다.
@@ -1388,22 +1388,22 @@ M365 Copilot 노드는 *무엇을 아는지* 를 보고 골랐습니다. 이 에
 
 ### 테스트하기
 
-이 노드의 **Run node** 탭을 열고 **Run** 을 선택합니다. Step 2의 원본 출력과 나란히 놓고 비교하세요. 같은 사실인데 쓸모가 완전히 다릅니다 — 그 대비가 이 시나리오에서 가장 잘 와닿는 대목입니다.
+이 노드의 **Run node (노드 실행)** 탭을 열고 **Run** 을 선택합니다. Step 2의 원본 출력과 나란히 놓고 비교하세요. 같은 사실인데 쓸모가 완전히 다릅니다 — 그 대비가 이 시나리오에서 가장 잘 와닿는 대목입니다.
 
 ---
 
 ## Step 4 — Teams로 전달하기
 
-1. 에이전트 아래에서 **Add a step ▸ Microsoft Teams ▸ Post message in a chat or channel** 를 선택합니다.
+1. 에이전트 아래에서 **Add a step (단계 추가) ▸ Microsoft Teams ▸ Post message in a chat or channel (채팅 또는 채널에서 메시지 게시)** 를 선택합니다.
 2. 다음과 같이 구성합니다:
 
    | 매개변수 | 값 |
    |---|---|
-   | Post as | `Flow bot` |
-   | Post in | `Chat with Flow bot` |
+   | Post as (다음으로 게시) | `Flow bot` (흐름 봇) |
+   | Post in (게시 위치) | `Chat with Flow bot` (흐름 봇과 채팅) |
    | Recipient | 본인 이메일 주소 |
 
-3. **Message** 에 헤더 줄을 입력하고, Enter를 두 번 누른 다음 토큰을 삽입합니다:
+3. **Message (메시지)** 에 헤더 줄을 입력하고, Enter를 두 번 누른 다음 토큰을 삽입합니다:
 
    ```
    Good morning - here is your day.
@@ -1411,7 +1411,7 @@ M365 Copilot 노드는 *무엇을 아는지* 를 보고 골랐습니다. 이 에
    ⟨insert /Agent Response from Format the brief⟩
    ```
 
-4. 노드 이름을 `Send the brief` 로 바꾸고 **Save** 를 선택합니다.
+4. 노드 이름을 `Send the brief` 로 바꾸고 **Save (저장)** 를 선택합니다.
 ![alt text](./img/image-40.png)
 
 <details>
@@ -1425,12 +1425,12 @@ M365 Copilot 노드는 *무엇을 아는지* 를 보고 골랐습니다. 이 에
 
 ## Step 5 — 게시하고 테스트를 실행하고 검증하기
 
-1. **Publish** 를 선택하고 배지가 **Published** 로 바뀔 때까지 기다립니다.
+1. **Publish (게시)** 를 선택하고 배지가 **Published (게시됨)** 로 바뀔 때까지 기다립니다.
 2. 상단 명령 모음에서 **Run** 버튼을 선택합니다.
 
    > ⏱️ **일정 기반 트리거에서 일어나는 일.** 내일 아침까지 기다리지 않습니다. **Run** 를 누르면 즉시 실행이 시작됩니다 — 확인하는 메뉴나 대화 상자가 없습니다. 이것이 30분짜리 세션에서 일정 기반 워크플로를 시연하는 방법입니다.
 
-3. **Activity** 탭을 엽니다. 실행이 나타나고 **Succeeded** 로 이동합니다. 처음부터 끝까지 대략 1~1.5분 정도 걸립니다 — Copilot 노드가 느린 부분이고(약 1분), 에이전트는 약 12초, Teams 게시는 약 2초입니다.
+3. **Activity (활동)** 탭을 엽니다. 실행이 나타나고 **Succeeded** 로 이동합니다. 처음부터 끝까지 대략 1~1.5분 정도 걸립니다 — Copilot 노드가 느린 부분이고(약 1분), 에이전트는 약 12초, Teams 게시는 약 2초입니다.
 4. 실행을 선택해 캔버스에 로드하고 각 노드의 실제 입력과 출력을 살펴봅니다.
 
 ### ✅ 검증
@@ -1440,7 +1440,7 @@ M365 Copilot 노드는 *무엇을 아는지* 를 보고 골랐습니다. 이 에
 | **Teams** — 본인의 Flow bot 채팅 | 지정한 정확한 레이아웃으로, 다섯 섹션이 모두 담긴 180단어 미만의 브리핑 |
 | **그 내용** | 오늘 실제로 캘린더에 있는 회의들이, 올바른 시간에, 오늘의 실제 날짜와 함께 |
 | **TOP 3** | 위 목록의 처음 세 항목이 아니라 *우선순위가 매겨진* 세 항목 |
-| **Activity** 패널 | **Succeeded** 실행 — **Read my day** 와 **Format the brief** 를 열어 두 출력을 비교 |
+| **Activity (활동)** 패널 | **Succeeded** 실행 — **Read my day** 와 **Format the brief** 를 열어 두 출력을 비교 |
 
 ![alt text](./img/image-42.png)
 ![alt text](./img/image-41.png)
@@ -1449,8 +1449,8 @@ M365 Copilot 노드는 *무엇을 아는지* 를 보고 골랐습니다. 이 에
 
 | 확장 |
 |---|
-| **공유 전에 사람의 관문을 추가하기.** 에이전트 뒤에 **Human review** 노드를 넣어 Yes/No 입력 `ShareWithTeam` 하나와 선택적 Text 입력 `AddNote` 하나를 두고, 이어서 If/Else로 여러분이 예라고 답할 때만 브리핑을 팀에 이메일로 보냅니다. 개인 브리핑을, 통제를 잃지 않으면서 팀 스탠드업 노트로 바꿔 줍니다. |
-| **모든 브리핑을 보관하기.** **Excel Online (Business) ▸ Add a row into a table** 를 추가해 날짜와 브리핑 텍스트를 기록합니다. 석 달 뒤면 매일 무엇이 중요했는지 검색 가능한 기록이 생깁니다. |
+| **공유 전에 사람의 관문을 추가하기.** 에이전트 뒤에 **Human review (인적 검토)** 노드를 넣어 Yes/No 입력 `ShareWithTeam` 하나와 선택적 Text 입력 `AddNote` 하나를 두고, 이어서 If/Else로 여러분이 예라고 답할 때만 브리핑을 팀에 이메일로 보냅니다. 개인 브리핑을, 통제를 잃지 않으면서 팀 스탠드업 노트로 바꿔 줍니다. |
+| **모든 브리핑을 보관하기.** **Excel Online (Business) ▸ Add a row into a table (테이블에 행 추가)** 를 추가해 날짜와 브리핑 텍스트를 기록합니다. 석 달 뒤면 매일 무엇이 중요했는지 검색 가능한 기록이 생깁니다. |
 | **외부 맥락 추가하기.** 두 번째 M365 Copilot 노드를 추가해 오늘 만나는 고객에 대한 최근 뉴스를 요청하고, 그 **Body / Response** 를 브리핑에 덧붙입니다. |
 | **하루 마감 버전.** 워크플로를 복제하고 일정을 17:30으로 바꾼 뒤, Message를 무엇이 진행되었고 무엇이 밀렸으며 무엇을 내일로 넘길지 묻도록 다시 작성합니다. |
 
@@ -1498,45 +1498,45 @@ M365 Copilot 노드는 *무엇을 아는지* 를 보고 골랐습니다. 이 에
 
 ## Step 1 — 워크플로와 금요일 일정 만들기
 
-1. **Workflows ▸ New workflow**. 제목을 다음으로 바꿉니다:
+1. **Workflows (워크플로) ▸ New workflow (새 워크플로)**. 제목을 다음으로 바꿉니다:
 
    ```
    Friday Project Roll-up
    ```
 
-2. **Start** 노드를 선택하고, **Trigger type** 을 **Recurrence** 로 설정한 뒤, 다음 순서로 구성합니다:
+2. **Start** 노드를 선택하고, **Trigger type (트리거 유형)** 을 **Recurrence (되풀이)** 로 설정한 뒤, 다음 순서로 구성합니다:
 
    | # | Parameter | Value |
    |---|---|---|
-   | 1 | **Frequency** | `Week` |
-   | 2 | **Interval** | `1` |
-   | 3 | **On these days** | `Fri` 만 체크 |
-   | 4 | **At these hours** | `16` |
-   | 5 | **At these minutes** | `0` |
-   | 6 | **Advanced ▸ Time zone** | `(UTC+09:00) Seoul` |
+   | 1 | **Frequency (빈도)** | `Week` |
+   | 2 | **Interval (간격)** | `1` |
+   | 3 | **On these days (선택한 요일)** | `Fri` 만 체크 |
+   | 4 | **At these hours (이 시간에는)** | `16` |
+   | 5 | **At these minutes (이 분에)** | `0` |
+   | 6 | **Advanced (고급) ▸ Time zone** | `(UTC+09:00) Seoul` |
 
-3. **Save** 를 선택합니다.
+3. **Save (저장)** 를 선택합니다.
 ![alt text](./img/image-43.png)
 
 ---
 
 ## Step 2 — Excel에서 추적표 읽기
 
-1. 트리거 아래에서 **Add a step** 를 선택하고,  검색한 뒤, **Excel Online (Business)** 아래에서  `List rows present in a table` 을 선택합니다.
+1. 트리거 아래에서 **Add a step (단계 추가)** 를 선택하고,  검색한 뒤, **Excel Online (Business)** 아래에서  `List rows present in a table` (테이블에 있는 행 나열) 을 선택합니다.
 ![alt text](./img/image-44.png)
 2. 안내가 나오면 연결을 만듭니다.
 3. 구성합니다 — 각 필드가 다음 필드를 로드합니다:
 
    | Parameter | Value |
    |---|---|
-   | Location | `OneDrive for Business` |
-   | Document library | `OneDrive` |
-   | File | **Change** 를 클릭한 뒤, 트리에서 `Workflows-Lab.xlsx` 를 선택 |
-   | Table | `ProjectTracker` |
+   | Location (위치) | `OneDrive for Business` |
+   | Document library (문서 라이브러리) | `OneDrive` |
+   | File (파일) | **Change (변경)** 를 클릭한 뒤, 트리에서 `Workflows-Lab.xlsx` 를 선택 |
+   | Table (테이블) | `ProjectTracker` |
 
-4. 노드 이름을 `List project rows` 로 바꿉니다. **Save** 를 선택합니다.
+4. 노드 이름을 `List project rows` 로 바꿉니다. **Save (저장)** 를 선택합니다.
 ![alt text](./img/image-45.png)
-5. 노드의 **Run node** 탭을 열고 **Run** 을 선택합니다. 여섯 개의 프로젝트 객체가 돌아와야 합니다.
+5. 노드의 **Run node (노드 실행)** 탭을 열고 **Run** 을 선택합니다. 여섯 개의 프로젝트 객체가 돌아와야 합니다.
 
 > ⚠️ **이 테스트는 꼭 실행하세요.** 10초면 되고, 이것이 다음 노드의 테스트를 의미 있게 만듭니다 — 그래야 에이전트 테스트가 아무것도 없는 상태로 돌아가는 대신 실제 행을 재사용할 수 있습니다.
 
@@ -1547,7 +1547,7 @@ M365 Copilot 노드는 *무엇을 아는지* 를 보고 골랐습니다. 이 에
 
 </details>
 
-> 📐 **List rows present in a table** 은 기본적으로 제한된 한 페이지 분량의 행을 반환합니다; 그 이상은 페이지네이션을 켜야 합니다. 오늘은 여섯 개 샘플 행이면 충분하지만, 실제 포트폴리오 추적표는 이 한계에 부딪힙니다 — 목록이 잘린 줄도 모르고 추론한 에이전트는 확신에 찬 틀린 보고서를 내놓습니다.
+> 📐 **List rows present in a table (테이블에 있는 행 나열)** 은 기본적으로 제한된 한 페이지 분량의 행을 반환합니다; 그 이상은 페이지네이션을 켜야 합니다. 오늘은 여섯 개 샘플 행이면 충분하지만, 실제 포트폴리오 추적표는 이 한계에 부딪힙니다 — 목록이 잘린 줄도 모르고 추론한 에이전트는 확신에 찬 틀린 보고서를 내놓습니다.
 
 ---
 
@@ -1555,9 +1555,9 @@ M365 Copilot 노드는 *무엇을 아는지* 를 보고 골랐습니다. 이 에
 
 ### 3a — 노드를 추가하고 지시문 작성하기
 
-1. Excel 노드 아래에서 **Add a step** 를 선택하고 **Agent** 타일을 고릅니다.
-2. **Agent** 를 **New agent for this workflow** 로 둡니다. 노드 이름을 `Status Analyst` 로 바꿉니다.
-3. **Instructions** 에 다음을 입력합니다. 토큰 표시가 있는 곳에서는 `/` 를 입력하고, `Value` 로 필터링한 뒤, **List project rows** 의 **Value** 를 선택합니다 — 이렇게 하면 전체 행 집합을 한 번에 에이전트에 넘깁니다.
+1. Excel 노드 아래에서 **Add a step (단계 추가)** 를 선택하고 **Agent (에이전트)** 타일을 고릅니다.
+2. **Agent (에이전트)** 를 **New agent for this workflow (이 워크플로의 새 에이전트)** 로 둡니다. 노드 이름을 `Status Analyst` 로 바꿉니다.
+3. **Instructions (안내)** 에 다음을 입력합니다. 토큰 표시가 있는 곳에서는 `/` 를 입력하고, `Value` 로 필터링한 뒤, **List project rows** 의 **Value (값)** 를 선택합니다 — 이렇게 하면 전체 행 집합을 한 번에 에이전트에 넘깁니다.
 
 ```
 You are the delivery lead's reporting assistant for an enterprise IT team.
@@ -1606,7 +1606,7 @@ Never soften a status: if a project is Blocked, the roll-up says Blocked.
 
 ### 3b — 출력 형태 잡기
 
-1. 패널 **맨 아래** 로 스크롤해 **Output** 을 열고 **Custom structured output** 을 선택합니다.
+1. 패널 **맨 아래** 로 스크롤해 **Output (출력)** 을 열고 **Custom structured output (사용자 지정 구조적 출력)** 을 선택합니다.
 2. 이 스키마를 **JSON Schema** 상자에 붙여 넣습니다:
 
    ```json
@@ -1625,12 +1625,12 @@ Never soften a status: if a project is Blocked, the roll-up says Blocked.
    ```
    ![alt text](./img/image-47.png)
 
-3. **Tools** 는 비워 둡니다 — 이 에이전트가 필요로 하는 모든 사실은 지시문으로 이미 넘겨받았습니다.
-4. **Save** 를 선택합니다.
+3. **Tools (도구)** 는 비워 둡니다 — 이 에이전트가 필요로 하는 모든 사실은 지시문으로 이미 넘겨받았습니다.
+4. **Save (저장)** 를 선택합니다.
 
 ### 3c — 테스트하기
 
-**Run node** 탭을 열고 **Run** 을 선택합니다.
+**Run node (노드 실행)** 탭을 열고 **Run** 을 선택합니다.
 
 여섯 개의 샘플 행에 대해 다음과 같은 결과가 나와야 합니다:
 
@@ -1654,7 +1654,7 @@ Never soften a status: if a project is Blocked, the roll-up says Blocked.
 
 ## Step 4 — 팀 리드에게 승인 요청 보내기
 
-1. 에이전트 아래에서 **Add a step** 를 선택하고 **Human review** 타일을 고릅니다. 이름을 `Team lead approval` 로 바꿉니다.
+1. 에이전트 아래에서 **Add a step (단계 추가)** 를 선택하고 **Human review (인적 검토)** 타일을 고릅니다. 이름을 `Team lead approval` 로 바꿉니다.
 2. 필드를 채웁니다:
 
    | Field | 입력할 내용 |
@@ -1690,7 +1690,7 @@ Never soften a status: if a project is Blocked, the roll-up says Blocked.
    ![alt text](./img/image-48.png)
    > 🔤 **대문자로 시작하는 토큰 이름으로 필터링하세요** — `Headline`, `Exec_summary`, `At_risk_count`, `At_risk_detail`, `Help_needed`, `Stale_projects`. `At_risk_count` 와 `At_risk_detail` 은 접두어를 공유하므로, 충분한 글자(`At_risk_c` / `At_risk_d`)를 입력해 구분하고, 각 칩을 확인하세요.
 
-3. 네 개의 입력을 추가합니다. 행마다 한 번씩 **Add an input** 을 선택하되, **매번 미리 채워진 라벨을 지웁니다**:
+3. 네 개의 입력을 추가합니다. 행마다 한 번씩 **Add an input (입력 추가)** 을 선택하되, **매번 미리 채워진 라벨을 지웁니다**:
 
    | # | Type | Name (공백 없이) | Configuration |
    |---|---|---|---|
@@ -1700,7 +1700,7 @@ Never soften a status: if a project is Blocked, the roll-up says Blocked.
    | 4 | **Email** | `ApproverEmail` | — |
    
    ![입력 네 개. 라벨 상자가 좁아 `ApproverEmail` 은 `ApproverE...` 로 잘려 보이지만, 전체 이름을 입력하세요.](./img/image-49.png)
-4. **Save** 를 선택합니다.
+4. **Save (저장)** 를 선택합니다.
 
 <details>
 <summary>💡 <b>개념 — 방금 지원되는 다섯 가지 입력 유형 중 4개를 사용했습니다</b></summary>
@@ -1715,20 +1715,20 @@ Human review는 **Text**, **Yes/No**, **Email**, **Number**, **Date** 를 지원
 
 ### 5a — 조건
 
-1. review 노드 아래에서 **Add a step ▸ If/Else**:
+1. review 노드 아래에서 **Add a step (단계 추가) ▸ If/Else**:
 
    | 항목 | 값 |
    |---|---|
-   | **Property** | **Team lead approval** 의 `Decision` |
-   | **Operator** | `Equals` |
-   | **Value** | `Approve` |
+   | **Property (속성)** | **Team lead approval** 의 `Decision` |
+   | **Operator (운영자)** | `Equals` |
+   | **Value (값)** | `Approve` |
 
 2. 이름을 `Approved?` 로 바꿉니다.
 ![alt text](./img/image-50.png)
 
 ### 5b — If 분기: 리더십에 이메일 보내기
 
-1. **Add a step** 에서 `Send an email` 을 검색하고, **Office 365 Outlook** 제목 아래에 있는 것을 고릅니다.
+1. **Add a step (단계 추가)** 에서 `Send an email` (메일 보내기) 을 검색하고, **Office 365 Outlook** 제목 아래에 있는 것을 고릅니다.
 
    > ⚠️ **여기서 두 액션이 똑같아 보입니다.** 검색 결과에는 **Mail** 커넥터의 **"Send an email notification"** 도 함께 나옵니다. 이걸 고르면 별도의 *Connect to Mail* 연결이 필요하고, 내 Outlook 계정으로 보내지지도 않습니다. 클릭하기 전에 그룹 제목을 확인하세요.
 
@@ -1736,9 +1736,9 @@ Human review는 **Text**, **Yes/No**, **Email**, **Number**, **Date** 를 지원
 
    | Parameter | 값 |
    |---|---|
-   | To | 자신의 주소(실제 버전에서는 관리자의 주소) |
-   | Subject | `Weekly project roll-up - ` 다음에 `/Headline` 삽입 |
-   | Body | 아래 블록 |
+   | To (받는 사람) | 자신의 주소(실제 버전에서는 관리자의 주소) |
+   | Subject (제목) | `Weekly project roll-up - ` 다음에 `/Headline` 삽입 |
+   | Body (본문) | 아래 블록 |
 
    ```
    ⟨insert /LeadNote⟩
@@ -1760,15 +1760,15 @@ Human review는 **Text**, **Yes/No**, **Email**, **Number**, **Date** 를 지원
 
 ### 5c — If 분기: 팀에 게시하기
 
-1. **Add a step ▸ Microsoft Teams ▸ Post message in a chat or channel**:
+1. **Add a step (단계 추가) ▸ Microsoft Teams ▸ Post message in a chat or channel (채팅 또는 채널에서 메시지 게시)**:
 
    | Parameter | 값 |
    |---|---|
-   | Post as | `Flow bot` |
-   | Post in | `Chat with Flow bot` *(또는 `Channel` ▸ `Workflow Lab` ▸ `Alerts`)* |
+   | Post as (다음으로 게시) | `Flow bot` (흐름 봇) |
+   | Post in (게시 위치) | `Chat with Flow bot` (흐름 봇과 채팅) *(또는 `Channel` (채널) ▸ `Workflow Lab` ▸ `Alerts`)* |
    | Recipient | 자신의 이메일 주소 |
 
-2. **Message** 에는:
+2. **Message (메시지)** 에는:
 
    ```
    Weekly roll-up
@@ -1785,14 +1785,14 @@ Human review는 **Text**, **Yes/No**, **Email**, **Number**, **Date** 를 지원
 
 ### 5d — If 분기: 보고서 보관하기
 
-1. **Add a step ▸ Excel Online (Business) ▸ Add a row into a table**:
+1. **Add a step (단계 추가) ▸ Excel Online (Business) ▸ Add a row into a table (테이블에 행 추가)**:
 
    | Parameter | 값 |
    |---|---|
-   | Location | `OneDrive for Business` |
-   | Document library | `OneDrive` — 목록의 첫 번째가 **아니라는** 점에 유의하세요. 보통 `PersonalCacheLibrary` 가 첫 번째입니다 |
-   | File | **Change** 를 클릭한 뒤 `Workflows-Lab.xlsx` 선택 |
-   | Table | `ReportArchive` |
+   | Location (위치) | `OneDrive for Business` |
+   | Document library (문서 라이브러리) | `OneDrive` — 목록의 첫 번째가 **아니라는** 점에 유의하세요. 보통 `PersonalCacheLibrary` 가 첫 번째입니다 |
+   | File (파일) | **Change (변경)** 를 클릭한 뒤 `Workflows-Lab.xlsx` 선택 |
+   | Table (테이블) | `ReportArchive` |
    | GeneratedAt | `ReportDate` *(Team lead approval에서)* |
    | Headline | `Headline` *(Status Analyst에서)* |
    | AtRiskCount | `At_risk_count` *(Status Analyst에서)* |
@@ -1803,13 +1803,13 @@ Human review는 **Text**, **Yes/No**, **Email**, **Number**, **Date** 를 지원
 
 ### 5e — Else 분기
 
-1. **Add a step ▸ Microsoft Teams ▸ Post a message to myself** 로 자신에게 게시하며, 메시지는:
+1. **Add a step (단계 추가) ▸ Microsoft Teams ▸ Post a message to myself (자신에게 메시지 게시)** 로 자신에게 게시하며, 메시지는:
 
    ```
    Weekly roll-up held by the team lead. Nothing was sent.
    ```
 
-2. 이름을 `Tell me it was held` 로 바꿉니다. **Save** 를 선택합니다.
+2. 이름을 `Tell me it was held` 로 바꿉니다. **Save (저장)** 를 선택합니다.
 ![alt text](./img/image-54.png)
 
 <details>
@@ -1823,9 +1823,9 @@ Human review는 **Text**, **Yes/No**, **Email**, **Number**, **Date** 를 지원
 
 ## Step 6 — 게시, 테스트 실행, 검증
 
-1. **Review** 에서 문제를 확인한 뒤 **Publish** 를 선택합니다.
+1. **Review (검토)** 에서 문제를 확인한 뒤 **Publish (게시)** 를 선택합니다.
 2. 상단 명령 모음의 **Run** 버튼을 선택합니다. Recurrence 트리거가 즉시 한 번 실행됩니다.
-3. **Activity** 를 지켜봅니다: `List project rows`(~3초) → `Status Analyst`(~20–30초) → 그다음 실행은 `Team lead approval` 에서 **Waiting** 상태로 머뭅니다.
+3. **Activity (활동)** 를 지켜봅니다: `List project rows`(~3초) → `Status Analyst`(~20–30초) → 그다음 실행은 `Team lead approval` 에서 **Waiting** 상태로 머뭅니다.
 4. **Outlook을 확인합니다.** `Approve the weekly project roll-up` 을 엽니다. Outlook이 양식을 차단했다면 **Show blocked content** 를 클릭한 뒤 채워 넣습니다:
    - `Decision` = `Approve`
    - `LeadNote` = `Two items need a decision from the security board this week.`
@@ -1851,7 +1851,7 @@ Human review는 **Text**, **Yes/No**, **Email**, **Number**, **Date** 를 지원
 | **Outlook** — 받은 편지함 | 리더십 이메일, 맨 위의 `LeadNote`, 헤드라인을 담은 제목 줄 |
 | **Teams** | 짧은 버전 — 헤드라인, 요약, 필요한 결정 하나 |
 | **Excel** — `ReportArchive` | 승인된 실행마다 새 행 하나, 보류된 실행에는 **행 없음** |
-| **Activity** 패널 | 제출할 때까지 **Waiting** 에 머물렀다가 이후 **Succeeded** 로 끝난 실행 |
+| **Activity (활동)** 패널 | 제출할 때까지 **Waiting** 에 머물렀다가 이후 **Succeeded** 로 끝난 실행 |
 
 > 🔎 **실행이 Succeeded라고 나오지만 아무것도 보내지지 않았고 `ReportArchive` 가 비어 있다면**, **Else**
 > 분기를 탄 것입니다. 로드된 실행에서 **Team lead approval** 노드를 열고 돌아온 `Decision` 값을 확인하세요.
@@ -1863,7 +1863,7 @@ Human review는 **Text**, **Yes/No**, **Email**, **Number**, **Date** 를 지원
 | 확장 |
 |---|
 | **추세 맥락 추가.** Excel 단계 뒤에 **M365 Copilot** 노드를 추가해, 이번 주 퍼센트를 최근 메일·문서와 비교하도록 요청하고, 그 **Body / Response** 를 Status Analyst의 지시문에 추가 맥락으로 넣습니다. |
-| **담당자 재촉.** 승인 후, at-risk 프로젝트에 대해 **Loop** 를 돌리고 각 `Owner` 에게 **Office 365 Outlook ▸ Send an email** 로 한 줄 업데이트를 요청합니다. roll-up이 보고서에 그치지 않고 프로세스가 됩니다. |
+| **담당자 재촉.** 승인 후, at-risk 프로젝트에 대해 **Loop** 를 돌리고 각 `Owner` 에게 **Office 365 Outlook ▸ Send an email (메일 보내기)** 로 한 줄 업데이트를 요청합니다. roll-up이 보고서에 그치지 않고 프로세스가 됩니다. |
 | **개수에 따라 에스컬레이션.** `At_risk_count` 에 대해 연산자 `is greater than`, 값 `2` 인 두 번째 If/Else를 추가하고, 그런 주는 다른 수신자에게 보냅니다. |
 | **오래된 행 추적.** `Stale_projects` `Does not equal` `None` 조건의 If/Else를 추가하고 별도의 Teams 알림을 게시합니다. |
 
@@ -1884,9 +1884,9 @@ Human review는 **Text**, **Yes/No**, **Email**, **Number**, **Date** 를 지원
 | 1 | 토큰을 삽입하지 않고 `/Subject` 를 텍스트로 입력 | 슬래시를 입력하고 **기다린 다음** 목록에서 고르세요. 색이 있는 칩이 아니면 토큰이 아닙니다. |
 | 2 | 미리 채워진 라벨과 옵션 상자에 덧입력 | 그 상자에는 이미 텍스트가 들어 있습니다. **Ctrl+A → Delete** 후 입력하세요. 안 그러면 드롭다운이 조용히 망가집니다. |
 | 3 | Excel 노드 뒤에 중복된 토큰을 선택 | 칩을 읽으세요. 어느 노드에서 왔는지 적혀 있습니다. |
-| 4 | **Folder** · **File** 선택기에서 더블클릭이 필요함 | 한 번 클릭은 강조만 합니다. 항목을 **더블클릭** 하세요. |
-| 5 | Excel 시트가 **Table** 로 서식 지정되지 않음 | 헤더만 있는 시트는 Table이 아닙니다. **Insert ▸ Table** 로 변환하세요. |
-| 6 | 테스트 전에 게시를 잊음 | **Publish** 는 배포가 아니라 트리거를 켜는 것입니다. |
+| 4 | **Folder (폴더)** · **File (파일)** 선택기에서 더블클릭이 필요함 | 한 번 클릭은 강조만 합니다. 항목을 **더블클릭** 하세요. |
+| 5 | Excel 시트가 **Table (테이블)** 로 서식 지정되지 않음 | 헤더만 있는 시트는 Table이 아닙니다. **Insert ▸ Table** 로 변환하세요. |
+| 6 | 테스트 전에 게시를 잊음 | **Publish (게시)** 는 배포가 아니라 트리거를 켜는 것입니다. |
 | 7 | **If/Else** 뒤에 단계를 찾음 | 분기는 다시 합쳐지지 않습니다. 공통 단계는 분기 **위** 로 갑니다. |
 | 8 | 트리거 폴링을 기다리지 못함 | 폴링 방식입니다. 2분 정도 기다리세요. 고장 난 것이 아닙니다. |
 
@@ -1905,21 +1905,21 @@ Human review는 **Text**, **Yes/No**, **Email**, **Number**, **Date** 를 지원
 | **어떤 단계가 "동작"은 했는데 잘못된 데이터를 씀** | 엉뚱한 노드의 토큰을 삽입한 것입니다. Excel의 *Add a row* 단계가 생긴 뒤에는 그 액션이 자신이 만든 행을 반환하기 때문에 선택기에 **이름이 중복된 항목**(`Category`, `Subject`, `Summary`…)이 나타납니다. | 칩을 클릭해 읽어 보세요: **`NodeName.FieldName`** 형태로 표시됩니다. 올바른 그룹에서 다시 삽입하세요. |
 | **토큰 뒤로 지시문이 잘려 나감** | 토큰 삽입에 실패한 것입니다. 선택기가 열린 채로 남아 그 뒤에 입력한 모든 글자를 삼켰습니다. | 필드를 지우고 다시 만드세요. `/` 를 입력하고 **잠시 멈춘 뒤** 필터링하고 클릭한 다음, **칩이 나타났는지 확인** 하고 계속하세요. |
 | **토큰이 `/Frmo` 같은 문자 그대로 나옴** | 필터를 너무 빨리 입력해 글자가 뒤섞여 아무것도 매칭되지 않은 것입니다. | 텍스트를 지우세요. `/` 를 입력하고 *Insert dynamic content* 가 뜰 때까지 기다린 뒤 천천히 입력하세요. |
-| **내 토큰이 선택기에 없음** | 상위 노드가 저장되지 않았거나, 데이터가 도달하지 않는 분기에 있습니다. | 상위 노드를 **Save** 하고 선택기를 다시 여세요. |
+| **내 토큰이 선택기에 없음** | 상위 노드가 저장되지 않았거나, 데이터가 도달하지 않는 분기에 있습니다. | 상위 노드를 **Save (저장)** 하고 선택기를 다시 여세요. |
 
 ### 화면에서 못 찾거나 입력이 안 될 때
 
 | 증상 | 가장 유력한 원인 | 해결 |
 |---|---|---|
-| **텍스트 상자처럼 보이는데 입력이 안 됨**(Folder, File, Table) | 이들은 텍스트 필드가 아니라 선택기입니다. 상자 자체를 클릭해도 아무 일도 일어나지 않습니다. | 필드 오른쪽의 작은 **Change** 버튼을 클릭해 선택기를 열고, 항목을 고른 뒤 **Escape** 를 눌러 닫으세요. |
+| **텍스트 상자처럼 보이는데 입력이 안 됨**(Folder, File, Table) | 이들은 텍스트 필드가 아니라 선택기입니다. 상자 자체를 클릭해도 아무 일도 일어나지 않습니다. | 필드 오른쪽의 작은 **Change (변경)** 버튼을 클릭해 선택기를 열고, 항목을 고른 뒤 **Escape** 를 눌러 닫으세요. |
 | **Folder나 File을 선택할 수 없음** | 둘 다 드롭다운이 아니라 **트리** 선택기입니다. | 항목을 **더블클릭** 하세요. 한 번 클릭은 강조 표시만 합니다. |
-| **Subject 필터를 찾을 수 없음** | 숨겨진 고급 매개변수 중 하나입니다. | **Advanced parameters**(*Showing 4 of 9*) 아래에서 **Show all** 을 클릭하세요. |
+| **Subject 필터를 찾을 수 없음** | 숨겨진 고급 매개변수 중 하나입니다. | **Advanced parameters (고급 매개 변수)**(*Showing 4 of 9*) 아래에서 **Show all (모두 보기)** 을 클릭하세요. |
 | **agent 노드에서 Output / JSON schema를 찾을 수 없음** | 패널 **맨 아래** 에 있습니다. | Tools, Knowledge, Request human assistance, Web search를 지나 스크롤하세요. |
 | **노드의 ⋯ 메뉴에 Rename이 없음** | Rename은 그 메뉴에 없습니다(Settings와 Code view만 있습니다). | **구성 패널 헤더의 노드 제목을 더블클릭** 해 덮어쓰세요. |
-| **"Condition" 노드를 찾을 수 없음** | 이름이 **If/Else** 입니다. | `If/Else` 를 검색하거나 **Add** 대화 상자에서 타일을 직접 고르세요. |
+| **"Condition" 노드를 찾을 수 없음** | 이름이 **If/Else** 입니다. | `If/Else` 를 검색하거나 **Add (추가)** 대화 상자에서 타일을 직접 고르세요. |
 | **분기 뒤에 단계를 놓을 수 없음** | **If/Else** 는 다시 합쳐지지 않습니다 — 각 분기는 그냥 끝납니다. | 공통 단계는 분기 **앞** 에 두거나, 양쪽에 복제하세요. |
-| **모든 노드 필드가 회색으로 비활성화됨** | 캔버스에 과거 실행이 로드되어 있습니다 — 그 뷰는 읽기 전용입니다. | **Build** 탭으로 돌아가세요. |
-| **새로 고쳤더니 캔버스가 비어 있음** | 디자이너는 다른 곳으로 이동하기 전까지 URL `.../flows/new` 를 유지합니다. 그 URL을 새로 고치면 빈 워크플로가 새로 열립니다. | 작업은 저장되어 있습니다. **Workflows** 목록에서 다시 여세요. |
+| **모든 노드 필드가 회색으로 비활성화됨** | 캔버스에 과거 실행이 로드되어 있습니다 — 그 뷰는 읽기 전용입니다. | **Build (빌드)** 탭으로 돌아가세요. |
+| **새로 고쳤더니 캔버스가 비어 있음** | 디자이너는 다른 곳으로 이동하기 전까지 URL `.../flows/new` 를 유지합니다. 그 URL을 새로 고치면 빈 워크플로가 새로 열립니다. | 작업은 저장되어 있습니다. **Workflows (워크플로)** 목록에서 다시 여세요. |
 
 ### Excel
 
@@ -1959,9 +1959,9 @@ Human review는 **Text**, **Yes/No**, **Email**, **Number**, **Date** 를 지원
 
 | 증상 | 가장 유력한 원인 | 해결 |
 |---|---|---|
-| **분기가 잘못된 경로로 갔는데 실행은 Succeeded라고 표시됨** | 드롭다운 옵션이나 입력 라벨이 미리 채워진 안내 텍스트를 그대로 유지했습니다. 예: `First optionApprove` 또는 `TextDecision`. 비교가 절대 매칭되지 않아 흐름이 오류 없이 **Else** 로 빠집니다. | 완료된 실행을 열고 If/Else 노드를 선택해 입력을 읽으세요 — 비교가 출력됩니다. 예: `Reject is equal to Approve → False`. 그런 다음 **Build** 탭에서 옵션/라벨 상자를 고치고(**Ctrl+A + Delete**, 다시 입력), 게시한 뒤 다시 실행하세요. |
-| **테스트 메일을 보내도 워크플로가 실행되지 않음** | 게시된 적이 없습니다. 워크플로는 게시한 **뒤에야** 트리거를 수신합니다. | **Save** 하고 **Publish** 하세요. 그런 다음 *새* 테스트 메일을 보내세요 — 게시 전에 보낸 것은 사라졌습니다. |
-| **Publish가 회색으로 비활성화되거나 실패함** | 워크플로에 오류가 있습니다. | 명령 모음의 **Review** 버튼이 개수를 보여 줍니다. 열어서 하나씩 해결하세요. |
+| **분기가 잘못된 경로로 갔는데 실행은 Succeeded라고 표시됨** | 드롭다운 옵션이나 입력 라벨이 미리 채워진 안내 텍스트를 그대로 유지했습니다. 예: `First optionApprove` 또는 `TextDecision`. 비교가 절대 매칭되지 않아 흐름이 오류 없이 **Else** 로 빠집니다. | 완료된 실행을 열고 If/Else 노드를 선택해 입력을 읽으세요 — 비교가 출력됩니다. 예: `Reject is equal to Approve → False`. 그런 다음 **Build (빌드)** 탭에서 옵션/라벨 상자를 고치고(**Ctrl+A + Delete**, 다시 입력), 게시한 뒤 다시 실행하세요. |
+| **테스트 메일을 보내도 워크플로가 실행되지 않음** | 게시된 적이 없습니다. 워크플로는 게시한 **뒤에야** 트리거를 수신합니다. | **Save (저장)** 하고 **Publish (게시)** 하세요. 그런 다음 *새* 테스트 메일을 보내세요 — 게시 전에 보낸 것은 사라졌습니다. |
+| **Publish가 회색으로 비활성화되거나 실패함** | 워크플로에 오류가 있습니다. | 명령 모음의 **Review (검토)** 버튼이 개수를 보여 줍니다. 열어서 하나씩 해결하세요. |
 | **워크플로 이름이 저장되지 않음** | 숫자로 시작합니다. | 워크플로 이름은 **반드시 문자로 시작** 해야 합니다. |
 | **예약된 워크플로가 요청 시 실행되지 않음** | 시계를 기다리고 있는 것입니다. | 상단 명령 모음에서 **Run** 를 누르세요. Recurrence 트리거는 즉시 한 번 실행됩니다. |
 | **Activity에 아무것도 나타나지 않음** | 커넥터 트리거는 폴링합니다. | 1~2분 기다렸다가 새로 고치세요. Outlook 트리거는 보통 빨리 발동하지만, 커넥터 문서는 드물게 최악의 경우 최대 한 시간까지 걸린다고 명시합니다. |
@@ -2002,16 +2002,16 @@ Recurrence 트리거는 테스트로 증명할 수 없습니다 — 수동 **Run
 
 ### Add 팔레트
 
-왼쪽 레일과 **Add** 대화 상자는 다음을 노출합니다: **Agent · Classify · M365 Copilot · Human review · Connector · Function · Variable · If/Else · Loop · Note**. **Add** 대화 상자는 추가로 **Switch · Scope · End · Respond to the agent** 를 제공하며, 검색을 통해 모든 커넥터 액션도 제공합니다.
+왼쪽 레일과 **Add (추가)** 대화 상자는 다음을 노출합니다: **Agent · Classify · M365 Copilot · Human review · Connector · Function · Variable · If/Else · Loop · Note**. **Add (추가)** 대화 상자는 추가로 **Switch · Scope · End · Respond to the agent** 를 제공하며, 검색을 통해 모든 커넥터 액션도 제공합니다.
 
 ### AI 기능 노드
 
 | 노드 | 사용할 때 | 주요 설정 |
 |---|---|---|
-| **Agent**(inline) | 단계에 판단, 다단계 추론, 또는 워크플로와 함께 이동하는 통제된 출력 형태가 필요할 때 | **Agent**: `New agent for this workflow` · **Instructions**(실행별 프롬프트 역할 겸함) · Instructions 헤더 *안* 의 모델 드롭다운 · **Tools** · **Knowledge** · **Request human assistance** · **Web search** · **Output** *(맨 아래)*: Text response / Structured output / Custom structured output |
-| **Agent**(기존) | 같은 에이전트를 여러 워크플로가 공유하거나 다른 팀이 소유할 때 | **Agent**: 게시된 에이전트 선택 · 실행별 프롬프트용 **Message** 필드 |
-| **M365 Copilot** | 단계에 실행 중인 사용자 본인의 Microsoft 365 맥락 — 메일, 파일, 캘린더, 채팅 — 이 필요할 때 | **M365 agent** *(선택 — 대화할 특정 Copilot 에이전트)* · **Message** · **Advanced parameters ▸ Time zone** *(IANA, 기본값 `America/New_York`)* · **Prefer async** |
-| **Classify** | 단순 라우팅만 — 텍스트 한 조각을 여러분이 정의한 범주로 분류 | 분류할 텍스트 · 여러분의 범주 목록 |
+| **Agent (에이전트)**(inline) | 단계에 판단, 다단계 추론, 또는 워크플로와 함께 이동하는 통제된 출력 형태가 필요할 때 | **Agent (에이전트)**: `New agent for this workflow` (이 워크플로의 새 에이전트) · **Instructions (안내)**(실행별 프롬프트 역할 겸함) · Instructions 헤더 *안* 의 모델 드롭다운 · **Tools (도구)** · **Knowledge (지식)** · **Request human assistance (사람의 도움 요청)** · **Web search (웹 검색)** · **Output (출력)** *(맨 아래)*: Text response / Structured output / Custom structured output |
+| **Agent (에이전트)**(기존) | 같은 에이전트를 여러 워크플로가 공유하거나 다른 팀이 소유할 때 | **Agent (에이전트)**: 게시된 에이전트 선택 · 실행별 프롬프트용 **Message** 필드 |
+| **M365 Copilot** | 단계에 실행 중인 사용자 본인의 Microsoft 365 맥락 — 메일, 파일, 캘린더, 채팅 — 이 필요할 때 | **M365 agent** *(선택 — 대화할 특정 Copilot 에이전트)* · **Message** · **Advanced parameters (고급 매개 변수) ▸ Time zone** *(IANA, 기본값 `America/New_York`)* · **Prefer async** |
+| **Classify (분류)** | 단순 라우팅만 — 텍스트 한 조각을 여러분이 정의한 범주로 분류 | 분류할 텍스트 · 여러분의 범주 목록 |
 
 **출력 토큰 한눈에 보기**
 
@@ -2027,7 +2027,7 @@ Recurrence 트리거는 테스트로 증명할 수 없습니다 — 수동 **Run
 
 ### Human review
 
-- **필수 필드:** **Title**(보내는 메시지의 제목), **Message**(함께 보내는 안내문), **Assigned to (first to respond)**, **Channel**, 그리고 최소 하나의 **Input**.
+- **필수 필드:** **Title**(보내는 메시지의 제목), **Message**(함께 보내는 안내문), **Assigned to (first to respond)**, **Channel**, 그리고 최소 하나의 **Input (입력)**.
 - **Channel:** `Outlook`(기본) 또는 `Teams` — 정확히 두 옵션뿐입니다. Outlook 전송은 **일관성이 없습니다**: 한 경우에는 1분 만에 관측되었고 다른 두 경우에는 아예 전달되지 않았으며, 어디에도 오류가 나타나지 않았습니다. Teams는 관측된 모든 경우에 안정적으로 전달했습니다. 시간이 정해진 세션에서는 **Teams** 를 쓰세요.
 - **지속성:** 대기 중인 요청은 발생 후 **71시간** 뒤에도 처리 가능했습니다. 즉 요청은 주말 동안 만료되지 않습니다. 그 대가로 실행은 그동안 내내 **Running** 에 머무릅니다.
 - **입력 유형:** Text, Yes/No, Email, Number, Date. Text 입력은 추가로 **Add dropdown** 과 **Add multi-select** 를 지원합니다.
@@ -2040,21 +2040,21 @@ Recurrence 트리거는 테스트로 증명할 수 없습니다 — 수동 **Run
 
 | 노드 | 사용 위치 | 참고 |
 |---|---|---|
-| **If/Else** | 시나리오 1, 2, 4 | 조건 행은 **Property / Operator / Value** 이며 AND/OR 그룹 선택기가 있습니다. 같음 연산자는 **Equals** 입니다. 분기 이름은 **If** 와 **Else** 이며, **Else** 는 자동으로 생성됩니다. **분기는 다시 합쳐지지 않습니다.** |
+| **If/Else** | 시나리오 1, 2, 4 | 조건 행은 **Property / Operator / Value** 이며 AND/OR 그룹 선택기가 있습니다. 같음 연산자는 **Equals (다음 값과 같음)** 입니다. 분기 이름은 **If** 와 **Else** 이며, **Else** 는 자동으로 생성됩니다. **분기는 다시 합쳐지지 않습니다.** |
 | **Loop** | 시나리오 4 확장 | Excel의 `Value` 컬렉션 같은 배열을 반복 |
 
 ### 이 팩에서 사용하는 커넥터
 
 | 커넥터 | 사용하는 액션 | 연결 동작 |
 |---|---|---|
-| **Office 365 Outlook** | *When a new email arrives*(트리거) · *Send an email* · *Reply to email* | 조용히 바인딩됨 |
-| **Microsoft Teams** | *Post message in a chat or channel* | 조용히 바인딩됨 |
-| **Excel Online (Business)** | *List rows present in a table* · *Add a row into a table* | **직접 만들어야 함** |
+| **Office 365 Outlook** | *When a new email arrives* (새 메일이 도착하면)(트리거) · *Send an email* (메일 보내기) · *Reply to email* (메일에 회신) | 조용히 바인딩됨 |
+| **Microsoft Teams** | *Post message in a chat or channel* (채팅 또는 채널에서 메시지 게시) | 조용히 바인딩됨 |
+| **Excel Online (Business)** | *List rows present in a table* (테이블에 있는 행 나열) · *Add a row into a table* (테이블에 행 추가) | **직접 만들어야 함** |
 | **M365 Copilot** | M365 Copilot node | **직접 만들어야 함** |
-| **Human review** | Human review node | 조용히 바인딩됨 |
-| **Agents** | Agent node | 조용히 바인딩됨 |
+| **Human review (인적 검토)** | Human review node | 조용히 바인딩됨 |
+| **Agents (에이전트)** | Agent node | 조용히 바인딩됨 |
 
-> 커넥터 액션을 검색하면 다른 커넥터의 같은 이름 액션이 나올 수 있습니다 — 특히 **Send an email**(Office 365 Outlook)과 **Send an email notification**(Mail)이 그렇습니다. 클릭하기 전에 항상 액션 위의 그룹 헤딩을 확인하세요.
+> 커넥터 액션을 검색하면 다른 커넥터의 같은 이름 액션이 나올 수 있습니다 — 특히 **Send an email (메일 보내기)**(Office 365 Outlook)과 **Send an email notification**(Mail)이 그렇습니다. 클릭하기 전에 항상 액션 위의 그룹 헤딩을 확인하세요.
 
 ---
 
@@ -2106,7 +2106,7 @@ Purview DLP policy tuning            | Sora Yoon   | At risk  | 35              
 | 위치 | 형식 | 이 팩에서 쓰는 값 |
 |---|---|---|
 | **Recurrence 트리거 ▸ Advanced ▸ Time zone** | 표시 이름 | `(UTC+09:00) Seoul` |
-| **M365 Copilot node ▸ Advanced ▸ Time zone** | IANA 식별자 | `Asia/Seoul` |
+| **M365 Copilot node ▸ Advanced (고급) ▸ Time zone** | IANA 식별자 | `Asia/Seoul` |
 
 ---
 
