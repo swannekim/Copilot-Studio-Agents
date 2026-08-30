@@ -20,6 +20,8 @@ This pack contains **four independent, self-contained scenarios**. There are no 
 
 ### 0.2 Node coverage
 
+**Use this to decide which two scenarios to build.** It shows which nodes each scenario exercises.
+
 | | Agent node | M365 Copilot node | Human review | Excel Online | Outlook | Teams |
 |---|:---:|:---:|:---:|:---:|:---:|:---:|
 | **1 · IT Request Triage Desk** | ✅ | ➕ | ➕ | ✅ | ✅ | ✅ |
@@ -27,8 +29,8 @@ This pack contains **four independent, self-contained scenarios**. There are no 
 | **3 · Daily Brief 8AM** | ✅ | ✅ | ➕ | ➕ | ➕ | ✅ |
 | **4 · Friday Project Roll-up** | ✅ | ➕ | ✅ | ✅ | ✅ | ✅ |
 
-✅ **In the core build** — you will use this node
-➕ **Optional extension** — not in the core build, but this pack walks you through adding it if you finish early.
+✅ **In the core build** — you will definitely use this node if you build this scenario
+➕ **Optional extension** — not in the core build, but you can add it if you finish early (each scenario ends with how)
 
 ---
 
@@ -78,6 +80,7 @@ A **connection** is the stored permission that lets a node act as you — read y
 4. A dialog appears naming the connector (for example **Office 365 Outlook** or **M365 Copilot (V2)**), with an optional display name you can leave blank. Click **Create**.
 5. A sign-in tab opens. Pick your lab account. It closes itself.
 6. The field now shows your account, and the dependent fields below it load.
+![alt text](./img/image-61.png)
 
 ### 1.4 Prepare the Excel workbook (needed for Scenario 1 and Scenario 4)
 
@@ -249,11 +252,9 @@ Read the progression left to right — it is *deterministic automation and agent
 
 | Situation | What to know |
 |---|---|
-| You have an existing cloud flow you like | You can **convert** it to an agent flow. This is **one-way** and cannot be reversed, because it changes how the flow is billed. |
-| You want to convert a cloud flow straight into a workflow | **Not supported.** Microsoft states you can only convert a cloud flow to an *agent flow*, not to the new workflow format. Rebuild it as a workflow if that is where you want it. |
-| Someone in your org says "agent flow" and someone else says "workflow" | They are **not** synonyms. Different harness, different canvas, different billing. If in doubt, ask which button they pressed: **New agent flow** (standard) or **New workflow** (GitHub Copilot). |
+| You want to move an existing cloud flow across | It converts to an **agent flow only** — not to a workflow. Rebuild it if you want it as a workflow. The conversion is **one-way** and cannot be reversed. |
+| Someone in your org says "agent flow" and someone else says "workflow" | They are **not** synonyms. Different harness, different canvas. If in doubt, ask which button they pressed: **New agent flow** (standard) or **New workflow** (GitHub Copilot). |
 | You are on the GitHub Copilot harness and open an agent flow | It opens in a **new browser tab**, because you are crossing into the other experience. |
-| Your finance team asks what this costs | Workflows draw on **Copilot Credits**; agent flows draw on **Copilot Studio capacity**. Both surface in the Power Platform admin center under **Licensing ▸ Copilot Studio**. See the billing note above before quoting specifics. |
 
 **Your Power Automate skills transfer directly.** Triggers, actions, connectors, dynamic content, branching, run history — same concepts, same mental model. What is new is the AI node types, the agent handoff, and per-node testing. That is roughly a day of unlearning, not a career's worth.
 
@@ -326,6 +327,8 @@ The honest trade-off: an inline agent keeps everything in one place, so the work
 ---
 
 # Scenario 1 — IT Request Triage Desk
+
+> **Triage** comes from emergency medicine, where patients are sorted by how urgent they are. Here it means sorting each incoming request by **what kind it is and how urgent it is**, so the queue can be worked in the right order.
 
 **Core nodes: Agent (custom structured output) · Excel Online (Business) · Outlook · If/Else · Teams**
 
@@ -458,7 +461,7 @@ This is the heart of the scenario. Everything before it moves data; this node ma
 
 1. Below the trigger, select the **+** (**Add a step**) button.
 2. In the **Add** dialog, select the **Agent** tile.
-3. If the node opens showing **Not connected**, create the connection first — see section 1.3. On a fresh environment it will. Once connected, the **Agent** dropdown and **Instructions** field appear.
+3. If the node opens showing **Not connected**, create the connection first — see [section 1.3](#13-connections--what-to-expect-the-first-time). On a fresh environment it will. Once connected, the **Agent** dropdown and **Instructions** field appear.
 4. Leave the **Agent** dropdown on **New agent for this workflow**.
 5. Rename the node to `Request Triage Agent`.
 ![alt text](./img/image-6.png)
@@ -586,9 +589,8 @@ With **Text response** the agent hands you one blob of prose and you can do noth
 
 </details>
 
-> 🔤 **The tokens are capitalised.** Your schema uses `snake_case`, but the picker shows the fields with
-> an initial capital: **Category, Priority, Summary, Owner_team, Sla_hours, Ack_message**. Same values,
-> different presentation — search for `Categ`, not `category`.
+> 🔤 **Token names arrive capitalised.** You wrote `category` and `owner_team` in lower case in the JSON schema, but the token picker lists them as **Category, Priority, Summary, Owner_team, Sla_hours, Ack_message**. Same values, different presentation.
+> The catch: **the picker's search is case-sensitive**, so typing lower-case `category` returns nothing. Type only the part you are sure of — `Categ` — and pick from the list.
 
 ### 3e — Test the node before you go any further
 
@@ -622,7 +624,7 @@ Node-level testing runs this step in isolation — it is fast, it does not publi
 1. Below the agent node, select **Add a step**.
 2. Search for `Add a row into a table` and choose it under **Excel Online (Business)**.
 ![alt text](./img/image-9.png)
-3. **Create the connection** if the node shows **Not connected** — chevron ⌄ → **Create new connection** → **Create** → pick your account in the popup. (See Section 1.3.)
+3. **Create the connection** if the node shows **Not connected** — chevron ⌄ → **Create new connection** → **Create** → pick your account in the popup. (See [Section 1.3](#13-connections--what-to-expect-the-first-time).)
 4. Set the location parameters in order — each one loads the next:
 
    | Parameter | Value |
@@ -656,7 +658,7 @@ Node-level testing runs this step in isolation — it is fast, it does not publi
 > `ReceivedAt` shows as "Received at" and `SLAHours` as "SLA hours". The underlying columns are
 > unchanged.
 
-> ⚠️ **If the Table dropdown is empty**, the workbook has headers but no *formatted table*. Go back to Section 1.4, select your header row, and use **Insert ▸ Table**. Also make sure the file is **closed** in your browser.
+> ⚠️ **If the Table dropdown is empty**, the workbook has headers but no *formatted table*. Go back to [Section 1.4](#14-prepare-the-excel-workbook-needed-for-scenario-1-and-scenario-4), select your header row, and use **Insert ▸ Table**. Also make sure the file is **closed** in your browser.
 
 <details>
 <summary>💡 <b>Notice what just happened</b></summary>
@@ -1258,7 +1260,7 @@ Scenarios 1 and 2 were **event-driven**: something happened, so the workflow ran
 ## Step 2 — Read the day with M365 Copilot
 
 1. Below the trigger, select **Add a step** and choose the **M365 Copilot** tile.
-2. If the node shows **Not connected**, create the connection via the **chevron ⌄ ▸ Create new connection ▸ Create** (Section 1.3). If you built Scenario 2 first, it binds silently.
+2. If the node shows **Not connected**, create the connection via the **chevron ⌄ ▸ Create new connection ▸ Create** ([Section 1.3](#13-connections--what-to-expect-the-first-time)). If you built Scenario 2 first, it binds silently.
 3. In the **Message** field, enter this exactly:
 
 ```
@@ -1301,7 +1303,9 @@ Rules:
 <details>
 <summary>💡 <b>Concept — grounding is the whole point</b></summary>
 
-No prompt engineering can make a general model know that your 10:00 is a customer escalation. This node runs **as the connected Microsoft 365 user** and reads that user's mail, files, calendar and chats. Notice you never had to add a single connector action to get calendar and mail data — that is the difference between the M365 Copilot node and building the same thing out of individual Outlook actions.
+No prompt engineering can make a general model know that your 10:00 is a customer escalation. That information does not live in the model — it lives **inside your Microsoft 365**.
+
+This node runs **as the user named in the Connection field** and reads that user's mail, files, calendar and chats directly. Think back to what you just built: you added **no connector actions at all** to fetch a calendar or a mailbox. Assembling the same result from Outlook actions would mean wiring up event lookups, mail lookups, sorting and merging by hand. That gap is the reason to reach for the M365 Copilot node.
 
 </details>
 
@@ -1488,7 +1492,7 @@ This workflow reads the tracker, does the translation, and asks a human to appro
     └── Else ─▶ [Teams]  tell me it was held
 ```
 
-> ✅ **Prerequisite.** Section 1.4 must be complete: `Workflows-Lab.xlsx` in your OneDrive, with the `ProjectTracker` table filled with the six sample rows and an empty `ReportArchive` table. The file must be **closed**.
+> ✅ **Prerequisite.** [Section 1.4](#14-prepare-the-excel-workbook-needed-for-scenario-1-and-scenario-4) must be complete: `Workflows-Lab.xlsx` in your OneDrive, with the `ProjectTracker` table filled with the six sample rows and an empty `ReportArchive` table. The file must be **closed**.
 
 ---
 
@@ -1520,7 +1524,7 @@ This workflow reads the tracker, does the translation, and asks a human to appro
 
 1. Below the trigger, select **Add a step**, search for `List rows present in a table`, and choose it under **Excel Online (Business)**.
 ![alt text](./img/image-44.png)
-2. Create the connection if prompted (Section 1.3).
+2. Create the connection if prompted ([Section 1.3](#13-connections--what-to-expect-the-first-time)).
 3. Configure — each field loads the next:
 
    | Parameter | Value |
@@ -1890,8 +1894,8 @@ When you get stuck, check these eight first — they cover most of what goes wro
 
 | Symptom | Most likely cause | Fix |
 |---|---|---|
-| **A node says "Not connected"** | No connection for that connector exists in this environment yet. On a freshly provisioned lab environment this happens for **every** connector on first use, Outlook and Teams included. | Create it: click **Not connected** ▸ **Create new connection** ▸ **Create** ▸ pick your account. Section 1.3 has the full procedure. You only do this once per connector. |
-| **"Could not load options. You can enter a value manually."** on Location / Document Library / File | The node has no connection yet, so it cannot query your OneDrive. It is not a permissions error. | Create the connection (section 1.3). The message disappears and the dropdowns populate. |
+| **A node says "Not connected"** | No connection for that connector exists in this environment yet. On a freshly provisioned lab environment this happens for **every** connector on first use, Outlook and Teams included. | Create it: click **Not connected** ▸ **Create new connection** ▸ **Create** ▸ pick your account. [Section 1.3](#13-connections--what-to-expect-the-first-time) has the full procedure. You only do this once per connector. |
+| **"Could not load options. You can enter a value manually."** on Location / Document Library / File | The node has no connection yet, so it cannot query your OneDrive. It is not a permissions error. | Create the connection ([section 1.3](#13-connections--what-to-expect-the-first-time)). The message disappears and the dropdowns populate. |
 | **The Excel node says "Not connected"** | Excel Online (Business) and M365 Copilot do not auto-bind. | Click the **chevron ⌄** on the Connection field ▸ **Create new connection** ▸ **Create** ▸ pick your account in the popup. Clicking the placeholder text in the panel body does nothing. |
 
 ### Tokens and dynamic content

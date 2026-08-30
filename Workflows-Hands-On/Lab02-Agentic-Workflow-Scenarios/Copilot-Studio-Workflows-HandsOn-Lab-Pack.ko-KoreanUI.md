@@ -20,6 +20,8 @@
 
 ### 0.2 노드 커버리지
 
+**어떤 시나리오 2개를 고를지 정하는 데 쓰세요.** 각 시나리오가 어떤 노드를 다루는지 보여 줍니다.
+
 | | Agent node | M365 Copilot node | Human review | Excel Online | Outlook | Teams |
 |---|:---:|:---:|:---:|:---:|:---:|:---:|
 | **1 · IT Request Triage Desk** | ✅ | ➕ | ➕ | ✅ | ✅ | ✅ |
@@ -27,8 +29,8 @@
 | **3 · Daily Brief 8AM** | ✅ | ✅ | ➕ | ➕ | ➕ | ✅ |
 | **4 · Friday Project Roll-up** | ✅ | ➕ | ✅ | ✅ | ✅ | ✅ |
 
-✅ **핵심 빌드에 포함** — 이 노드를 실제로 사용합니다
-➕ **선택 확장** — 핵심 빌드에는 없지만, 일찍 끝나면 이 팩이 추가하는 방법을 안내합니다.
+✅ **핵심 빌드에 포함** — 이 시나리오를 만들면 반드시 사용하게 되는 노드입니다
+➕ **선택 확장** — 핵심 빌드에는 없지만, 일찍 끝나면 추가로 해 볼 수 있습니다(방법은 각 시나리오 끝에 있습니다)
 
 ---
 
@@ -78,6 +80,7 @@
 4. 커넥터 이름이 적힌 대화 상자가 나타납니다(예: **Office 365 Outlook** 또는 **M365 Copilot (V2)**). 표시 이름은 비워 둬도 됩니다. **Create** 를 클릭합니다.
 5. 로그인 탭이 열립니다. 랩 계정을 선택합니다. 탭은 자동으로 닫힙니다.
 6. 이제 필드에 계정이 표시되고, 그 아래 종속 필드들이 로드됩니다.
+![alt text](./img/image-61.png)
 
 ### 1.4 Excel 통합 문서 준비 (시나리오 1과 4에 필요)
 
@@ -249,11 +252,9 @@ Copilot Studio에서 만드는 모든 것은 **harness** 위에서 돌아갑니�
 
 | 상황 | 알아 둘 것 |
 |---|---|
-| 이미 잘 쓰고 있는 cloud flow가 있음 | agent flow로 **변환** 할 수 있습니다. 과금 방식이 바뀌기 때문에 **되돌릴 수 없는 일방향** 작업입니다. |
-| cloud flow를 곧바로 workflow로 변환하고 싶음 | **지원되지 않습니다.** Microsoft는 cloud flow를 *agent flow* 로만 변환할 수 있고 새 workflow 형식으로는 변환할 수 없다고 명시합니다. workflow로 만들고 싶다면 새로 만들어야 합니다. |
-| 조직 내에서 누군가는 "agent flow", 누군가는 "workflow"라고 말함 | 둘은 **동의어가 아닙니다.** harness도, 캔버스도, 과금도 다릅니다. 헷갈리면 어떤 버튼을 눌렀는지 물어보세요: **New agent flow**(standard) 인지 **New workflow (새 워크플로)**(GitHub Copilot) 인지. |
+| 이미 쓰고 있는 cloud flow를 옮기고 싶음 | **agent flow로만** 변환됩니다. workflow로는 변환되지 않으니, workflow로 만들려면 새로 만들어야 합니다. 변환은 **되돌릴 수 없습니다.** |
+| 조직 내에서 누군가는 "agent flow", 누군가는 "workflow"라고 말함 | 둘은 **동의어가 아닙니다.** harness도 캔버스도 다릅니다. 헷갈리면 어떤 버튼을 눌렀는지 물어보세요: **New agent flow**(standard) 인지 **New workflow (새 워크플로)**(GitHub Copilot) 인지. |
 | GitHub Copilot harness에서 agent flow를 열었을 때 | 다른 경험으로 넘어가는 것이므로 **새 브라우저 탭** 에서 열립니다. |
-| 재무 팀이 비용을 물어봄 | 워크플로는 **Copilot Credits** 를, agent flow는 **Copilot Studio capacity** 를 사용합니다. 둘 다 Power Platform 관리 센터의 **Licensing ▸ Copilot Studio** 에서 확인할 수 있습니다. 구체적인 수치를 말하기 전에 위의 과금 안내를 먼저 읽으세요. |
 
 **여러분의 Power Automate 경험은 그대로 이어집니다.** 트리거, 액션, 커넥터, 동적 콘텐츠, 분기, 실행 기록 — 개념도 사고 방식도 같습니다. 새로운 것은 AI 노드 유형, 에이전트 핸드오프, 노드 단위 테스트입니다. 커리어를 다시 쌓는 수준이 아니라, 하루 정도 익히면 되는 차이입니다.
 
@@ -326,6 +327,8 @@ agent node를 추가할 때 **Agent (에이전트)** 를 *New agent for this wor
 ---
 
 # 시나리오 1 — IT Request Triage Desk
+
+> **Triage(트리아지)** 는 원래 응급실에서 환자를 위급한 순서대로 분류하는 말입니다. 여기서는 들어온 요청을 **무슨 종류인지 + 얼마나 급한지** 로 나눠 처리 순서를 정하는 것을 뜻합니다.
 
 **핵심 노드: Agent (custom structured output) · Excel Online (Business) · Outlook · If/Else · Teams**
 
@@ -458,7 +461,7 @@ agent node를 추가할 때 **Agent (에이전트)** 를 *New agent for this wor
 
 1. 트리거 아래에서 **+**(**Add a step (단계 추가)**) 버튼을 선택합니다.
 2. **Add (추가)** 대화 상자에서 **Agent (에이전트)** 타일을 선택합니다.
-3. 노드가 **Not connected** 로 열리면 먼저 연결을 만드세요 — 1.3절을 참고하세요. 새 환경에서는 그렇게 나옵니다. 연결되고 나면 **Agent (에이전트)** 드롭다운과 **Instructions (안내)** 필드가 나타납니다.
+3. 노드가 **Not connected** 로 열리면 먼저 연결을 만드세요 — [1.3절](#13-연결connections--처음에-무엇을-보게-되는가)을 참고하세요. 새 환경에서는 그렇게 나옵니다. 연결되고 나면 **Agent (에이전트)** 드롭다운과 **Instructions (안내)** 필드가 나타납니다.
 4. **Agent (에이전트)** 드롭다운을 **New agent for this workflow (이 워크플로의 새 에이전트)** 로 그대로 둡니다.
 5. 노드 이름을 `Request Triage Agent` 로 바꿉니다.
 ![alt text](./img/image-6.png)
@@ -586,9 +589,8 @@ and do not include a signature.
 
 </details>
 
-> 🔤 **토큰은 첫 글자가 대문자입니다.** 스키마는 `snake_case` 를 쓰지만, 선택기는 필드를 첫 글자
-> 대문자로 표시합니다: **Category, Priority, Summary, Owner_team, Sla_hours, Ack_message**. 같은
-> 값이지만 표시가 다릅니다 — `category` 가 아니라 `Categ` 로 검색하세요.
+> 🔤 **토큰 이름은 첫 글자가 대문자로 바뀝니다.** JSON 스키마에는 `category`, `owner_team` 처럼 소문자로 적었지만, 토큰 선택기에는 **Category, Priority, Summary, Owner_team, Sla_hours, Ack_message** 로 표시됩니다. 값은 같고 표시만 다릅니다.
+> 그런데 **선택기 검색은 대소문자를 구분** 해서, 소문자 `category` 로 치면 아무것도 안 나옵니다. 그러니 대소문자가 확실한 앞부분만 — 예를 들어 `Categ` 까지만 — 입력하고 목록에서 고르세요.
 
 ### 3e — 더 진행하기 전에 노드 테스트하기
 
@@ -656,7 +658,7 @@ and do not include a signature.
 > `ReceivedAt`는 "Received at"로, `SLAHours`는 "SLA hours"로 표시됩니다. 실제 열 자체는
 > 바뀌지 않습니다.
 
-> ⚠️ **Table 드롭다운이 비어 있다면**, 통합 문서에 헤더는 있지만 *형식이 지정된 table*이 없는 것입니다. 섹션 1.4로 돌아가 헤더 행을 선택하고 **Insert ▸ Table**을 사용하세요. 또한 브라우저에서 파일이 **닫혀** 있는지도 확인하세요.
+> ⚠️ **Table 드롭다운이 비어 있다면**, 통합 문서에 헤더는 있지만 *형식이 지정된 table*이 없는 것입니다. [1.4절](#14-excel-통합-문서-준비-시나리오-1과-4에-필요)로 돌아가 헤더 행을 선택하고 **Insert ▸ Table**을 사용하세요. 또한 브라우저에서 파일이 **닫혀** 있는지도 확인하세요.
 
 <details>
 <summary>💡 <b>방금 무슨 일이 일어났는지 확인하세요</b></summary>
@@ -1258,7 +1260,7 @@ Microsoft 365 Copilot은 그 질문들에 이미 답할 수 있습니다. 다만
 ## Step 2 — M365 Copilot으로 하루 읽기
 
 1. 트리거 아래에서 **Add a step (단계 추가)** 을 선택하고 **M365 Copilot** 타일을 고릅니다.
-2. 노드에 **Not connected** 가 표시되면 **chevron ⌄ ▸ Create new connection ▸ Create** 로 연결을 만듭니다(1.3절). 시나리오 2를 먼저 만들었다면 조용히 바인딩됩니다.
+2. 노드에 **Not connected** 가 표시되면 **chevron ⌄ ▸ Create new connection ▸ Create** 로 연결을 만듭니다([1.3절](#13-연결connections--처음에-무엇을-보게-되는가)). 시나리오 2를 먼저 만들었다면 조용히 바인딩됩니다.
 3. **Message** 필드에 다음을 정확히 입력합니다:
 
 ```
@@ -1301,7 +1303,9 @@ Rules:
 <details>
 <summary>💡 <b>개념 — 핵심은 그라운딩입니다</b></summary>
 
-프롬프트를 아무리 잘 써도, 범용 모델은 내 10:00 일정이 고객 에스컬레이션이라는 걸 알 수 없습니다. 이 노드는 **연결된 Microsoft 365 사용자로서** 실행되며 그 사용자의 메일, 파일, 캘린더, 채팅을 읽습니다. 캘린더와 메일 데이터를 얻기 위해 커넥터 액션을 단 하나도 추가할 필요가 없었다는 점에 주목하세요 — 이것이 M365 Copilot 노드와, 같은 결과를 개별 Outlook 액션으로 일일이 조립하는 방식의 차이입니다.
+프롬프트를 아무리 잘 써도, 범용 모델은 내 10:00 일정이 고객 에스컬레이션이라는 걸 알 수 없습니다. 그 정보는 모델이 아니라 **내 Microsoft 365 안에** 있기 때문입니다.
+
+이 노드는 **Connection 필드에 지정된 사용자로 실행되면서** 그 사용자의 메일, 파일, 캘린더, 채팅을 직접 읽습니다. 방금 이 단계를 만들면서 캘린더나 메일을 가져오는 **커넥터 액션을 하나도 추가하지 않았다는 점** 을 떠올려 보세요. 같은 결과를 Outlook 액션으로 만들려면 이벤트 조회, 메일 조회, 정렬, 병합을 일일이 붙여야 합니다. 그 차이가 곧 M365 Copilot 노드를 쓰는 이유입니다.
 
 </details>
 
@@ -1488,7 +1492,7 @@ M365 Copilot 노드는 *무엇을 아는지* 를 보고 골랐습니다. 이 에
     └── Else ─▶ [Teams]  tell me it was held
 ```
 
-> ✅ **사전 준비.** 섹션 1.4가 완료되어 있어야 합니다: OneDrive에 `Workflows-Lab.xlsx` 가 있고, `ProjectTracker` table에 여섯 개의 샘플 행이 채워져 있으며, 비어 있는 `ReportArchive` table이 있어야 합니다. 파일은 반드시 **닫혀** 있어야 합니다.
+> ✅ **사전 준비.** [1.4절](#14-excel-통합-문서-준비-시나리오-1과-4에-필요)이 완료되어 있어야 합니다: OneDrive에 `Workflows-Lab.xlsx` 가 있고, `ProjectTracker` table에 여섯 개의 샘플 행이 채워져 있으며, 비어 있는 `ReportArchive` table이 있어야 합니다. 파일은 반드시 **닫혀** 있어야 합니다.
 
 ---
 
@@ -1890,8 +1894,8 @@ Human review는 **Text**, **Yes/No**, **Email**, **Number**, **Date** 를 지원
 
 | 증상 | 가장 유력한 원인 | 해결 |
 |---|---|---|
-| **노드에 "Not connected"라고 표시됨** | 이 환경에 그 커넥터의 연결이 아직 없습니다. 새로 프로비저닝된 랩 환경에서는 Outlook과 Teams를 포함해 **모든** 커넥터에서 처음 사용할 때 이 일이 발생합니다. | 만드세요: **Not connected** ▸ **Create new connection** ▸ **Create** ▸ 계정 선택. 1.3 섹션에 전체 절차가 있습니다. 커넥터당 한 번만 하면 됩니다. |
-| Location / Document Library / File에 **"Could not load options. You can enter a value manually."** 표시 | 노드에 아직 연결이 없어 OneDrive를 조회할 수 없습니다. 권한 오류가 아닙니다. | 연결을 만드세요(1.3 섹션). 메시지가 사라지고 드롭다운이 채워집니다. |
+| **노드에 "Not connected"라고 표시됨** | 이 환경에 그 커넥터의 연결이 아직 없습니다. 새로 프로비저닝된 랩 환경에서는 Outlook과 Teams를 포함해 **모든** 커넥터에서 처음 사용할 때 이 일이 발생합니다. | 만드세요: **Not connected** ▸ **Create new connection** ▸ **Create** ▸ 계정 선택. [1.3절](#13-연결connections--처음에-무엇을-보게-되는가)에 전체 절차가 있습니다. 커넥터당 한 번만 하면 됩니다. |
+| Location / Document Library / File에 **"Could not load options. You can enter a value manually."** 표시 | 노드에 아직 연결이 없어 OneDrive를 조회할 수 없습니다. 권한 오류가 아닙니다. | 연결을 만드세요([1.3절](#13-연결connections--처음에-무엇을-보게-되는가)). 메시지가 사라지고 드롭다운이 채워집니다. |
 | **Excel 노드에 "Not connected"라고 표시됨** | Excel Online (Business)과 M365 Copilot은 자동으로 바인딩되지 않습니다. | Connection 필드의 **꺾쇠 ⌄** 클릭 ▸ **Create new connection** ▸ **Create** ▸ 팝업에서 계정 선택. 패널 본문의 안내 텍스트를 클릭해도 아무 일도 일어나지 않습니다. |
 
 ### 토큰 · Dynamic Content
